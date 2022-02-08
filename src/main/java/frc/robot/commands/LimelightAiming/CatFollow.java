@@ -3,7 +3,7 @@ package frc.robot.commands.LimelightAiming;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 // import frc.robot.Vision.LimelightFetch;
-import frc.robot.Vision.SnakeEyesFetchTest;
+import frc.robot.Vision.SnakeEyesFetch;
 import frc.robot.subsystems.Drivetrain;
 
 public class CatFollow extends CommandBase {
@@ -19,7 +19,7 @@ public class CatFollow extends CommandBase {
   
     @Override
     public void execute() {
-        double tx = SnakeEyesFetchTest.getX();
+        double tx = SnakeEyesFetch.getX();
         float Kp = 0.03f; 
         float min_command = 0.03f;
         float heading_error = (float)tx;
@@ -45,18 +45,18 @@ public class CatFollow extends CommandBase {
   
     @Override
     public boolean isFinished() {
-        double x = SnakeEyesFetchTest.getX();
-        if(x >= -20.0 && x <= 20.0)
+        double x = SnakeEyesFetch.getX();
+        if(x >= -30.0 && x <= 30.0)
         {
              try {
              Thread.sleep(50);
              } catch (InterruptedException e) {
                  e.printStackTrace();
              }
-            if (x >= -20.0 && x <= 20.0)
+            if (x >= -30.0 && x <= 30.0)
                 return true;
         }
-        if (SnakeEyesFetchTest.getV() != 1.0) 
+        if (SnakeEyesFetch.getV() == true) 
             return true;
         return false;    
     }

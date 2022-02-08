@@ -3,7 +3,7 @@ package frc.robot.commands.LimelightAiming;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 // import frc.robot.Vision.LimelightFetch;
-import frc.robot.Vision.SnakeEyesFetchTest;
+import frc.robot.Vision.SnakeEyesFetch;
 import frc.robot.subsystems.Drivetrain;
 
 public class CatSearch extends CommandBase{
@@ -18,12 +18,11 @@ public class CatSearch extends CommandBase{
     
     @Override
     public void execute() {
-        double seen = SnakeEyesFetchTest.getV();
-
-        if (seen == 1.0)
+        boolean seen = SnakeEyesFetch.getV();
+        if (seen == true)
             found = true;
         else
-            requiredSubsystem.turnLeft(Constants.AIM_SPEED);
+            requiredSubsystem.turnLeft(Constants.OBJECT_AIM_SPEED);
 
     }
     @Override

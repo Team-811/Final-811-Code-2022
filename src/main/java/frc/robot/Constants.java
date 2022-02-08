@@ -18,7 +18,8 @@ public final class Constants {
     public static final double DRIVETRAIN_SPEED_SCALE = 0.7;
     public static final double DRIVETRAIN_AUTO_SPEED_SCALE = 0.5;
     public static final double DRIVE_SPEED = 0.1;
-    public static final double AIM_SPEED = 0.4;   
+    public static final double AIM_SPEED = 0.6;
+    public static final double OBJECT_AIM_SPEED = 0.4;   
     public static final double STRAFE_SPEED = 0.7; 
     public static final double CAT_DRIVE_SPEED = 0.3;
 

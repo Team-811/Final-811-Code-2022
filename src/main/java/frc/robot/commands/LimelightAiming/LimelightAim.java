@@ -9,6 +9,6 @@ public class LimelightAim extends SequentialCommandGroup{
     public LimelightAim(Drivetrain m_SubsystemBase) {
       requiredSubsystem = m_SubsystemBase;
       addRequirements(requiredSubsystem);
-      addCommands(/*new LimelightSearch(requiredSubsystem), */new LimelightAimX(requiredSubsystem));
+      addCommands(new LimelightSearch(requiredSubsystem), new LimelightAimX(requiredSubsystem));
     }
 }

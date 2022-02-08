@@ -1,43 +1,46 @@
-// package frc.robot.Vision;
+package frc.robot.Vision;
 
-// import org.photonvision.PhotonCamera;
-// import org.photonvision.targeting.PhotonPipelineResult;
-// import org.photonvision.targeting.PhotonTrackedTarget;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.TimedRobot;
 
+public class SnakeEyesFetch extends TimedRobot{
+    static private NetworkTable table = NetworkTableInstance.getDefault().getTable("photonvision/Team811ObjectCamera");
+    static private NetworkTableEntry tx = table.getEntry("targetYaw");
+    static private NetworkTableEntry ty = table.getEntry("targetPitch");
+    static private NetworkTableEntry ta = table.getEntry("targetArea");
 
-// import edu.wpi.first.wpilibj.TimedRobot;
+    static private double x = tx.getDouble(0.0);
+    static private double y = ty.getDouble(0.0);
+    static private double area = ta.getDouble(0.0);
 
-// public class SnakeEyesFetch extends TimedRobot{
-//     private static PhotonCamera camera = new PhotonCamera("Team811ObjectCamera");
-//     private static PhotonPipelineResult result = camera.getLatestResult();
-//     private static PhotonTrackedTarget target = result.getBestTarget();
-    
-//     private static double x;
-//     private static double y;
-//     private static double area;
-//     private static boolean inVision = result.hasTargets();
+    public static double getX() {
+        tx = table.getEntry("targetYaw");
+        x = tx.getDouble(0.0);
+        return x;
+    }
 
-//     public static double getX() {
-//         if (inVision == true)
-//             x = target.getYaw();
-//         return x;
-//     }
+    public static double getY() {
+        ty = table.getEntry("targetPitch");
+        y = ty.getDouble(0.0);
+        return y;
+    }
 
-//     public static double getY() {
-//         if (inVision == true)
-//             y = target.getPitch();
-//         return y;
-//     }
+    public static double getA() {
+        ta = table.getEntry("targetArea");
+        area = ta.getDouble(0.0);
+        return area;
+    }
 
-//     public static double getA() {
-//         if (inVision == true)
-//             area = target.getArea();
-//         return area;
-//     }
-
-//     public static boolean getV() {
-//         if (inVision == true)
-//             inVision = result.hasTargets();
-//         return inVision;
-//     }
-// }
+    public static boolean getV() {
+        tx = table.getEntry("targetYaw");
+        x = tx.getDouble(0.0);
+        ty = table.getEntry("targetPitch");
+        y = ty.getDouble(0.0);
+        if (x != 0 || y != 0)
+            return true;
+        else 
+            return false;    
+    }
+}
