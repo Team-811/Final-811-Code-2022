@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-import frc.robot.Vision.Ultrasonic;
 public class Auto extends SubsystemBase implements ISubsystem {
     
     private TalonSRX topLeftMotor;
@@ -18,10 +17,7 @@ public class Auto extends SubsystemBase implements ISubsystem {
     private TalonSRX bottomLeftMotor;
     private TalonSRX bottomRightMotor;
 
-    private Ultrasonic ultrasonic;
-
-    public Auto(Ultrasonic m_ultrasonic){
-        ultrasonic = m_ultrasonic;
+    public Auto(){
         resetSubsystem();
         topLeftMotor = new TalonSRX(RobotMap.DRIVE_TRAIN_TOP_LEFT );
         topRightMotor= new TalonSRX(RobotMap.DRIVE_TRAIN_TOP_RIGHT );
@@ -51,7 +47,6 @@ public class Auto extends SubsystemBase implements ISubsystem {
         SmartDashboard.putNumber("Front Right Wheel", -topRightMotor.getMotorOutputPercent());
         SmartDashboard.putNumber("Back Left Wheel", bottomLeftMotor.getMotorOutputPercent());
         SmartDashboard.putNumber("Back Right Wheel", -bottomRightMotor.getMotorOutputPercent());
-        SmartDashboard.putNumber("Ultrasonic", ultrasonic.getDistance());
     }
 
     @Override

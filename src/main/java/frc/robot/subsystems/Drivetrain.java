@@ -1,36 +1,24 @@
 package frc.robot.subsystems;
 
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-// import com.ctre.phoenix.motorcontrol.ControlMode;
-// import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.Vision.LimelightFetch;
-// import frc.robot.Vision.LimelightFetch;
-// import frc.robot.Vision.SnakeEyesFetchTest;
-import frc.robot.Vision.Ultrasonic;
-
 
 public class Drivetrain extends SubsystemBase implements ISubsystem {
-
 
     private TalonSRX topLeftMotor;
     private TalonSRX topRightMotor;
     private TalonSRX bottomLeftMotor;
     private TalonSRX bottomRightMotor;
-    
-    private Ultrasonic ultrasonic;
 
-    public Drivetrain( Ultrasonic m_ultrasonic, AHRS gyro){
-        ultrasonic = m_ultrasonic;
+    public Drivetrain(AHRS gyro){
         gyro.calibrate();
         gyro.reset(); 
         resetSubsystem();
@@ -123,14 +111,10 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         SmartDashboard.putNumber("Front Right Wheel", -topRightMotor.getMotorOutputPercent());
         SmartDashboard.putNumber("Back Left Wheel", bottomLeftMotor.getMotorOutputPercent());
         SmartDashboard.putNumber("Back Right Wheel", -bottomRightMotor.getMotorOutputPercent());
-        SmartDashboard.putNumber("Ultrasonic", ultrasonic.getDistance());
         if (LimelightFetch.getV() == 1.0)
             SmartDashboard.putBoolean("HasTarget", true);
         else
             SmartDashboard.putBoolean("HasTarget", false);
-        // System.out.println(SnakeEyesFetchTest.getV() + ", X:" + SnakeEyesFetchTest.getX());
-        //System.out.println("Limelight: " + LimelightFetch.getX() + " " + LimelightFetch.getY() + " " + LimelightFetch.getA() + " " + LimelightFetch.getV());
-        //System.out.println("SnakeEyes: " + SnakeEyesFetch.getX() + " " + SnakeEyesFetch.getY() + " " + SnakeEyesFetch.getA() + " " + SnakeEyesFetch.getV());
     }
 
     @Override

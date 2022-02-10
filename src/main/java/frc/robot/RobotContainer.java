@@ -9,14 +9,13 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.Vision.Ultrasonic;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Drivetrain.DriveLeft;
 import frc.robot.commands.Drivetrain.DriveRight;
 import frc.robot.commands.Drivetrain.DriveStop;
 import frc.robot.commands.Drivetrain.DrivingCommand;
-import frc.robot.commands.LimelightAiming.Cat;
-import frc.robot.commands.LimelightAiming.LimelightAim;
+import frc.robot.commands.VisionTargeting.Cargo.Cat;
+import frc.robot.commands.VisionTargeting.Hub.LimelightAim;
 // import frc.robot.commands.LimelightAiming.LimelightAimX;
 // import frc.robot.commands.LimelightAiming.LimelightAimY;
 // import frc.robot.commands.LimelightAiming.LimelightSearch;
@@ -36,8 +35,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private static final AHRS gyro = new AHRS();
-  private static final Ultrasonic ultrasonic = new Ultrasonic();
-  private static final Drivetrain drivetrain = new Drivetrain(ultrasonic, gyro);
+  private static final Drivetrain drivetrain = new Drivetrain(gyro);
   // private static final Kicker kicker = new Kicker();
   // Compressor pcmCompressor = new Compressor(PneumaticsModuleType.CTREPCM);
   public static BobXboxController driveController;
