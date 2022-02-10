@@ -2,9 +2,7 @@ package frc.robot.commands.Auto;
 
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-// import frc.robot.Robot;
-// import frc.robot.RobotContainer;
-import frc.robot.subsystems.Auto;
+import frc.robot.subsystems.Auto.Auto;
 
 public class AutoForward extends CommandBase {
    private Auto requiredSubsystem;
