@@ -34,7 +34,6 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
 
     private double SpeedScale = Constants.DRIVETRAIN_SPEED_SCALE;
     public void driveWithMisery(double leftStick, double rightStick, double rotation){
-
         double forwardValue = leftStick * SpeedScale;
         double rotationValue = rotation * SpeedScale * 0.8;
         double leftValue = forwardValue + rotationValue;

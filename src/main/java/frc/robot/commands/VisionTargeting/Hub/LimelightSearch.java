@@ -1,8 +1,5 @@
 package frc.robot.commands.VisionTargeting.Hub;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -13,11 +10,7 @@ public class LimelightSearch extends CommandBase{
     
     private Drivetrain requiredSubsystem;
     private boolean found = false;
-    private TalonSRX topLeftMotor;
-    private TalonSRX topRightMotor;
-    private TalonSRX bottomLeftMotor;
-    private TalonSRX bottomRightMotor;
-    private double SpeedScale = Constants.DRIVETRAIN_SPEED_SCALE;
+
 
     public LimelightSearch(Drivetrain m_SubsystemBase) {
       requiredSubsystem = m_SubsystemBase;
@@ -27,20 +20,19 @@ public class LimelightSearch extends CommandBase{
     @Override
     public void execute() {
         double seen = LimelightFetch.getV();
-        double leftStick = -RobotContainer.driveController.leftStick.getY(); 
-        double rotation = RobotContainer.driveController.rightStick.getX();
-        double forwardValue = leftStick * SpeedScale;
-        double rotationValue = rotation * SpeedScale * 0.8;
-        double leftValue = forwardValue + rotationValue;
-        double rightValue = forwardValue - rotationValue;
-        
         if (seen == 1.0)
             found = true;
-        else
-             topLeftMotor.set(ControlMode.PercentOutput, leftValue);
-             bottomLeftMotor.set(ControlMode.PercentOutput, leftValue);
-             topRightMotor.set(ControlMode.PercentOutput, -rightValue);
-             bottomRightMotor.set(ControlMode.PercentOutput, -rightValue); 
+        if (RobotContainer.driveController.rightStick.getX() <= -10)
+            requiredSubsystem.turnLeft(Constants.AIM_SPEED);
+        else if (RobotContainer.driveController.rightStick.getX() >= 10)
+            requiredSubsystem.turnRight(Constants.AIM_SPEED);
+
+/*
+Something Worth Trying: find out values of joystick and do math to make turning speed adjustable
+EX: requiredSubsystem.turnRight(RobotContainer.driveController.rightStick.getX() * .04 );
+If joystick is 150 then the turn speed will be 6 (every 10 on the joystick is .4 on speed constraint)
+*/
+
     }
     @Override
     public void end(boolean interrupted) {
