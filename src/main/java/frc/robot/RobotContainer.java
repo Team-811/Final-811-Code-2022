@@ -34,8 +34,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private static final AHRS gyro = new AHRS();
-  private static final Drivetrain drivetrain = new Drivetrain(gyro);
+  //private static final AHRS gyro = new AHRS();
+  private static final Drivetrain drivetrain = new Drivetrain(); //gyro
   // private static final Kicker kicker = new Kicker();
   // Compressor pcmCompressor = new Compressor(PneumaticsModuleType.CTREPCM);
   public static BobXboxController driveController;
@@ -85,7 +85,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    boolean autoMode = true;
+    //boolean autoMode = true;
     
     // An ExampleCommand will run in autonomous
     return m_autoCommand;
