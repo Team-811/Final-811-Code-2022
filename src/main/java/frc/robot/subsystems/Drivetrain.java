@@ -17,10 +17,11 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     private TalonSRX topRightMotor;
     private TalonSRX bottomLeftMotor;
     private TalonSRX bottomRightMotor;
-
-    public Drivetrain(AHRS gyro){
-        gyro.calibrate();
-        gyro.reset(); 
+    private static AHRS gyro = new AHRS();
+//ahrs gyro was in dt
+    public Drivetrain(){
+        //gyro.calibrate();
+        //gyro.reset(); 
         resetSubsystem();
         topLeftMotor = new TalonSRX(RobotMap.DRIVE_TRAIN_TOP_LEFT );
         topRightMotor= new TalonSRX(RobotMap.DRIVE_TRAIN_TOP_RIGHT );
@@ -110,6 +111,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         SmartDashboard.putNumber("Front Right Wheel", -topRightMotor.getMotorOutputPercent());
         SmartDashboard.putNumber("Back Left Wheel", bottomLeftMotor.getMotorOutputPercent());
         SmartDashboard.putNumber("Back Right Wheel", -bottomRightMotor.getMotorOutputPercent());
+        SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
         if (LimelightFetch.getV() == 1.0)
             SmartDashboard.putBoolean("HasTarget", true);
         else
