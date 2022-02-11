@@ -31,6 +31,7 @@ public class LimelightSearch extends CommandBase{
 Something Worth Trying: find out values of joystick and do math to make turning speed adjustable
 EX: requiredSubsystem.turnRight(RobotContainer.driveController.rightStick.getX() * .04 );
 If joystick is 150 then the turn speed will be 6 (every 10 on the joystick is .4 on speed constraint)
+It is a range between -1.0 and 1.0 with 0.0 being the joystick in resting position
 */
 
     }
