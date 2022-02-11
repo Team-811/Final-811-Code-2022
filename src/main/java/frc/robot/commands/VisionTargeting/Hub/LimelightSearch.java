@@ -22,11 +22,12 @@ public class LimelightSearch extends CommandBase{
         double seen = LimelightFetch.getV();
         if (seen == 1.0)
             found = true;
-        if (RobotContainer.driveController.rightStick.getX() <= -10)
-            requiredSubsystem.turnLeft(Constants.AIM_SPEED);
-        else if (RobotContainer.driveController.rightStick.getX() >= 10)
-            requiredSubsystem.turnRight(Constants.AIM_SPEED);
-
+        if (RobotContainer.driveController.leftStick.getX() < 0) {
+            requiredSubsystem.turnLeft(Math.abs(RobotContainer.driveController.leftStick.getX()*0.6));
+        }
+        else if (RobotContainer.driveController.leftStick.getX() > 0) {
+            requiredSubsystem.turnRight(Math.abs(RobotContainer.driveController.leftStick.getX()*0.6));
+        }
 /*
 Something Worth Trying: find out values of joystick and do math to make turning speed adjustable
 EX: requiredSubsystem.turnRight(RobotContainer.driveController.rightStick.getX() * .04 );
