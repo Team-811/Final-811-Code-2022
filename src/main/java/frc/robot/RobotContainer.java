@@ -70,7 +70,8 @@ public class RobotContainer {
     // LimelightAimY limeAimY = new LimelightAimY(drivetrain);
     // LimelightAimX limeAimX = new LimelightAimX(drivetrain);
     // Command[] LimelightAimingCommands = {limeSearch, limeAimY, limeAimX};
-     driveController.bButton.whileHeld(new LimelightAim(drivetrain));
+     driveController.rightStickButton.whileActiveContinuous(new LimelightAim(drivetrain));
+    //  driveController.bButton.whileHeld(new LimelightAim(drivetrain));
      driveController.xButton.whileHeld(new Cat(drivetrain));
      driveController.leftTriggerButton.whileHeld(new DriveLeft(drivetrain));
      driveController.leftTriggerButton.whenReleased(new DriveStop(drivetrain));
