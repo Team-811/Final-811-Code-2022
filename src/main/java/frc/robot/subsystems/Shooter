@@ -1,0 +1,48 @@
+package frc.robot.subsystems;
+
+import com.revrobotics.CANSparkMax;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+public class Shooter extends SubsystemBase implements ISubsystem {
+    
+    private CANSparkMax shooterMotor;
+
+    public Shooter(){
+    //    shooterMotor =  new CANSparkMax(RobotMap.SHOOTER_MOTOR, MotorType.kBrushless);
+    }
+
+    public void shooterSpin(double speed){
+        shooterMotor.set(speed);
+    }
+    public void shooterStop(){
+        shooterMotor.set(0);
+    }
+
+
+    @Override
+    public void outputSmartdashboard() {
+        SmartDashboard.putNumber("Shooter Speed", shooterMotor.getAppliedOutput());
+        SmartDashboard.putNumber("Shooter Temperature", shooterMotor.getMotorTemperature());
+    }
+
+    @Override
+    public void zeroSensors() {
+        shooterStop();
+        
+        
+    }
+
+    @Override
+    public void resetSubsystem() {
+        
+    }
+
+    @Override
+    public void testSubsystem() {
+
+        
+    }
+    
+}

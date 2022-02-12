@@ -5,7 +5,6 @@
 package frc.robot;
 
 
-import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -14,6 +13,7 @@ import frc.robot.commands.Drivetrain.DriveLeft;
 import frc.robot.commands.Drivetrain.DriveRight;
 import frc.robot.commands.Drivetrain.DriveStop;
 import frc.robot.commands.Drivetrain.DrivingCommand;
+
 import frc.robot.commands.VisionTargeting.Cargo.Cat;
 import frc.robot.commands.VisionTargeting.Hub.LimelightAim;
 // import frc.robot.commands.LimelightAiming.LimelightAimX;
@@ -36,8 +36,10 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   //private static final AHRS gyro = new AHRS();
   private static final Drivetrain drivetrain = new Drivetrain(); //gyro
-  // private static final Kicker kicker = new Kicker();
-  // Compressor pcmCompressor = new Compressor(PneumaticsModuleType.CTREPCM);
+  // private static final Intake intake = new Intake();
+  // private static final Shooter shooter = new Shooter();
+
+  // Compressor pcmCompressor = new Compressor(PneumaticsModuleType.CTREPCM); // for testing compressor
   public static BobXboxController driveController;
   public static BobXboxController operatorController;
 
@@ -76,6 +78,13 @@ public class RobotContainer {
      driveController.rightTriggerButton.whenReleased(new DriveStop(drivetrain));
   //  driveController.bButton.whenPressed(new LimelightAimX2(drivetrain));
 
+    // operatorController.xButton.whileHeld(new ShooterForward(shooter));
+    // operatorController.xButton.whenReleased(new ShooterStop(shooter));
+    // operatorController.yButton.whileHeld(new IntakeForward(intake));
+    // operatorController.yButton.whenReleased(new IntakeStop(intake));
+
+
+
   }
 
   /**
@@ -91,5 +100,7 @@ public class RobotContainer {
   }
   public static void updateSmartdashboard() {
     drivetrain.outputSmartdashboard();
+    // shooter.outputSmartdashboard();
+    // intake.outputSmartdashboard();
   }
 }
