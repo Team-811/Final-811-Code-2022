@@ -18,7 +18,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     private TalonSRX bottomLeftMotor;
     private TalonSRX bottomRightMotor;
     private static AHRS gyro = new AHRS();
-//ahrs gyro was in dt
+
     public Drivetrain(){
         //gyro.calibrate();
         //gyro.reset(); 
@@ -44,6 +44,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
          topRightMotor.set(ControlMode.PercentOutput, -rightValue);
          bottomRightMotor.set(ControlMode.PercentOutput, -rightValue); 
     }
+    
     public void driveWithMisery(double leftStick, double rightStick, double rotation, double FL, double FR, double BL, double BR){
         double forwardValue = leftStick * SpeedScale;
         double rotationValue = rotation * SpeedScale * 0.8;
@@ -59,46 +60,54 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         topLeftMotor.set(ControlMode.PercentOutput, speed);
         bottomLeftMotor.set(ControlMode.PercentOutput, speed);
     }
+    
     public void rightWheelsForward(double speed){
         topRightMotor.set(ControlMode.PercentOutput, -speed);
         bottomRightMotor.set(ControlMode.PercentOutput, -speed);
     }
+
     public void mechanumWHeelRight(double speed){
         topRightMotor.set(ControlMode.PercentOutput, speed);
         bottomRightMotor.set(ControlMode.PercentOutput, -speed);
         topLeftMotor.set(ControlMode.PercentOutput, speed);
         bottomLeftMotor.set(ControlMode.PercentOutput, -speed);
     }
+
     public void mechanumWHeelLeft(double speed){
         topRightMotor.set(ControlMode.PercentOutput, -speed);
         bottomRightMotor.set(ControlMode.PercentOutput, speed);
         topLeftMotor.set(ControlMode.PercentOutput, -speed);
         bottomLeftMotor.set(ControlMode.PercentOutput, speed);
     }
+
     public void turnLeft(double speed){
         topLeftMotor.set(ControlMode.PercentOutput, -speed);
         bottomLeftMotor.set(ControlMode.PercentOutput, -speed);
         topRightMotor.set(ControlMode.PercentOutput, -speed);
         bottomRightMotor.set(ControlMode.PercentOutput, -speed);
     }
+
     public void turnRight(double speed){
         topLeftMotor.set(ControlMode.PercentOutput, speed);
         bottomLeftMotor.set(ControlMode.PercentOutput, speed);
         topRightMotor.set(ControlMode.PercentOutput, speed);
         bottomRightMotor.set(ControlMode.PercentOutput, speed);
     }
+
     public void stopRobot(){
         topLeftMotor.set(ControlMode.PercentOutput, 0);
         bottomLeftMotor.set(ControlMode.PercentOutput, 0);
         topRightMotor.set(ControlMode.PercentOutput, 0);
         bottomRightMotor.set(ControlMode.PercentOutput, 0);
     }
+
     public void driveForward(double speed){
         topLeftMotor.set(ControlMode.PercentOutput, speed);
         bottomLeftMotor.set(ControlMode.PercentOutput, speed);
         topRightMotor.set(ControlMode.PercentOutput, -speed);
         bottomRightMotor.set(ControlMode.PercentOutput, -speed);
     }
+
     public void driveBackwards(double speed){
         topLeftMotor.set(ControlMode.PercentOutput, -speed);
         bottomLeftMotor.set(ControlMode.PercentOutput, -speed);

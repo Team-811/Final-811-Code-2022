@@ -10,7 +10,7 @@ public class DrivingCommand extends CommandBase {
   
   private Drivetrain requiredSubsystem;
 
-   static BobXboxController controller;
+  static BobXboxController controller;
   
   public DrivingCommand(Drivetrain m_SubsystemBase, BobXboxController m_controller) {
     requiredSubsystem = m_SubsystemBase;
