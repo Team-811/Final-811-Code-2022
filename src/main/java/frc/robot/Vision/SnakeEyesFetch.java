@@ -1,11 +1,15 @@
 package frc.robot.Vision;
 
+import org.photonvision.PhotonCamera;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 public class SnakeEyesFetch extends TimedRobot{
+    static PhotonCamera camera = new PhotonCamera("Team811ObjectCamera");
+
     static private NetworkTable table = NetworkTableInstance.getDefault().getTable("photonvision/Team811ObjectCamera");
     static private NetworkTableEntry tx = table.getEntry("targetYaw");
     static private NetworkTableEntry ty = table.getEntry("targetPitch");
@@ -14,6 +18,7 @@ public class SnakeEyesFetch extends TimedRobot{
     static private double x = tx.getDouble(0.0);
     static private double y = ty.getDouble(0.0);
     static private double area = ta.getDouble(0.0);
+
 
     public static double getX() {
         tx = table.getEntry("targetYaw");
@@ -42,5 +47,14 @@ public class SnakeEyesFetch extends TimedRobot{
             return true;
         else 
             return false;    
+    }
+    public static void setTeam() {
+        if(TeamSelector.getTeam()){
+            camera.setPipelineIndex(1);
+            System.out.println("Setting team to Red");
+        }else{
+            camera.setPipelineIndex(0);
+            System.out.println("Setting team to Blue");
+        }
     }
 }
