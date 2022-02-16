@@ -1,18 +1,22 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-// import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-// import frc.robot.RobotMap;
+import frc.robot.RobotMap;
 
 public class Intake extends SubsystemBase implements ISubsystem {
 
     private CANSparkMax intakeMotor;
+    private CANSparkMax backIntakeMotor;
+    private DigitalInput limitSwitch;
 
     public Intake(){
-    //    intakeMotor =  new CANSparkMax(RobotMap.INTAKE_MOTOR, MotorType.kBrushless);
+       intakeMotor =  new CANSparkMax(RobotMap.INTAKE_MOTOR, MotorType.kBrushless);
+       backIntakeMotor = new CANSparkMax(RobotMap.INTAKE_BACK_MOTOR, MotorType.kBrushless);
     }
 
     public void intakeSpin(double speed){
@@ -21,8 +25,15 @@ public class Intake extends SubsystemBase implements ISubsystem {
     public void intakeStop(){
         intakeMotor.set(0);
     }
-
-
+    public void backSpin(double speed){
+        backIntakeMotor.set(speed);
+    }
+    public void backStop(){
+        backIntakeMotor.set(0);
+    }
+    public boolean getLimitSwitch(){
+        return limitSwitch.get();
+    }
     @Override
     public void outputSmartdashboard() {
         SmartDashboard.putNumber("Intake Speed", intakeMotor.getAppliedOutput());

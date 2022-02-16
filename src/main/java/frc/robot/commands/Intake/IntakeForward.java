@@ -18,7 +18,12 @@ public class IntakeForward extends CommandBase {
  
    @Override
    public void execute() {
-       requiredSubsystem.intakeSpin(Constants.INTAKE_SPEED);
+    if(requiredSubsystem.getLimitSwitch()==true){//might be false
+      requiredSubsystem.backStop();
+    }else{
+      requiredSubsystem.backSpin(Constants.INTAKE_SPEED);
+    }
+    requiredSubsystem.intakeSpin(Constants.INTAKE_SPEED);
 
 }
  

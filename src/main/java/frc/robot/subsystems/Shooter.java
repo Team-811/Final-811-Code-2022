@@ -1,30 +1,35 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotMap;
 
 public class Shooter extends SubsystemBase implements ISubsystem {
     
-    private CANSparkMax shooterMotor;
+    private WPI_TalonSRX LeftMotor;
+    private WPI_TalonSRX RightMotor;
 
     public Shooter(){
-    //    shooterMotor =  new CANSparkMax(RobotMap.SHOOTER_MOTOR, MotorType.kBrushless);
+       LeftMotor =  new WPI_TalonSRX(RobotMap.SHOOTER_MOTOR_LEFT);
+       RightMotor = new WPI_TalonSRX(RobotMap.SHOOTER_MOTOR_RIGHT);
     }
 
     public void shooterSpin(double speed){
-        shooterMotor.set(speed);
+        LeftMotor.set(speed);
+        RightMotor.set(speed);
     }
     public void shooterStop(){
-        shooterMotor.set(0);
+        LeftMotor.set(0);
+        RightMotor.set(0);
     }
 
 
     @Override
     public void outputSmartdashboard() {
-        SmartDashboard.putNumber("Shooter Speed", shooterMotor.getAppliedOutput());
-        SmartDashboard.putNumber("Shooter Temperature", shooterMotor.getMotorTemperature());
+        SmartDashboard.putNumber("Shooter Speed", LeftMotor.getMotorOutputPercent());
+        SmartDashboard.putNumber("Shooter Temperature", LeftMotor.getMotorOutputPercent());
     }
 
     @Override
