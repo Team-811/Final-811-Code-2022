@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -14,19 +14,19 @@ import frc.robot.Vision.SnakeEyesFetch;
 
 public class Drivetrain extends SubsystemBase implements ISubsystem {
 
-    private TalonSRX topLeftMotor;
-    private TalonSRX topRightMotor;
-    private TalonSRX bottomLeftMotor;
-    private TalonSRX bottomRightMotor;
+    private WPI_TalonSRX topLeftMotor;
+    private WPI_TalonSRX topRightMotor;
+    private WPI_TalonSRX bottomLeftMotor;
+    private WPI_TalonSRX bottomRightMotor;
     private static AHRS gyro = new AHRS();
 
     public Drivetrain(){
     
         resetSubsystem();
-        topLeftMotor = new TalonSRX(RobotMap.DRIVE_TRAIN_TOP_LEFT );
-        topRightMotor= new TalonSRX(RobotMap.DRIVE_TRAIN_TOP_RIGHT );
-        bottomLeftMotor = new TalonSRX(RobotMap.DRIVE_TRAIN_BOTTOM_LEFT );
-        bottomRightMotor= new TalonSRX(RobotMap.DRIVE_TRAIN_BOTTOM_RIGHT );
+        topLeftMotor = new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_TOP_LEFT );
+        topRightMotor= new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_TOP_RIGHT );
+        bottomLeftMotor = new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_BOTTOM_LEFT );
+        bottomRightMotor= new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_BOTTOM_RIGHT );
         topLeftMotor.set(ControlMode.PercentOutput, 0.0f);
         topRightMotor.set(ControlMode.PercentOutput, 0.0f);
         bottomLeftMotor.set(ControlMode.PercentOutput, 0.0f);

@@ -13,7 +13,10 @@ import frc.robot.commands.Drivetrain.DriveLeft;
 import frc.robot.commands.Drivetrain.DriveRight;
 import frc.robot.commands.Drivetrain.DriveStop;
 import frc.robot.commands.Drivetrain.DrivingCommand;
-
+import frc.robot.commands.Intake.IntakeForward;
+import frc.robot.commands.Intake.IntakeStop;
+import frc.robot.commands.Shooter.ShooterForward;
+import frc.robot.commands.Shooter.ShooterStop;
 import frc.robot.commands.VisionTargeting.Cargo.Cat;
 import frc.robot.commands.VisionTargeting.Hub.LimelightAim;
 // import frc.robot.commands.LimelightAiming.LimelightAimX;
@@ -22,6 +25,8 @@ import frc.robot.commands.VisionTargeting.Hub.LimelightAim;
 import frc.robot.controllers.BobXboxController;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 // import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -36,8 +41,8 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   //private static final AHRS gyro = new AHRS();
   private static final Drivetrain drivetrain = new Drivetrain(); //gyro
-  // private static final Intake intake = new Intake();
-  // private static final Shooter shooter = new Shooter();
+  private static final Intake intake = new Intake();
+  private static final Shooter shooter = new Shooter();
 
   // Compressor pcmCompressor = new Compressor(PneumaticsModuleType.CTREPCM); // for testing compressor
   public static BobXboxController driveController;
@@ -79,10 +84,10 @@ public class RobotContainer {
      driveController.rightTriggerButton.whenReleased(new DriveStop(drivetrain));
   //  driveController.bButton.whenPressed(new LimelightAimX2(drivetrain));
 
-    // operatorController.xButton.whileHeld(new ShooterForward(shooter));
-    // operatorController.xButton.whenReleased(new ShooterStop(shooter));
-    // operatorController.yButton.whileHeld(new IntakeForward(intake));
-    // operatorController.yButton.whenReleased(new IntakeStop(intake));
+    operatorController.xButton.whileHeld(new ShooterForward(shooter));
+    operatorController.xButton.whenReleased(new ShooterStop(shooter));
+    operatorController.yButton.whileHeld(new IntakeForward(intake));
+    operatorController.yButton.whenReleased(new IntakeStop(intake));
 
 
 
@@ -101,7 +106,7 @@ public class RobotContainer {
   }
   public static void updateSmartdashboard() {
     drivetrain.outputSmartdashboard();
-    // shooter.outputSmartdashboard();
-    // intake.outputSmartdashboard();
+    shooter.outputSmartdashboard();
+    intake.outputSmartdashboard();
   }
 }
