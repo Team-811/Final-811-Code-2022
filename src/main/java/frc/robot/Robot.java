@@ -1,15 +1,25 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
 import org.photonvision.PhotonCamera;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Vision.SnakeEyesFetch;
+import frc.robot.Vision.TeamSelector;
+
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
+import com.kauailabs.navx.frc.AHRS;
+
+import frc.robot.RobotMap;
+
 import frc.robot.Vision.TeamSelector;
 
 /**
@@ -29,6 +39,23 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
 
+   
+  private static AHRS gyro = new AHRS();
+
+
+  double kP = 1;
+
+   
+  Spark leftTop = new Spark(0); //for sparkmaxes -- look into talon changes
+  Spark leftBottom = new Spark(1);
+
+  Spark rightTop = new Spark(2);
+  Spark rightBottom = new Spark(3);
+
+   MotorControllerGroup leftMotors = new MotorControllerGroup(leftTop, leftBottom);
+   MotorControllerGroup rightMotors = new MotorControllerGroup(rightTop, rightBottom);
+   
+   DifferentialDrive drive = new DifferentialDrive(leftMotors, rightMotors);
 
   @Override
   public void robotInit() {
@@ -72,6 +99,12 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     SnakeEyesFetch.setTeam();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+
+    rightMotors.setInverted(true);
+    double error = -gyro.getRate();
+
+    drive.tankDrive(.5 + kP * error, .5 - kP * error);
+
 
 
     // schedule the autonomous command (example)

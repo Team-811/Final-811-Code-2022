@@ -70,19 +70,14 @@ public class RobotContainer {
     driveController = new BobXboxController(0, .3, .3);
     operatorController = new BobXboxController(1, .3, .3);
 
-    //Button Map here
-    // LimelightSearch limeSearch = new LimelightSearch(drivetrain);
-    // LimelightAimY limeAimY = new LimelightAimY(drivetrain);
-    // LimelightAimX limeAimX = new LimelightAimX(drivetrain);
-    // Command[] LimelightAimingCommands = {limeSearch, limeAimY, limeAimX};
-     driveController.rightStickButton.whileActiveContinuous(new LimelightAim(drivetrain));
-    //  driveController.bButton.whileHeld(new LimelightAim(drivetrain));
+    //Button Mapping
+     driveController.rightStickButton.whileHeld(new LimelightAim(drivetrain));
      driveController.xButton.whileHeld(new Cat(drivetrain));
      driveController.leftTriggerButton.whileHeld(new DriveLeft(drivetrain));
      driveController.leftTriggerButton.whenReleased(new DriveStop(drivetrain));
      driveController.rightTriggerButton.whileHeld(new DriveRight(drivetrain));
      driveController.rightTriggerButton.whenReleased(new DriveStop(drivetrain));
-  //  driveController.bButton.whenPressed(new LimelightAimX2(drivetrain));
+
 
     operatorController.xButton.whileHeld(new ShooterForward(shooter));
     operatorController.xButton.whenReleased(new ShooterStop(shooter));

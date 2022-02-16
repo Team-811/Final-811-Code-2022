@@ -25,10 +25,10 @@ public class CatFollow extends CommandBase {
         float steering_adjust = 0.0f;
         left_command = 0;
         right_command = 0;
-        if(tx > 7.5){
+        if(tx > 10){
             steering_adjust = Kp*heading_error - min_command;
         }
-        if (tx < 7.5){
+        if (tx < 10){
             steering_adjust = Kp*heading_error + min_command;
         }
         left_command = left_command + steering_adjust + Constants.CAT_DRIVE_SPEED;
