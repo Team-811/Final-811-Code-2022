@@ -6,7 +6,9 @@ package frc.robot;
 
 
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Drivetrain.DriveLeft;
@@ -44,7 +46,7 @@ public class RobotContainer {
   private static final Intake intake = new Intake();
   private static final Shooter shooter = new Shooter();
 
-  // Compressor pcmCompressor = new Compressor(PneumaticsModuleType.CTREPCM); // for testing compressor
+  Compressor pcmCompressor = new Compressor(PneumaticsModuleType.CTREPCM); // for testing compressor
   public static BobXboxController driveController;
   public static BobXboxController operatorController;
 
