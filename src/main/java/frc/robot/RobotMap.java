@@ -8,8 +8,12 @@ public class RobotMap {
     public static final int DRIVE_TRAIN_BOTTOM_LEFT = 3;
     public static final int DRIVE_TRAIN_BOTTOM_RIGHT = 4;
 
-    public static final int SHOOTER_MOTOR_LEFT = 0;
-    public static final int SHOOTER_MOTOR_RIGHT = 0;
-    public static final int INTAKE_MOTOR = 0;
-    public static final int INTAKE_BACK_MOTOR = 0;
+    public static final int SHOOTER_MOTOR_LEFT = 5;
+    public static final int SHOOTER_MOTOR_RIGHT = 6;
+    public static final int INTAKE_MOTOR = 7;
+    public static final int INTAKE_BACK_MOTOR = 8;
+
+    public static final int INTAKE_PISTON_EXTENTION = 9;
+    public static final int INTAKE_PISTON_RETRACTION = 10;
+
 }

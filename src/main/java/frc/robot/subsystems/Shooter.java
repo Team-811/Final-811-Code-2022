@@ -28,8 +28,8 @@ public class Shooter extends SubsystemBase implements ISubsystem {
 
     @Override
     public void outputSmartdashboard() {
-        SmartDashboard.putNumber("Shooter Speed", LeftMotor.getMotorOutputPercent());
-        SmartDashboard.putNumber("Shooter Temperature", LeftMotor.getMotorOutputPercent());
+     //   SmartDashboard.putNumber("Shooter Speed", LeftMotor.getMotorOutputPercent());
+       // SmartDashboard.putNumber("Shooter Temperature", LeftMotor.getMotorOutputPercent());
     }
 
     @Override
