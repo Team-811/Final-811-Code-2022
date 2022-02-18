@@ -18,6 +18,7 @@ public class IntakeStop extends CommandBase {
    @Override
    public void execute() {
        requiredSubsystem.intakeStop();
+       requiredSubsystem.backStop();
 
 }
  

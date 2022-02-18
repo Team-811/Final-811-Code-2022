@@ -18,7 +18,7 @@ public class Intake extends SubsystemBase implements ISubsystem {
     private CANSparkMax backIntakeMotor;
     private DigitalInput limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
     private DoubleSolenoid extendPiston; 
-
+    // private boolean Extended = false;
 
     public Intake(){
        intakeMotor =  new CANSparkMax(RobotMap.INTAKE_MOTOR, MotorType.kBrushless);
@@ -27,14 +27,21 @@ public class Intake extends SubsystemBase implements ISubsystem {
        extendPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.INTAKE_PISTON_EXTENTION, RobotMap.INTAKE_PISTON_RETRACTION);
 
     }
+    // public void toggleExtended()
+    // {
+    //     Extended = !Extended;
+    // }
+    // public boolean getExtended()
+    // {
+    //     return Extended;
+    // }
     public void extendIntake() {
-        
         extendPiston.set(Value.kReverse);
     }
     public void retractIntake() {
         extendPiston.set(Value.kForward);
     }
-    
+
     public void stopPistonIntake(){
         extendPiston.set(Value.kOff);
     }

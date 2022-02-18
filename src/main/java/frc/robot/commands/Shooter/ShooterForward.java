@@ -1,6 +1,7 @@
 package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 
 public class ShooterForward extends CommandBase {
@@ -18,7 +19,7 @@ public class ShooterForward extends CommandBase {
    public void execute() {
       double distance = GetDistance.Distance();
       double SHOOTER_SPEED = distance * 0.1; // placeholder 
-      requiredSubsystem.shooterSpin(SHOOTER_SPEED);
+      requiredSubsystem.shooterSpin(Constants.SHOOTER_SPEED);
 }
  
    @Override

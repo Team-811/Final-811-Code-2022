@@ -12,6 +12,7 @@ import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.Vision.LimelightFetch;
 import frc.robot.Vision.SnakeEyesFetch;
+import frc.robot.commands.Shooter.GetDistance;
 
 public class Drivetrain extends SubsystemBase implements ISubsystem {
 
@@ -121,6 +122,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         // SmartDashboard.putNumber("Front Right Wheel", -topRightMotor.getMotorOutputPercent());
         // SmartDashboard.putNumber("Back Left Wheel", bottomLeftMotor.getMotorOutputPercent());
         // SmartDashboard.putNumber("Back Right Wheel", -bottomRightMotor.getMotorOutputPercent());
+        SmartDashboard.putNumber("Get Distance", GetDistance.Distance());
         SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
         SmartDashboard.putNumber("Snakeye X", SnakeEyesFetch.getX());
         if (LimelightFetch.getV() == 1.0)

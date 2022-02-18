@@ -13,9 +13,12 @@ import frc.robot.commands.Drivetrain.DriveLeft;
 import frc.robot.commands.Drivetrain.DriveRight;
 import frc.robot.commands.Drivetrain.DriveStop;
 import frc.robot.commands.Drivetrain.DrivingCommand;
+import frc.robot.commands.Intake.IntakeExtend;
 import frc.robot.commands.Intake.IntakeForward;
+import frc.robot.commands.Intake.IntakeReverse;
 import frc.robot.commands.Intake.IntakeStop;
 import frc.robot.commands.Shooter.Shoot;
+import frc.robot.commands.Shooter.ShooterStop;
 import frc.robot.commands.VisionTargeting.Cargo.Cat;
 import frc.robot.commands.VisionTargeting.Hub.LimelightAim;
 // import frc.robot.commands.LimelightAiming.LimelightAimX;
@@ -70,8 +73,8 @@ public class RobotContainer {
     operatorController = new BobXboxController(1, .3, .3);
 
     //Button Mapping
-     driveController.rightStickButton.whileHeld(new LimelightAim(drivetrain));
-     driveController.xButton.whileHeld(new Cat(drivetrain));
+     driveController.xButton.whileHeld(new LimelightAim(drivetrain));
+    //  driveController.xButton.whileHeld(new Cat(drivetrain));
      driveController.leftTriggerButton.whileHeld(new DriveLeft(drivetrain));
      driveController.leftTriggerButton.whenReleased(new DriveStop(drivetrain));
      driveController.rightTriggerButton.whileHeld(new DriveRight(drivetrain));
@@ -79,10 +82,11 @@ public class RobotContainer {
 
 
     operatorController.xButton.whileHeld(new Shoot(shooter));
-    operatorController.xButton.whenReleased(new Shoot(shooter));
+    operatorController.xButton.whenReleased(new ShooterStop(shooter));
     operatorController.yButton.whileHeld(new IntakeForward(intake));
     operatorController.yButton.whenReleased(new IntakeStop(intake));
-
+    operatorController.aButton.whileHeld(new IntakeExtend(intake));
+    
 
 
   }

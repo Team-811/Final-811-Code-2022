@@ -6,6 +6,7 @@ import frc.robot.subsystems.Intake;
 public class IntakeExtend extends CommandBase{
 
     private Intake requiredSubsystem;
+    
 
    public IntakeExtend(Intake m_SubsystemBase) {
        requiredSubsystem = m_SubsystemBase;
@@ -17,8 +18,11 @@ public class IntakeExtend extends CommandBase{
  
    @Override
    public void execute() {
-       requiredSubsystem.extendIntake();
-
+        // if (requiredSubsystem.getExtended())
+        //     requiredSubsystem.retractIntake();
+        // else
+            requiredSubsystem.extendIntake();
+        // requiredSubsystem.toggleExtended();
 }
  
    @Override
