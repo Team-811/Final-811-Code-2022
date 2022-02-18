@@ -5,6 +5,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
@@ -13,17 +16,29 @@ public class Intake extends SubsystemBase implements ISubsystem {
 
     private CANSparkMax intakeMotor;
     private CANSparkMax backIntakeMotor;
-    private DigitalInput limitSwitch;
-    // private DoubleSolenoid extendPiston; 
+    private DigitalInput limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
+    private DoubleSolenoid extendPiston; 
 
 
     public Intake(){
        intakeMotor =  new CANSparkMax(RobotMap.INTAKE_MOTOR, MotorType.kBrushless);
        backIntakeMotor = new CANSparkMax(RobotMap.INTAKE_BACK_MOTOR, MotorType.kBrushless);
 
-    //    extendPiston = new DoubleSolenoid(moduleType, forwardChannel, reverseChannel);
+       extendPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.INTAKE_PISTON_EXTENTION, RobotMap.INTAKE_PISTON_RETRACTION);
 
     }
+    public void extendIntake() {
+        
+        extendPiston.set(Value.kReverse);
+    }
+    public void retractIntake() {
+        extendPiston.set(Value.kForward);
+    }
+    
+    public void stopPistonIntake(){
+        extendPiston.set(Value.kOff);
+    }
+
 
     public void intakeSpin(double speed){
         intakeMotor.set(speed);
