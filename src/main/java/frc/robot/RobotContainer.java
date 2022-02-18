@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-
-
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -17,8 +15,7 @@ import frc.robot.commands.Drivetrain.DriveStop;
 import frc.robot.commands.Drivetrain.DrivingCommand;
 import frc.robot.commands.Intake.IntakeForward;
 import frc.robot.commands.Intake.IntakeStop;
-import frc.robot.commands.Shooter.ShooterForward;
-import frc.robot.commands.Shooter.ShooterStop;
+import frc.robot.commands.Shooter.Shoot;
 import frc.robot.commands.VisionTargeting.Cargo.Cat;
 import frc.robot.commands.VisionTargeting.Hub.LimelightAim;
 // import frc.robot.commands.LimelightAiming.LimelightAimX;
@@ -81,8 +78,8 @@ public class RobotContainer {
      driveController.rightTriggerButton.whenReleased(new DriveStop(drivetrain));
 
 
-    operatorController.xButton.whileHeld(new ShooterForward(shooter));
-    operatorController.xButton.whenReleased(new ShooterStop(shooter));
+    operatorController.xButton.whileHeld(new Shoot(shooter));
+    operatorController.xButton.whenReleased(new Shoot(shooter));
     operatorController.yButton.whileHeld(new IntakeForward(intake));
     operatorController.yButton.whenReleased(new IntakeStop(intake));
 
