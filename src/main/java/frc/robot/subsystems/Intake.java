@@ -48,7 +48,7 @@ public class Intake extends SubsystemBase implements ISubsystem {
 
 
     public void intakeSpin(double speed){
-        intakeMotor.set(speed);
+        intakeMotor.set(-speed);
     }
     public void intakeStop(){
         intakeMotor.set(0);
@@ -66,6 +66,7 @@ public class Intake extends SubsystemBase implements ISubsystem {
     public void outputSmartdashboard() {
         SmartDashboard.putNumber("Intake Speed", intakeMotor.getAppliedOutput());
         SmartDashboard.putNumber("Intake Temperature", intakeMotor.getMotorTemperature());
+        SmartDashboard.putBoolean("Ball Ready", getLimitSwitch());
     }
 
     @Override

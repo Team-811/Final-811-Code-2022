@@ -15,6 +15,7 @@ import frc.robot.commands.Drivetrain.DriveStop;
 import frc.robot.commands.Drivetrain.DrivingCommand;
 import frc.robot.commands.Intake.IntakeExtend;
 import frc.robot.commands.Intake.IntakeForward;
+import frc.robot.commands.Intake.IntakeRetract;
 import frc.robot.commands.Intake.IntakeReverse;
 import frc.robot.commands.Intake.IntakeStop;
 import frc.robot.commands.Shooter.Shoot;
@@ -85,7 +86,11 @@ public class RobotContainer {
     operatorController.xButton.whenReleased(new ShooterStop(shooter));
     operatorController.yButton.whileHeld(new IntakeForward(intake));
     operatorController.yButton.whenReleased(new IntakeStop(intake));
-    operatorController.aButton.whileHeld(new IntakeExtend(intake));
+    operatorController.leftTriggerButton.whileHeld(new IntakeExtend(intake));
+    operatorController.bButton.whileHeld( new IntakeReverse(intake));
+    operatorController.bButton.whenReleased(new IntakeStop(intake));
+    operatorController.rightTriggerButton.whileHeld(new IntakeRetract(intake));
+    
     
 
 

@@ -10,7 +10,7 @@ public class RobotMap {
 
     public static final int SHOOTER_MOTOR_LEFT = 16;
     public static final int SHOOTER_MOTOR_RIGHT = 5;
-    public static final int INTAKE_MOTOR = 17;
+    public static final int INTAKE_MOTOR = 9;
     public static final int INTAKE_BACK_MOTOR = 8;
     public static final int LIMIT_SWITCH = 0;
 
