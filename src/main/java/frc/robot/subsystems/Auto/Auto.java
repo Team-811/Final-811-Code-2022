@@ -24,21 +24,19 @@ public class Auto extends SubsystemBase implements ISubsystem {
         topRightMotor= new TalonSRX(RobotMap.DRIVE_TRAIN_TOP_RIGHT );
         bottomLeftMotor = new TalonSRX(RobotMap.DRIVE_TRAIN_BOTTOM_LEFT );
         bottomRightMotor= new TalonSRX(RobotMap.DRIVE_TRAIN_BOTTOM_RIGHT );
-        topLeftMotor .set(ControlMode.PercentOutput, 0.0f);
-        topRightMotor .set(ControlMode.PercentOutput, 0.0f);
-        bottomLeftMotor.set(ControlMode.PercentOutput, 0.0f);
-        bottomRightMotor.set(ControlMode.PercentOutput, 0.0f);
+        
     }
 
-    private double AutoSpeedScale = Constants.DRIVETRAIN_AUTO_SPEED_SCALE;
+    private double AutoSpeedScale = Constants.AUTO_SPEED;
+
     public void autoCrossLine(double speed) {
 
         double autoForward = speed * AutoSpeedScale;
 
-        topLeftMotor.set(ControlMode.PercentOutput, autoForward); // I highly doubt that this will work
-        topRightMotor.set(ControlMode.PercentOutput, autoForward);
+        topLeftMotor.set(ControlMode.PercentOutput, autoForward);
+        topRightMotor.set(ControlMode.PercentOutput, -autoForward);
         bottomLeftMotor.set(ControlMode.PercentOutput, autoForward);
-        bottomRightMotor.set(ControlMode.PercentOutput, autoForward);
+        bottomRightMotor.set(ControlMode.PercentOutput, -autoForward);
         
     }
 

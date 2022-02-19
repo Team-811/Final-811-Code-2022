@@ -31,6 +31,7 @@ public class Shooter extends SubsystemBase implements ISubsystem {
     public void outputSmartdashboard() {
         double feet = GetDistance.Distance();
         SmartDashboard.putNumber("Distance", feet);
+        // SmartDashboard.putNumber("Shooter RPM", LeftMotor.getMotorOutputPercent());
      //   SmartDashboard.putNumber("Shooter Speed", LeftMotor.getMotorOutputPercent());
        // SmartDashboard.putNumber("Shooter Temperature", LeftMotor.getMotorOutputPercent());
     }

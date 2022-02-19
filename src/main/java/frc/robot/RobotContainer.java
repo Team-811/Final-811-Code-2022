@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
+// import frc.robot.commands.Auto.AutoForward;
 import frc.robot.commands.Drivetrain.DriveLeft;
 import frc.robot.commands.Drivetrain.DriveRight;
 import frc.robot.commands.Drivetrain.DriveStop;
@@ -20,8 +21,11 @@ import frc.robot.commands.Intake.IntakeReverse;
 import frc.robot.commands.Intake.IntakeStop;
 import frc.robot.commands.Shooter.Shoot;
 import frc.robot.commands.Shooter.ShooterStop;
+import frc.robot.commands.Shooter.SlowShooter;
+//import frc.robot.commands.Shooter.SlowShooter;
 import frc.robot.commands.VisionTargeting.Cargo.Cat;
 import frc.robot.commands.VisionTargeting.Hub.LimelightAim;
+import frc.robot.commands.VisionTargeting.Hub.LimelightAimY;
 // import frc.robot.commands.LimelightAiming.LimelightAimX;
 // import frc.robot.commands.LimelightAiming.LimelightAimY;
 // import frc.robot.commands.LimelightAiming.LimelightSearch;
@@ -31,6 +35,8 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Auto.Auto;
 // import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
@@ -52,7 +58,9 @@ public class RobotContainer {
   public static BobXboxController operatorController;
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
+  private Auto m_SubsystemBase;
+  // private final CommandBase m_autoForward = new AutoForward(m_SubsystemBase);
+  //  private static final Auto AutoCommand1 = new Auto();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -75,6 +83,7 @@ public class RobotContainer {
 
     //Button Mapping
      driveController.xButton.whileHeld(new LimelightAim(drivetrain));
+     driveController.yButton.whileHeld(new LimelightAimY(drivetrain));
     //  driveController.xButton.whileHeld(new Cat(drivetrain));
      driveController.leftTriggerButton.whileHeld(new DriveLeft(drivetrain));
      driveController.leftTriggerButton.whenReleased(new DriveStop(drivetrain));
@@ -90,8 +99,8 @@ public class RobotContainer {
     operatorController.bButton.whileHeld( new IntakeReverse(intake));
     operatorController.bButton.whenReleased(new IntakeStop(intake));
     operatorController.rightTriggerButton.whileHeld(new IntakeRetract(intake));
-    
-    
+    operatorController.aButton.whileHeld(new SlowShooter(shooter));
+    operatorController.aButton.whenReleased(new ShooterStop(shooter));
 
 
   }
@@ -102,6 +111,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    
     //boolean autoMode = true;
     
     // An ExampleCommand will run in autonomous
