@@ -4,7 +4,13 @@
 
 package frc.robot.commands.Shooter;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -17,17 +23,17 @@ public class IntakeAndShootFast extends SequentialCommandGroup {
     super(
       new ParallelDeadlineGroup(
         new WaitCommand(0.3),
-        new InstantCommand(() -> intake.backSpin(-Constants.INTAKE_SPEED))
+        new InstantCommand(() -> intake.backSpin(-Constants.INTAKE_SPEED), intake)
       ),
       new ParallelDeadlineGroup(
         new WaitCommand(1),
-        new InstantCommand(() -> shoot.shooterSpin(1))
+        new InstantCommand(() -> shoot.shooterSpin(1), shoot)
       ),
       new ParallelDeadlineGroup(
         new WaitCommand(1),
-        new InstantComand(() -> intake.shooterSpin(Constants.SHOOTER_SPEED/2 + 0.05)),
-        new InstantCommand(() -> intake.backSpin(Constants.INTAKE_SPEED))
+        new InstantCommand(() -> shoot.shooterSpin(Constants.SHOOTER_SPEED), shoot),
+        new InstantCommand(() -> intake.backSpin(Constants.INTAKE_SPEED), intake)
       )
-    )
+    );
   }
 }
