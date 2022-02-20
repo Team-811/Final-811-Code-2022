@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
+import frc.robot.commands.Intake.IntakeForward;
+import frc.robot.commands.Intake.IntakeStop;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
@@ -22,18 +24,22 @@ public class IntakeAndShootFast extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     super(
       new ParallelDeadlineGroup(
-        new WaitCommand(0.3),
-        new InstantCommand(() -> intake.backSpin(-Constants.INTAKE_SPEED), intake)
+        new WaitCommand(0.2),
+        new InstantCommand(() -> shoot.shooterSpin(-0.3), shoot),
+        new InstantCommand(() -> intake.backSpin(-0.2), intake)
       ),
       new ParallelDeadlineGroup(
-        new WaitCommand(1),
+        new WaitCommand(1.5),
         new InstantCommand(() -> shoot.shooterSpin(1), shoot)
       ),
       new ParallelDeadlineGroup(
         new WaitCommand(1),
-        new InstantCommand(() -> shoot.shooterSpin(Constants.SHOOTER_SPEED), shoot),
-        new InstantCommand(() -> intake.backSpin(Constants.INTAKE_SPEED), intake)
-      )
+        new IntakeForward(intake),
+        new InstantCommand(() -> shoot.shooterSpin(Constants.SHOOTER_SPEED), shoot)
+      ),
+      new ShooterStop(shoot),
+      new InstantCommand(() -> intake.intakeSpin(0), intake),
+      new InstantCommand(() -> intake.backSpin(0), intake)
     );
   }
 }

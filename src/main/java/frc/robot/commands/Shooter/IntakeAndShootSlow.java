@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
+import frc.robot.commands.Intake.IntakeStop;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -32,7 +33,9 @@ public class IntakeAndShootSlow extends SequentialCommandGroup {
         new WaitCommand(1),
         new InstantCommand(() -> shoot.shooterSpin(Constants.SHOOTER_SPEED/2 + 0.05)),
         new InstantCommand(() -> intake.backSpin(Constants.INTAKE_SPEED))
-      )
+      ),
+      new ShooterStop(shoot),
+      new IntakeStop(intake)
     );
   }
 }

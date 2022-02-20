@@ -94,11 +94,10 @@ public class RobotContainer {
 
 
     operatorController.xButton.whenPressed(new IntakeAndShootFast(shooter, intake));
-    operatorController.xButton.whenReleased(new ShooterStop(shooter));
     operatorController.yButton.whileHeld(new IntakeForward(intake));
     operatorController.yButton.whenReleased(new IntakeStop(intake));
     operatorController.leftTriggerButton.whileHeld(new IntakeExtend(intake));
-    operatorController.bButton.whileHeld( new IntakeReverse(intake));
+    operatorController.bButton.whileHeld( new IntakeReverse(intake, shooter));
     operatorController.bButton.whenReleased(new IntakeStop(intake));
     operatorController.rightTriggerButton.whileHeld(new IntakeRetract(intake));
     operatorController.aButton.whileHeld(new SlowShooter(shooter));
