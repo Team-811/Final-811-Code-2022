@@ -15,7 +15,7 @@ public class SimpleAuto extends ParallelDeadlineGroup {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
 
-    super(new WaitCommand(0), new InstantCommand(()->subsystem.driveForward(0.7), subsystem));
+    super(new WaitCommand(1), new InstantCommand(()->subsystem.driveForward(0.3), subsystem));
 
 
   }
