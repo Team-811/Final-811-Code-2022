@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.Auto.SimpleAuto;
 // import frc.robot.commands.Auto.AutoForward;
 import frc.robot.commands.Drivetrain.DriveLeft;
 import frc.robot.commands.Drivetrain.DriveRight;
@@ -115,7 +116,7 @@ public class RobotContainer {
     //boolean autoMode = true;
     
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return new SimpleAuto(drivetrain);
   }
   public static void updateSmartdashboard() {
     drivetrain.outputSmartdashboard();

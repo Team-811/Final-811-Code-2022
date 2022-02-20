@@ -97,19 +97,19 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    SnakeEyesFetch.setTeam();
+    // SnakeEyesFetch.setTeam();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-    rightMotors.setInverted(true);
-    double error = -gyro.getRate();
+    // rightMotors.setInverted(true);
+    // double error = -gyro.getRate();
 
-    drive.tankDrive(.5 + kP * error, .5 - kP * error);
+    // drive.tankDrive(.5 + kP * error, .5 - kP * error);
 
 
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+            m_autonomousCommand.schedule();
     }
   }
 
