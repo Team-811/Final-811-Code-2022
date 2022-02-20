@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Drivetrain;
 
-public class SimpleAuto extends ParallelDeadlineGroup {
-  public SimpleAuto(Drivetrain subsystem) {
+public class BackwardsAuto extends ParallelDeadlineGroup {
+  public BackwardsAuto(Drivetrain subsystem) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
 
-    super(new WaitCommand(1), new InstantCommand(()->subsystem.driveForward(0.3), subsystem));
+    super(new WaitCommand(1), new InstantCommand(()->subsystem.driveForward(-0.3), subsystem));
 
 
   }

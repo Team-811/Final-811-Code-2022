@@ -37,7 +37,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Auto.Auto;
+
 // import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
@@ -59,7 +59,7 @@ public class RobotContainer {
   public static BobXboxController operatorController;
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private Auto m_SubsystemBase;
+
   // private final CommandBase m_autoForward = new AutoForward(m_SubsystemBase);
   //  private static final Auto AutoCommand1 = new Auto();
 
