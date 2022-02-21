@@ -8,7 +8,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.Vision.LimelightFetch;
 
 
-public class MoveAndAim extends CommandBase {
+public class StrafeAndAimLeft extends CommandBase {
   
   private Drivetrain requiredSubsystem;
   private double left_command;
@@ -17,7 +17,7 @@ public class MoveAndAim extends CommandBase {
   static BobXboxController controller;
   
   
-  public MoveAndAim(Drivetrain m_SubsystemBase, BobXboxController m_controller) {
+  public StrafeAndAimLeft(Drivetrain m_SubsystemBase, BobXboxController m_controller) {
     requiredSubsystem = m_SubsystemBase;
     controller = m_controller;
     addRequirements(requiredSubsystem);
@@ -47,10 +47,10 @@ public class MoveAndAim extends CommandBase {
           right_command = Constants.STRAFE_AND_AIM_SPEED + steering_adjust;
 
       }
-      requiredSubsystem.frontLeftForward(left_command);
+      requiredSubsystem.frontLeftForward(-left_command);
       requiredSubsystem.backLeftForward(left_command);
       requiredSubsystem.frontRightForward(right_command);
-      requiredSubsystem.backRightForward(right_command);
+      requiredSubsystem.backRightForward(-right_command);
  
   }
 
