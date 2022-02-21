@@ -19,6 +19,7 @@ public final class Constants { //Constraints
     public static final double DRIVE_SPEED = 0.1;
     public static final double AIM_SPEED = 0.4;
     public static final double OBJECT_AIM_SPEED = 0.4;   
+    public static final double STRAFE_AND_AIM_SPEED = 0.5;
     public static final double STRAFE_SPEED = 1; 
     public static final double CAT_DRIVE_SPEED = 0.1;
     public static final double INTAKE_SPEED = 0.3; //Placeholder
