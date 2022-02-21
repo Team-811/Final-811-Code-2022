@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
+// import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Auto.SimpleAuto;
 // import frc.robot.commands.Auto.AutoForward;
 import frc.robot.commands.Drivetrain.DriveLeft;
@@ -21,11 +21,11 @@ import frc.robot.commands.Intake.IntakeRetract;
 import frc.robot.commands.Intake.IntakeReverse;
 import frc.robot.commands.Intake.IntakeStop;
 import frc.robot.commands.Shooter.IntakeAndShootFast;
-import frc.robot.commands.Shooter.Shoot;
+// import frc.robot.commands.Shooter.Shoot;
 import frc.robot.commands.Shooter.ShooterStop;
 import frc.robot.commands.Shooter.SlowShooter;
 //import frc.robot.commands.Shooter.SlowShooter;
-import frc.robot.commands.VisionTargeting.Cargo.Cat;
+// import frc.robot.commands.VisionTargeting.Cargo.Cat;
 import frc.robot.commands.VisionTargeting.Hub.LimelightAim;
 import frc.robot.commands.VisionTargeting.Hub.LimelightAimY;
 // import frc.robot.commands.LimelightAiming.LimelightAimX;
@@ -33,11 +33,11 @@ import frc.robot.commands.VisionTargeting.Hub.LimelightAimY;
 // import frc.robot.commands.LimelightAiming.LimelightSearch;
 import frc.robot.controllers.BobXboxController;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.ExampleSubsystem;
+// import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+// import edu.wpi.first.wpilibj2.command.CommandBase;
 
 // import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -49,7 +49,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   //private static final AHRS gyro = new AHRS();
   private static final Drivetrain drivetrain = new Drivetrain(); //gyro
   private static final Intake intake = new Intake();
@@ -59,7 +59,7 @@ public class RobotContainer {
   public static BobXboxController driveController;
   public static BobXboxController operatorController;
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  // private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   // private final CommandBase m_autoForward = new AutoForward(m_SubsystemBase);
   //  private static final Auto AutoCommand1 = new Auto();

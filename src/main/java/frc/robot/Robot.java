@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot;
 
-import org.photonvision.PhotonCamera;
+// import org.photonvision.PhotonCamera;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -12,15 +12,15 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Vision.SnakeEyesFetch;
-import frc.robot.Vision.TeamSelector;
+// import frc.robot.Vision.TeamSelector;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+// import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import frc.robot.RobotMap;
+// import frc.robot.RobotMap;
 
-import frc.robot.Vision.TeamSelector;
+// import frc.robot.Vision.TeamSelector;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
 
-   
+  @SuppressWarnings("unused")
   private static AHRS gyro = new AHRS();
 
 

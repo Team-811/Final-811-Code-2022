@@ -17,8 +17,8 @@ public class ShooterForward extends CommandBase {
  
    @Override
    public void execute() {
-      double distance = GetDistance.Distance();
-      double SHOOTER_SPEED = distance * 0.1; // placeholder 
+      // double distance = GetDistance.Distance();
+      // double SHOOTER_SPEED = distance * 0.1; // placeholder 
       requiredSubsystem.shooterSpin(Constants.SHOOTER_SPEED);
 }
  

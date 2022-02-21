@@ -1,14 +1,14 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+// import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.drive.MecanumDrive;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
+// import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+// import edu.wpi.first.wpilibj.drive.MecanumDrive;
+// import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+// import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -16,7 +16,7 @@ import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.Vision.LimelightFetch;
 import frc.robot.Vision.SnakeEyesFetch;
-import frc.robot.commands.Shooter.GetDistance;
+// import frc.robot.commands.Shooter.GetDistance;
 
 public class Drivetrain extends SubsystemBase implements ISubsystem {
 
@@ -28,7 +28,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     // private MotorControllerGroup rigthMotors = new MotorControllerGroup(topRightMotor, topLeftMotor);
     // private MecanumDrive driveTrain = new MecanumDrive(topLeftMotor, bottomLeftMotor, topRightMotor, bottomRightMotor);
     private static AHRS gyro = new AHRS();
-
+    /*A new Instance of the Drivetrain*/
     public Drivetrain(){
     
         resetSubsystem();
