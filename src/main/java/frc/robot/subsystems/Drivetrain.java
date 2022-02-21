@@ -124,6 +124,22 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         bottomRightMotor.set(ControlMode.PercentOutput, speed);
     }
 
+    public void frontRightForward(double speed){
+        topRightMotor.set(ControlMode.PercentOutput, -speed);
+    }
+
+    public void backRightForward(double speed){
+        bottomRightMotor.set(ControlMode.PercentOutput, -speed);
+    }
+
+    public void frontLeftForward(double speed){
+        topLeftMotor.set(ControlMode.PercentOutput, speed);
+    }
+
+    public void backLeftForward(double speed){
+        bottomLeftMotor.set(ControlMode.PercentOutput, speed);
+    }
+
     @Override
     public void outputSmartdashboard() {
         // SmartDashboard.putNumber("Front Right Wheel", -topRightMotor.getMotorOutputPercent());
