@@ -15,6 +15,9 @@ import frc.robot.commands.Drivetrain.DriveLeft;
 import frc.robot.commands.Drivetrain.DriveRight;
 import frc.robot.commands.Drivetrain.DriveStop;
 import frc.robot.commands.Drivetrain.DrivingCommand;
+import frc.robot.commands.Drivetrain.StrafeAndAimLeft;
+import frc.robot.commands.Drivetrain.StrafeAndAimRight;
+import frc.robot.commands.Drivetrain.UltimateDrivingCommand;
 import frc.robot.commands.Intake.IntakeExtend;
 import frc.robot.commands.Intake.IntakeForward;
 import frc.robot.commands.Intake.IntakeRetract;
@@ -67,7 +70,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
-    drivetrain.setDefaultCommand(new DrivingCommand(drivetrain, driveController));
+    drivetrain.setDefaultCommand(new UltimateDrivingCommand(drivetrain));
     configureButtonBindings();
     
     // pcmCompressor.enableDigital();
@@ -84,13 +87,13 @@ public class RobotContainer {
     operatorController = new BobXboxController(1, .3, .3);
 
     //Button Mapping
-     driveController.xButton.whileHeld(new LimelightAim(drivetrain));
-     driveController.yButton.whileHeld(new LimelightAimY(drivetrain));
+    //  driveController.xButton.whileHeld(new LimelightAim(drivetrain));
+    //  driveController.yButton.whileHeld(new LimelightAimY(drivetrain));
     //  driveController.xButton.whileHeld(new Cat(drivetrain));
-     driveController.leftTriggerButton.whileHeld(new DriveLeft(drivetrain));
-     driveController.leftTriggerButton.whenReleased(new DriveStop(drivetrain));
-     driveController.rightTriggerButton.whileHeld(new DriveRight(drivetrain));
-     driveController.rightTriggerButton.whenReleased(new DriveStop(drivetrain));
+    //  driveController.leftTriggerButton.whileHeld(new StrafeAndAimLeft(drivetrain, driveController));
+    //  driveController.leftTriggerButton.whenReleased(new DriveStop(drivetrain));
+    //  driveController.rightTriggerButton.whileHeld(new StrafeAndAimRight(drivetrain, driveController));
+    //  driveController.rightTriggerButton.whenReleased(new DriveStop(drivetrain));
 
 
     operatorController.xButton.whenPressed(new IntakeAndShootFast(shooter, intake));

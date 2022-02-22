@@ -37,16 +37,19 @@ public class StrafeAndAimLeft extends CommandBase {
       right_command = 0;
       if(tx > 0){
           steering_adjust = Kp*heading_error + min_command;
+          steering_adjust = -steering_adjust;
           left_command = Constants.STRAFE_AND_AIM_SPEED - steering_adjust;
           right_command = Constants.STRAFE_AND_AIM_SPEED + steering_adjust;
 
       }
       if (tx < 0){
           steering_adjust = Kp*heading_error - min_command;
+          steering_adjust = -steering_adjust;
           left_command = Constants.STRAFE_AND_AIM_SPEED - steering_adjust;
           right_command = Constants.STRAFE_AND_AIM_SPEED + steering_adjust;
 
       }
+      
       requiredSubsystem.frontLeftForward(-left_command);
       requiredSubsystem.backLeftForward(left_command);
       requiredSubsystem.frontRightForward(right_command);

@@ -11,6 +11,10 @@ public class GetDistance {
             angle = 0;        
         else
             angle = 30;
-        return (6 / Math.tan((angle + Math.abs(LimelightFetch.getY())) *(Math.PI / 180)));
+        return (6 / Math.tan((angle + Math.abs(LimelightFetch.getY()-14)) *(Math.PI / 180)));
+    }
+
+    public static float ShooterSpeed(){
+        return (float) (Distance() * 0.1);
     }
 }

@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.Constants;
 import frc.robot.commands.Intake.IntakeForward;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -17,6 +16,8 @@ import frc.robot.subsystems.Shooter;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class IntakeAndShootFast extends SequentialCommandGroup {
+  private static double speed = GetDistance.Distance() * .195;
+
   /** Creates a new IntakeAndShoot. */
   public IntakeAndShootFast(Shooter shoot, Intake intake) {
     // Add your commands in the addCommands() call, e.g.
@@ -29,12 +30,12 @@ public class IntakeAndShootFast extends SequentialCommandGroup {
       ),
       new ParallelDeadlineGroup(
         new WaitCommand(1.5),
-        new InstantCommand(() -> shoot.shooterSpin(1), shoot)
+        new InstantCommand(() -> shoot.shooterSpin(speed), shoot)
       ),
       new ParallelDeadlineGroup(
-        new WaitCommand(1),
+        new WaitCommand(1.5),
         new IntakeForward(intake),
-        new InstantCommand(() -> shoot.shooterSpin(Constants.SHOOTER_SPEED), shoot)
+        new InstantCommand(() -> shoot.shooterSpin(speed), shoot)
       ),
       new ShooterStop(shoot),
       new InstantCommand(() -> intake.intakeSpin(0), intake),

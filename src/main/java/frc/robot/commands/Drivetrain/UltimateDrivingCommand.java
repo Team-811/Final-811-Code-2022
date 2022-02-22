@@ -25,8 +25,8 @@ public class UltimateDrivingCommand extends CommandBase {
   @Override
   public void execute() {
     double tx = LimelightFetch.getX();
-    float Kp = 0.02f; 
-    float min_command = 0.05f;
+    float Kp = 0.04f; 
+    float min_command = 0.075f;
     float heading_error = (float)tx;
     float steering_adjust = 0.0f;
     if(tx > 0){
@@ -41,13 +41,13 @@ public class UltimateDrivingCommand extends CommandBase {
     double forwardAdjust=0;
     double feet  = GetDistance.Distance();
     if(RobotContainer.driveController.yButton.get()){
-      if(feet > 9 && feet != 0)
+      if(feet > 6.75 && feet != 0)
       {
-        forwardAdjust = 0.1;
+        forwardAdjust = 0.2;
       }
-      else
+      else if (feet < 7.25 && feet != 0)
       {
-        forwardAdjust = -0.1;
+        forwardAdjust = -0.2;
       }
     }else{
       forwardAdjust = 0;
