@@ -11,19 +11,16 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-<<<<<<< HEAD
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Vision.SnakeEyesFetch;
+
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.commands.Auto.ComplexAuto;
 
 import frc.robot.commands.Auto.SimpleAuto;
+import frc.robot.NetworkTables.SnakeEyesFetch;
 import frc.robot.commands.Auto.BackwardsAuto;
 // import frc.robot.Vision.TeamSelector;
-=======
-import frc.robot.NetworkTables.SnakeEyesFetch;
->>>>>>> 1c6cb79e42daa21f3e1a4a5fe84783c78d5c20d7
 
 // import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
