@@ -1,6 +1,4 @@
-package frc.robot.commands.Shooter;
-
-import frc.robot.NetworkTables.LimelightFetch;
+package frc.robot.NetworkTables;
 
 public class GetDistance {
 

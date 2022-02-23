@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
-import frc.robot.commands.Shooter.GetDistance;
+import frc.robot.NetworkTables.GetDistance;
 
 public class Shooter extends SubsystemBase implements ISubsystem {
     

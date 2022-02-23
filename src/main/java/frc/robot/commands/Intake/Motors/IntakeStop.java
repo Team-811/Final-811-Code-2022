@@ -1,15 +1,13 @@
-package frc.robot.commands.Intake;
+package frc.robot.commands.Intake.Motors;
 
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
 
-public class IntakeReverse extends CommandBase {
+public class IntakeStop extends CommandBase {
    private Intake requiredSubsystem;
 
-   public IntakeReverse(Intake m_SubsystemBase, Shooter shoot) {
+   public IntakeStop(Intake m_SubsystemBase) {
        requiredSubsystem = m_SubsystemBase;
        addRequirements(requiredSubsystem);
    }
@@ -19,9 +17,9 @@ public class IntakeReverse extends CommandBase {
  
    @Override
    public void execute() {
-       requiredSubsystem.backSpin(-0.2);
-       requiredSubsystem.intakeSpin(-Constants.REAL_INTAKE_SPEED);
-      
+       requiredSubsystem.intakeStop();
+       requiredSubsystem.backStop();
+
 }
  
    @Override
@@ -29,6 +27,6 @@ public class IntakeReverse extends CommandBase {
  
    @Override
    public boolean isFinished() {
-     return true;
+     return false;
    }
  }

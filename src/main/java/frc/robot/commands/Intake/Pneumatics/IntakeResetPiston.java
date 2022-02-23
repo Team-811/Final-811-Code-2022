@@ -1,13 +1,13 @@
-package frc.robot.commands.Intake;
+package frc.robot.commands.Intake.Pneumatics;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
-public class IntakeRetract extends CommandBase{
+public class IntakeResetPiston extends CommandBase{
     
     private Intake requiredSubsystem;
 
-   public IntakeRetract(Intake m_SubsystemBase) {
+   public IntakeResetPiston(Intake m_SubsystemBase) {
        requiredSubsystem = m_SubsystemBase;
        addRequirements(requiredSubsystem);
    }
@@ -17,7 +17,7 @@ public class IntakeRetract extends CommandBase{
  
    @Override
    public void execute() {
-       requiredSubsystem.retractIntake();
+       requiredSubsystem.stopPistonIntake();
 
 }
  

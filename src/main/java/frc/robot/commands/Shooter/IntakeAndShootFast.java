@@ -8,7 +8,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.Intake.IntakeForward;
+import frc.robot.NetworkTables.GetDistance;
+import frc.robot.commands.Intake.Motors.IntakeForward;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
