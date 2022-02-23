@@ -11,7 +11,14 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Vision.SnakeEyesFetch;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.commands.Auto.ComplexAuto;
+
+import frc.robot.commands.Auto.SimpleAuto;
+import frc.robot.commands.Auto.BackwardsAuto;
 // import frc.robot.Vision.TeamSelector;
 
 // import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -29,9 +36,11 @@ import com.kauailabs.navx.frc.AHRS;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
-
   private RobotContainer m_robotContainer= new RobotContainer();
+  private static final Drivetrain drivetrain = new Drivetrain();
+
+  Command m_autonomousCommand;
+  SendableChooser<Command> m_Chooser = new SendableChooser<>();
  // public static Drivetrain drivetrain;
 
   /**
@@ -40,6 +49,7 @@ public class Robot extends TimedRobot {
    */
 
   @SuppressWarnings("unused")
+
   private static AHRS gyro = new AHRS();
 
 
@@ -57,9 +67,21 @@ public class Robot extends TimedRobot {
    
    DifferentialDrive drive = new DifferentialDrive(leftMotors, rightMotors);
 
+     
+   
+  //  m_chooser.setDefaultOption("Cross Line", new CrossLine());
+  //  m_chooser.addOption("Cross Line and Shoot (Middle)", new CrossLineAndShootComp());
+  //  m_chooser.addOption("Do Nothing", null);
+
+  //  SmartDashboard.putData("Auto mode", m_chooser);
+
   @Override
   public void robotInit() {
-    
+
+    m_Chooser.setDefaultOption("Forward", new SimpleAuto(drivetrain));
+    m_Chooser.addOption("Backward", new BackwardsAuto(drivetrain));
+    //m_Chooser.addOption("Complex", new ComplexAuto(drivetrain));
+    m_Chooser.addOption("Do Nothing :(", null);
 
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
@@ -98,8 +120,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     // SnakeEyesFetch.setTeam();
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
+    
+    SmartDashboard.putData("Auto mode", m_Chooser);
+    m_autonomousCommand = m_Chooser.getSelected();
     // rightMotors.setInverted(true);
     // double error = -gyro.getRate();
 

@@ -35,11 +35,14 @@ import frc.robot.commands.VisionTargeting.Hub.LimelightAimY;
 // import frc.robot.commands.LimelightAiming.LimelightAimY;
 // import frc.robot.commands.LimelightAiming.LimelightSearch;
 import frc.robot.controllers.BobXboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
 // import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
+
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 // import edu.wpi.first.wpilibj2.command.CommandBase;
 
 // import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -61,6 +64,8 @@ public class RobotContainer {
   Compressor pcmCompressor = new Compressor(PneumaticsModuleType.CTREPCM); // for testing compressor
   public static BobXboxController driveController;
   public static BobXboxController operatorController;
+  Command m_autonomousCommand;
+  SendableChooser<Command> m_Chooser = new SendableChooser<>();
 
   // private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
@@ -69,6 +74,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    
+    
     // Configure the button bindings
     drivetrain.setDefaultCommand(new UltimateDrivingCommand(drivetrain));
     configureButtonBindings();
@@ -115,11 +122,14 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    m_Chooser.setDefaultOption("Forward", new SimpleAuto(drivetrain));
+    m_Chooser.addOption("Do Nothing :)", null);
+
     
-    //boolean autoMode = true;
     
     // An ExampleCommand will run in autonomous
     return new SimpleAuto(drivetrain);
+    
   }
   public static void updateSmartdashboard() {
     drivetrain.outputSmartdashboard();
