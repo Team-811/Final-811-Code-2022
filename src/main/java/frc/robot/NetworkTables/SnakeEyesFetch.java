@@ -1,4 +1,4 @@
-package frc.robot.Vision;
+package frc.robot.NetworkTables;
 
 import org.photonvision.PhotonCamera;
 

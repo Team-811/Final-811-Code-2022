@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-import frc.robot.Vision.LimelightFetch;
-import frc.robot.Vision.SnakeEyesFetch;
+import frc.robot.NetworkTables.LimelightFetch;
+import frc.robot.NetworkTables.SnakeEyesFetch;
 // import frc.robot.commands.Shooter.GetDistance;
 import frc.robot.commands.Shooter.GetDistance;
 
