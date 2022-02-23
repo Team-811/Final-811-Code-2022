@@ -8,16 +8,10 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.DrivingCommand;
 // import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Auto.SimpleAuto;
 // import frc.robot.commands.Auto.AutoForward;
-import frc.robot.commands.Drivetrain.DriveLeft;
-import frc.robot.commands.Drivetrain.DriveRight;
-import frc.robot.commands.Drivetrain.DriveStop;
-import frc.robot.commands.Drivetrain.DrivingCommand;
-import frc.robot.commands.Drivetrain.StrafeAndAimLeft;
-import frc.robot.commands.Drivetrain.StrafeAndAimRight;
-import frc.robot.commands.Drivetrain.UltimateDrivingCommand;
 import frc.robot.commands.Intake.IntakeExtend;
 import frc.robot.commands.Intake.IntakeForward;
 import frc.robot.commands.Intake.IntakeRetract;
@@ -29,13 +23,13 @@ import frc.robot.commands.Shooter.ShooterStop;
 import frc.robot.commands.Shooter.SlowShooter;
 //import frc.robot.commands.Shooter.SlowShooter;
 // import frc.robot.commands.VisionTargeting.Cargo.Cat;
-import frc.robot.commands.VisionTargeting.Hub.LimelightAim;
-import frc.robot.commands.VisionTargeting.Hub.LimelightAimY;
+// import frc.robot.commands.VisionTargeting.Hub.LimelightAim;
+// import frc.robot.commands.VisionTargeting.Hub.LimelightAimY;
 // import frc.robot.commands.LimelightAiming.LimelightAimX;
 // import frc.robot.commands.LimelightAiming.LimelightAimY;
 // import frc.robot.commands.LimelightAiming.LimelightSearch;
 import frc.robot.controllers.BobXboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
 // import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Intake;
@@ -77,7 +71,7 @@ public class RobotContainer {
     
     
     // Configure the button bindings
-    drivetrain.setDefaultCommand(new UltimateDrivingCommand(drivetrain));
+    drivetrain.setDefaultCommand(new DrivingCommand(drivetrain));
     configureButtonBindings();
     
     // pcmCompressor.enableDigital();
