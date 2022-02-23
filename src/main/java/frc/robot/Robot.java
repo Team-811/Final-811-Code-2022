@@ -11,8 +11,7 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Vision.SnakeEyesFetch;
-// import frc.robot.Vision.TeamSelector;
+import frc.robot.NetworkTables.SnakeEyesFetch;
 
 // import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
