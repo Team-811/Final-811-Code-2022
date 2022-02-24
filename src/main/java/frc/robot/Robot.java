@@ -69,7 +69,7 @@ public class Robot extends TimedRobot {
   private static AHRS gyro = new AHRS();
 
 
-  double kP = 1;
+  double kP = 0.5;
 
   
 
@@ -81,6 +81,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
+    rightMotors.setInverted(true);
 
     m_Chooser.setDefaultOption("Forward", new SimpleAuto(drivetrain));
     m_Chooser.addOption("Backward", new BackwardsAuto(drivetrain));
@@ -143,7 +144,10 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    
+    double error = 90 - gyro.getAngle();
+
+    drive.arcadeDrive(kP * error, -kP * error);
+
   }
 
   @Override
