@@ -9,10 +9,13 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
@@ -24,9 +27,12 @@ import frc.robot.NetworkTables.SnakeEyesFetch;
 import frc.robot.commands.Auto.BackwardsAuto;
 // import frc.robot.Vision.TeamSelector;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 // import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import com.kauailabs.navx.frc.AHRS;
+import frc.robot.RobotMap;
 
 // import frc.robot.RobotMap;
 
@@ -43,6 +49,11 @@ public class Robot extends TimedRobot {
   private static final Drivetrain drivetrain = new Drivetrain();
   private static final Intake intake = new Intake();
   private static final Shooter shooter = new Shooter();
+  
+  private WPI_TalonSRX leftTop = new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_TOP_LEFT);
+  private WPI_TalonSRX leftBottom = new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_BOTTOM_LEFT);
+  private WPI_TalonSRX rightTop = new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_TOP_RIGHT);
+  private WPI_TalonSRX rightBottom = new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_BOTTOM_RIGHT);
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_Chooser = new SendableChooser<>();
@@ -60,25 +71,13 @@ public class Robot extends TimedRobot {
 
   double kP = 1;
 
-   
-  Spark leftTop = new Spark(0); //for sparkmaxes -- look into talon changes
-  Spark leftBottom = new Spark(1);
-
-  Spark rightTop = new Spark(2);
-  Spark rightBottom = new Spark(3);
+  
 
    MotorControllerGroup leftMotors = new MotorControllerGroup(leftTop, leftBottom);
    MotorControllerGroup rightMotors = new MotorControllerGroup(rightTop, rightBottom);
    
    DifferentialDrive drive = new DifferentialDrive(leftMotors, rightMotors);
 
-     
-   
-  //  m_chooser.setDefaultOption("Cross Line", new CrossLine());
-  //  m_chooser.addOption("Cross Line and Shoot (Middle)", new CrossLineAndShootComp());
-  //  m_chooser.addOption("Do Nothing", null);
-
-  //  SmartDashboard.putData("Auto mode", m_chooser);
 
   @Override
   public void robotInit() {
