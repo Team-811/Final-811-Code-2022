@@ -19,6 +19,8 @@ public class RobotMap {
     public static final int INTAKE_PISTON_EXTENTION = 6;
     public static final int INTAKE_PISTON_RETRACTION = 7;
 
+    public static final int CLIMBER_WINCH_LEFT = 14; //might be switched around
+    public static final int CLIMBER_WINCH_RIGHT = 15;
     public static final int CLIMBER_ARM_LEFT = 18; //might be switched around 
     public static final int CLIMBER_ARM_RIGHT = 19;
 
