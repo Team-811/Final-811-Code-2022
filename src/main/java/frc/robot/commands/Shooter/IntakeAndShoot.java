@@ -16,11 +16,11 @@ import frc.robot.subsystems.Shooter;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class IntakeAndShootFast extends SequentialCommandGroup {
+public class IntakeAndShoot extends SequentialCommandGroup {
   private static double speed = GetDistance.Distance() * .195;
 
   /** Creates a new IntakeAndShoot. */
-  public IntakeAndShootFast(Shooter shoot, Intake intake) {
+  public IntakeAndShoot(Shooter shoot, Intake intake) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     super(
