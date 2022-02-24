@@ -11,23 +11,14 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DrivingCommand;
 // import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Auto.SimpleAuto;
-// import frc.robot.commands.Auto.AutoForward;
-import frc.robot.commands.Intake.IntakeExtend;
-import frc.robot.commands.Intake.IntakeForward;
-import frc.robot.commands.Intake.IntakeRetract;
-import frc.robot.commands.Intake.IntakeReverse;
-import frc.robot.commands.Intake.IntakeStop;
+import frc.robot.commands.Intake.Motors.IntakeForward;
+import frc.robot.commands.Intake.Motors.IntakeReverse;
+import frc.robot.commands.Intake.Motors.IntakeStop;
+import frc.robot.commands.Intake.Pneumatics.IntakeExtend;
+import frc.robot.commands.Intake.Pneumatics.IntakeRetract;
 import frc.robot.commands.Shooter.IntakeAndShootFast;
-// import frc.robot.commands.Shooter.Shoot;
-import frc.robot.commands.Shooter.ShooterStop;
-import frc.robot.commands.Shooter.SlowShooter;
-//import frc.robot.commands.Shooter.SlowShooter;
-// import frc.robot.commands.VisionTargeting.Cargo.Cat;
-// import frc.robot.commands.VisionTargeting.Hub.LimelightAim;
-// import frc.robot.commands.VisionTargeting.Hub.LimelightAimY;
-// import frc.robot.commands.LimelightAiming.LimelightAimX;
-// import frc.robot.commands.LimelightAiming.LimelightAimY;
-// import frc.robot.commands.LimelightAiming.LimelightSearch;
+// import frc.robot.commands.Shooter.ShooterStop;
+// import frc.robot.commands.Auto.AutoForward;
 import frc.robot.controllers.BobXboxController;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
@@ -104,8 +95,8 @@ public class RobotContainer {
     operatorController.bButton.whileHeld( new IntakeReverse(intake, shooter));
     operatorController.bButton.whenReleased(new IntakeStop(intake));
     operatorController.rightTriggerButton.whileHeld(new IntakeRetract(intake));
-    operatorController.aButton.whileHeld(new SlowShooter(shooter));
-    operatorController.aButton.whenReleased(new ShooterStop(shooter));
+    // operatorController.aButton.whileHeld(new SlowShooter(shooter));
+    // operatorController.aButton.whenReleased(new ShooterStop(shooter));
 
 
   }
