@@ -1,13 +1,14 @@
-package frc.robot.commands.Intake.Pneumatics;
+package frc.robot.Unused;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
-public class IntakeRetract extends CommandBase{
-    
-    private Intake requiredSubsystem;
+public class IntakeExtend extends CommandBase{
 
-   public IntakeRetract(Intake m_SubsystemBase) {
+    private Intake requiredSubsystem;
+    
+
+   public IntakeExtend(Intake m_SubsystemBase) {
        requiredSubsystem = m_SubsystemBase;
        addRequirements(requiredSubsystem);
    }
@@ -17,8 +18,11 @@ public class IntakeRetract extends CommandBase{
  
    @Override
    public void execute() {
-       requiredSubsystem.retractIntake();
-
+        // if (requiredSubsystem.getExtended())
+        //     requiredSubsystem.retractIntake();
+        // else
+            requiredSubsystem.extendIntake();
+        // requiredSubsystem.toggleExtended();
 }
  
    @Override

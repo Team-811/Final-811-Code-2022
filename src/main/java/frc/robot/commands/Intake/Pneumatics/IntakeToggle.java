@@ -1,14 +1,14 @@
-package frc.robot.commands.Intake.Motors;
-
+package frc.robot.commands.Intake.Pneumatics;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 
-public class IntakeForward extends CommandBase {
-   private Intake requiredSubsystem;
+public class IntakeToggle extends CommandBase{
 
-   public IntakeForward(Intake m_SubsystemBase) {
+    private Intake requiredSubsystem;
+    
+
+   public IntakeToggle(Intake m_SubsystemBase) {
        requiredSubsystem = m_SubsystemBase;
        addRequirements(requiredSubsystem);
    }
@@ -18,10 +18,10 @@ public class IntakeForward extends CommandBase {
  
    @Override
    public void execute() {
-    requiredSubsystem.intakeSpin(Constants.REAL_INTAKE_SPEED);
-    requiredSubsystem.backSpin(Constants.INTAKE_SPEED);
-    // }
-
+        if (requiredSubsystem.getState())
+            requiredSubsystem.retractIntake();
+        else
+            requiredSubsystem.extendIntake();
 }
  
    @Override
@@ -31,4 +31,5 @@ public class IntakeForward extends CommandBase {
    public boolean isFinished() {
      return true;
    }
- }
+    
+}

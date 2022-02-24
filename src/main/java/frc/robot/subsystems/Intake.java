@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+// import javax.naming.ldap.ExtendedRequest;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -17,7 +19,7 @@ public class Intake extends SubsystemBase implements ISubsystem {
     private CANSparkMax backIntakeMotor;
     private DigitalInput limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
     private DoubleSolenoid extendPiston; 
-    // private boolean Extended = false;
+    private boolean Extended = false;
 
     public Intake(){
        intakeMotor =  new CANSparkMax(RobotMap.INTAKE_MOTOR, MotorType.kBrushless);
@@ -26,14 +28,11 @@ public class Intake extends SubsystemBase implements ISubsystem {
        extendPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.INTAKE_PISTON_EXTENTION, RobotMap.INTAKE_PISTON_RETRACTION);
 
     }
-    // public void toggleExtended()
-    // {
-    //     Extended = !Extended;
-    // }
-    // public boolean getExtended()
-    // {
-    //     return Extended;
-    // }
+    public boolean getState()
+    {
+        Extended = !Extended;
+        return Extended;
+    }
     public void extendIntake() {
         extendPiston.set(Value.kReverse);
     }

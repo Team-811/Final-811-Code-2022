@@ -8,15 +8,16 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
+// import frc.robot.Unused.IntakeExtend;
+// import frc.robot.Unused.IntakeRetract;
 import frc.robot.commands.DrivingCommand;
 // import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Auto.SimpleAuto;
 import frc.robot.commands.Intake.Motors.IntakeForward;
-import frc.robot.commands.Intake.Motors.IntakeReverse;
+// import frc.robot.commands.Intake.Motors.IntakeReverse;
 import frc.robot.commands.Intake.Motors.IntakeStop;
-import frc.robot.commands.Intake.Pneumatics.IntakeExtend;
-import frc.robot.commands.Intake.Pneumatics.IntakeRetract;
-import frc.robot.commands.Shooter.IntakeAndShootFast;
+import frc.robot.commands.Intake.Pneumatics.IntakeToggle;
+import frc.robot.commands.Shooter.IntakeAndShoot;
 // import frc.robot.commands.Shooter.ShooterStop;
 // import frc.robot.commands.Auto.AutoForward;
 import frc.robot.controllers.BobXboxController;
@@ -88,13 +89,14 @@ public class RobotContainer {
     //  driveController.rightTriggerButton.whenReleased(new DriveStop(drivetrain));
 
 
-    operatorController.xButton.whenPressed(new IntakeAndShootFast(shooter, intake));
+    operatorController.xButton.whenPressed(new IntakeAndShoot(shooter, intake));
     operatorController.yButton.whileHeld(new IntakeForward(intake));
     operatorController.yButton.whenReleased(new IntakeStop(intake));
-    operatorController.leftTriggerButton.whileHeld(new IntakeExtend(intake));
-    operatorController.bButton.whileHeld( new IntakeReverse(intake, shooter));
-    operatorController.bButton.whenReleased(new IntakeStop(intake));
-    operatorController.rightTriggerButton.whileHeld(new IntakeRetract(intake));
+    operatorController.rightTriggerButton.whenPressed(new IntakeToggle(intake));
+
+    // operatorController.bButton.whileHeld( new IntakeReverse(intake, shooter));
+    // operatorController.bButton.whenReleased(new IntakeStop(intake));
+    // operatorController.rightTriggerButton.whileHeld(new IntakeRetract(intake));
     // operatorController.aButton.whileHeld(new SlowShooter(shooter));
     // operatorController.aButton.whenReleased(new ShooterStop(shooter));
 
