@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 import frc.robot.commands.Auto.ComplexAuto;
 
 import frc.robot.commands.Auto.SimpleAuto;
@@ -39,6 +41,8 @@ import com.kauailabs.navx.frc.AHRS;
 public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer= new RobotContainer();
   private static final Drivetrain drivetrain = new Drivetrain();
+  private static final Intake intake = new Intake();
+  private static final Shooter shooter = new Shooter();
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_Chooser = new SendableChooser<>();
@@ -81,7 +85,7 @@ public class Robot extends TimedRobot {
 
     m_Chooser.setDefaultOption("Forward", new SimpleAuto(drivetrain));
     m_Chooser.addOption("Backward", new BackwardsAuto(drivetrain));
-    //m_Chooser.addOption("Complex", new ComplexAuto(drivetrain));
+    m_Chooser.addOption("Complex", new ComplexAuto(drivetrain, intake, shooter));
     m_Chooser.addOption("Do Nothing :(", null);
 
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
