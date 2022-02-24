@@ -10,12 +10,16 @@ public class RobotMap {
 
     public static final int SHOOTER_MOTOR_LEFT = 16;
     public static final int SHOOTER_MOTOR_RIGHT = 5;
+
+
     public static final int INTAKE_MOTOR = 9;
     public static final int INTAKE_BACK_MOTOR = 8;
     public static final int LIMIT_SWITCH = 0;
 
-
     public static final int INTAKE_PISTON_EXTENTION = 6;
     public static final int INTAKE_PISTON_RETRACTION = 7;
+
+    public static final int CLIMBER_ARM_LEFT = 18; //might be switched around 
+    public static final int CLIMBER_ARM_RIGHT = 19;
 
 }
