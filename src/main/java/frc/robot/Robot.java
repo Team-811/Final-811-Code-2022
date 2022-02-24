@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
@@ -27,12 +27,11 @@ import frc.robot.NetworkTables.SnakeEyesFetch;
 import frc.robot.commands.Auto.BackwardsAuto;
 // import frc.robot.Vision.TeamSelector;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 
 // import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import com.kauailabs.navx.frc.AHRS;
-import frc.robot.RobotMap;
 
 // import frc.robot.RobotMap;
 
@@ -50,11 +49,6 @@ public class Robot extends TimedRobot {
   private static final Intake intake = new Intake();
   private static final Shooter shooter = new Shooter();
   
-  private WPI_TalonSRX leftTop = new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_TOP_LEFT);
-  private WPI_TalonSRX leftBottom = new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_BOTTOM_LEFT);
-  private WPI_TalonSRX rightTop = new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_TOP_RIGHT);
-  private WPI_TalonSRX rightBottom = new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_BOTTOM_RIGHT);
-
   Command m_autonomousCommand;
   SendableChooser<Command> m_Chooser = new SendableChooser<>();
  // public static Drivetrain drivetrain;
@@ -72,16 +66,8 @@ public class Robot extends TimedRobot {
   double kP = 0.5;
 
   
-
-   MotorControllerGroup leftMotors = new MotorControllerGroup(leftTop, leftBottom);
-   MotorControllerGroup rightMotors = new MotorControllerGroup(rightTop, rightBottom);
-   
-   DifferentialDrive drive = new DifferentialDrive(leftMotors, rightMotors);
-
-
   @Override
   public void robotInit() {
-    rightMotors.setInverted(true);
 
     m_Chooser.setDefaultOption("Forward", new SimpleAuto(drivetrain));
     m_Chooser.addOption("Backward", new BackwardsAuto(drivetrain));
@@ -144,9 +130,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    double error = 90 - gyro.getAngle();
-
-    drive.arcadeDrive(kP * error, -kP * error);
+    
 
   }
 

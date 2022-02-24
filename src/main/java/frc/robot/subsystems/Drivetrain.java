@@ -12,6 +12,8 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.NetworkTables.GetDistance;
@@ -24,10 +26,17 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     private WPI_TalonSRX topRightMotor;
     private WPI_TalonSRX bottomLeftMotor;
     private WPI_TalonSRX bottomRightMotor;
-    // private MotorControllerGroup leftMotors = new MotorControllerGroup(topLeftMotor, bottomLeftMotor);
-    // private MotorControllerGroup rigthMotors = new MotorControllerGroup(topRightMotor, topLeftMotor);
-    // private MecanumDrive driveTrain = new MecanumDrive(topLeftMotor, bottomLeftMotor, topRightMotor, bottomRightMotor);
-    private static AHRS gyro = new AHRS();
+
+
+    public MotorControllerGroup leftMotors = new MotorControllerGroup(topLeftMotor, bottomLeftMotor);
+    public MotorControllerGroup rightMotors = new MotorControllerGroup(topRightMotor, bottomRightMotor);
+
+    double kP = 0.5;
+
+
+    //private MecanumDrive driveTrain = new MecanumDrive(topLeftMotor, bottomLeftMotor, topRightMotor, bottomRightMotor);
+    private AHRS gyro;
+
     /*A new Instance of the Drivetrain*/
     public Drivetrain(){
     
@@ -40,9 +49,16 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         topRightMotor.set(ControlMode.PercentOutput, 0.0f);
         bottomLeftMotor.set(ControlMode.PercentOutput, 0.0f);
         bottomRightMotor.set(ControlMode.PercentOutput, 0.0f);
+
+        gyro = new AHRS();
+        gyro.reset();
+        //invertGyro(false);
+        
     }
 
+
     private double SpeedScale = Constants.DRIVETRAIN_SPEED_SCALE;
+
     public void driveWithMisery(double leftStick, double rightStick, double rotation){
         double forwardValue = leftStick * SpeedScale;
         double rotationValue = rotation * SpeedScale * 0.8;
@@ -52,6 +68,15 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
          bottomLeftMotor.set(ControlMode.PercentOutput, leftValue);
          topRightMotor.set(ControlMode.PercentOutput, -rightValue);
          bottomRightMotor.set(ControlMode.PercentOutput, -rightValue); 
+
+         double correction; // idk why this isnt showing as implemented, it is but go off ig
+         if (Math.abs(rotation) < 0.2) {
+             correction = gyroCorrection();
+         } else {
+             correction = 0;
+         }
+
+         prevAngle = getGyroAngle(); 
     }
 
     public void driveWithMisery(double leftStick, double rightStick, double rotation, double FL, double FR, double BL, double BR){
@@ -140,6 +165,37 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         bottomLeftMotor.set(ControlMode.PercentOutput, speed);
     }
 
+    //gyro
+    private int gyroInversion = 1;
+    private double correctRate = 0.5;
+    private double prevAngle = 0;
+
+    public double getGyroAngle() {
+        return gyroInversion * gyro.getAngle();
+    }
+
+    public double getAngularVelocity() {
+        return gyroInversion * gyro.getRate();
+    }
+
+    public void gyroInvert(boolean inverted) {
+        if (inverted) {
+            gyroInversion = -1;
+        } else {
+            gyroInversion = 1;
+        }
+    }
+
+    public double gyroCorrection() {
+        return (getGyroAngle() - prevAngle) * correctRate; 
+    }
+
+    public void zeroGyro() {
+        gyro.zeroYaw();
+    }
+
+    
+
     @Override
     public void outputSmartdashboard() {
         // SmartDashboard.putNumber("Front Right Wheel", -topRightMotor.getMotorOutputPercent());
@@ -157,6 +213,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
 
     @Override
     public void zeroSensors() {
+        zeroGyro();
 
     }
 
@@ -169,6 +226,9 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     public void testSubsystem() {
 
     }
+
+
+
 
     
 }
