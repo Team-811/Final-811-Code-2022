@@ -1,4 +1,4 @@
-package frc.robot.commands.VisionTargeting.Hub;
+package frc.robot.commands.Auto.VisionTargeting.Hub;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Drivetrain;

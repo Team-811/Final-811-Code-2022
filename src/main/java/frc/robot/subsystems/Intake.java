@@ -17,7 +17,7 @@ public class Intake extends SubsystemBase implements ISubsystem {
 
     private CANSparkMax intakeMotor;
     private CANSparkMax backIntakeMotor;
-    private DigitalInput limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
+    // private DigitalInput limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
     private DoubleSolenoid extendPiston; 
     private boolean Extended = false;
 
@@ -57,14 +57,14 @@ public class Intake extends SubsystemBase implements ISubsystem {
     public void backStop(){
         backIntakeMotor.set(0);
     }
-    public boolean getLimitSwitch(){
-        return limitSwitch.get();
-    }
+    // public boolean getLimitSwitch(){
+    //     return limitSwitch.get();
+    // }
     @Override
     public void outputSmartdashboard() {
         SmartDashboard.putNumber("Intake Speed", intakeMotor.getAppliedOutput());
         SmartDashboard.putNumber("Intake Temperature", intakeMotor.getMotorTemperature());
-        SmartDashboard.putBoolean("Ball Ready", getLimitSwitch());
+        // SmartDashboard.putBoolean("Ball Ready", getLimitSwitch());
     }
 
     @Override

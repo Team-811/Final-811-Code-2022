@@ -1,38 +1,41 @@
-package frc.robot.commands.VisionTargeting.Cargo;
+package frc.robot.commands.Auto.VisionTargeting.Hub;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.NetworkTables.SnakeEyesFetch;
+import frc.robot.NetworkTables.LimelightFetch;
 import frc.robot.subsystems.Drivetrain;
 
-public class CatFollow extends CommandBase {
+public class LimelightAimX extends CommandBase {
 
     private Drivetrain requiredSubsystem;
     private double left_command;
     private double right_command;
+    private boolean exit = false;
   
-    public CatFollow(Drivetrain m_SubsystemBase) {
+    public LimelightAimX(Drivetrain m_SubsystemBase) {
       requiredSubsystem = m_SubsystemBase;
       addRequirements(requiredSubsystem);
     }
   
     @Override
     public void execute() {
-        double tx = SnakeEyesFetch.getX();
+        if (LimelightFetch.getV() != 1.0) {
+            exit = true;
+        }
+        double tx = LimelightFetch.getX();
         float Kp = 0.02f; 
-        float min_command = 0.04f;
+        float min_command = 0.05f;
         float heading_error = (float)tx;
         float steering_adjust = 0.0f;
         left_command = 0;
         right_command = 0;
-        if(tx > 10){
+        if(tx > 0){
             steering_adjust = Kp*heading_error - min_command;
         }
-        if (tx < 10){
+        if (tx < 0){
             steering_adjust = Kp*heading_error + min_command;
         }
-        left_command = left_command + steering_adjust + Constants.CAT_DRIVE_SPEED;
-        right_command = right_command - steering_adjust + Constants.CAT_DRIVE_SPEED;
+        left_command += steering_adjust;
+        right_command -= steering_adjust;
         requiredSubsystem.leftWheelsForward(left_command);
         requiredSubsystem.rightWheelsForward(right_command);
     }
@@ -44,19 +47,21 @@ public class CatFollow extends CommandBase {
   
     @Override
     public boolean isFinished() {
-        double x = SnakeEyesFetch.getX();
-        if(x >= -30.0 && x <= 30.0)
+        if (exit == true){
+            exit = false;
+            return true;
+        }
+        double x = LimelightFetch.getX();
+        if(x >= -2.0 && x <= 2.0 && x !=0.0)
         {
-             try {
-             Thread.sleep(50);
-             } catch (InterruptedException e) {
-                 e.printStackTrace();
-             }
-            if (x >= -30.0 && x <= 30.0)
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (x >= -3.0 && x <= 3.0 && x !=0.0)
                 return true;
         }
-        if (SnakeEyesFetch.getV() == true) 
-            return true;
         return false;    
     }
 }
