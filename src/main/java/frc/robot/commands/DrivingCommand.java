@@ -26,7 +26,7 @@ public class DrivingCommand extends CommandBase {
     double tx = LimelightFetch.getX();
     double bx = SnakeEyesFetch.getX();
     float Kp = 0.04f; 
-    float min_command = 0.1f; //Last value that worked: 0.075
+    float min_command = 0.075f; //Last value that worked: 0.075
     float heading_error_target = (float)tx;
     float heading_error_object = (float)bx;
     float steering_adjust = 0.0f;
@@ -39,18 +39,14 @@ public class DrivingCommand extends CommandBase {
             steering_adjust = Kp*heading_error_target + min_command;
     }
     //Hold Y for object aiming
-    else if (RobotContainer.driveController.yButton.get() == true)
+   if (RobotContainer.driveController.yButton.get() == true)
         if(tx > 0){
             steering_adjust = Kp*heading_error_object - min_command;
         }
         if (tx < 0){
             steering_adjust = Kp*heading_error_object + min_command;
     }
-    //No aiming
-    else {
-      steering_adjust = 0;
-    }
-    
+
     if(RobotContainer.driveController.rightTriggerButton.get()){
       //Strafe Right
       drive.driveWithMisery(-RobotContainer.driveController.leftStick.getY(), /*+ forwardAdjust,*/   //Left Stick

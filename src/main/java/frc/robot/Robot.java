@@ -45,9 +45,9 @@ import com.kauailabs.navx.frc.AHRS;
  */
 public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer= new RobotContainer();
-  private static final Drivetrain drivetrain = new Drivetrain();
-  private static final Intake intake = new Intake();
-  private static final Shooter shooter = new Shooter();
+  // private static final Drivetrain drivetrain = new Drivetrain();
+  // private static final Intake intake = new Intake();
+  // private static final Shooter shooter = new Shooter();
   
   Command m_autonomousCommand;
   SendableChooser<Command> m_Chooser = new SendableChooser<>();
@@ -69,9 +69,9 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
 
-    m_Chooser.setDefaultOption("Forward", new SimpleAuto(drivetrain));
-    m_Chooser.addOption("Backward", new BackwardsAuto(drivetrain));
-    m_Chooser.addOption("Complex", new ComplexAuto(drivetrain, intake, shooter));
+    // m_Chooser.setDefaultOption("Forward", new SimpleAuto(drivetrain));
+    // m_Chooser.addOption("Backward", new BackwardsAuto(drivetrain));
+    // m_Chooser.addOption("Complex", new ComplexAuto(drivetrain, intake, shooter));
     m_Chooser.addOption("Do Nothing :(", null);
 
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our

@@ -1,4 +1,4 @@
-package frc.robot.commands.VisionTargeting.Cargo;
+package frc.robot.commands.Auto.VisionTargeting.Cargo;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Drivetrain;
