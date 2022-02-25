@@ -20,67 +20,41 @@ public class Climber extends SubsystemBase implements ISubsystem{
 
   private double leftEncoderValue; 
   private double rightEncoderValue;
-  /** Creates a new Climber. */
-  public Climber() {
-    leftWinch = new TalonSRX(RobotMap.CLIMBER_WINCH_LEFT);
-    leftArm = new TalonSRX(RobotMap.CLIMBER_ARM_LEFT);
-    rightWinch = new TalonSRX(RobotMap.CLIMBER_WINCH_RIGHT);
-    rightArm = new TalonSRX(RobotMap.CLIMBER_ARM_RIGHT);
-    lErrorSum = 0;
-    LastTimeStamp = Timer.getFPGATimestamp();
-    lLastError = 0;
-    rErrorSum = 0;
-    rLastError =0;
-  }
+  
   private double LastTimeStamp;
   private double ProportionalErrorMargin = 1;
-
-  private double kLP = 0.01;
-  private double kLI = 0.01;
-  private double kLD = 0.01;
-  private double lSetpoint;
-  private double lErrorSum;
-  private double lLastError;
-  public void leftArmAngle(double angle){
-    lSetpoint = angle;
+  private double kP = 0.01;
+  private double kI = 0.01;
+  private double kD = 0.01;
+  private double Setpoint;
+  private double ErrorSum;
+  private double LastError;
+  /** Creates a new Climber. */
+  public Innit() {
+    ErrorSum = 0;
+    LastTimeStamp = Timer.getFPGATimestamp();
+    LastError = 0;
   }
-  private double kRP;
-  private double kRI;
-  private double kRD;
-  private double rSetpoint;
-  private double rErrorSum;
-  private double rLastError;
-  public void rightArmAngle(double angle){
-    rSetpoint = angle;
+  public void setAnAngle(double angle){
+    Setpoint = angle;
   }
-
-
   @Override
   public void periodic() {
     leftEncoderValue = 1; //Get encoder values in degrees
     rightEncoderValue = 1;
 
     //Left Calculations
-    double leftError = lSetpoint - leftEncoderValue;
+    double leftError = Setpoint - leftEncoderValue;
     double ldt = Timer.getFPGATimestamp() - LastTimeStamp;
     if(Math.abs(leftError)<ProportionalErrorMargin)
-      lErrorSum += leftError * ldt;
-    double lErrorRate = (leftError - lLastError)/ldt;
-    double leftOutputSpeed = kLP * leftError + kLI * lErrorSum + kLD * lErrorRate;
-    //Right Calculations
-    double rightError = rSetpoint - rightEncoderValue;
-    double rdt = Timer.getFPGATimestamp()  -LastTimeStamp;
-    if(Math.abs(rightError)<ProportionalErrorMargin)
-      rErrorSum += rightError * rdt;
-    double rErrorRate = (rightError - rLastError)/rdt;
-    double rightOutputSpeed = kRP * rightError + kRI * rErrorSum + kRD * rErrorRate;
-    //Motor control
-    leftWinch.set(ControlMode.PercentOutput, leftOutputSpeed);
-    rightWinch.set(ControlMode.PercentOutput, rightOutputSpeed);
+      ErrorSum += leftError * ldt;
+    double lErrorRate = (leftError - LastError)/ldt;
+    double leftOutputSpeed = kP * leftError + kI * ErrorSum + kD * lErrorRate;
+    //Motors here
     //Time Update
     LastTimeStamp= Timer.getFPGATimestamp();
-    lLastError = leftError;
-    rLastError = rightError;
+    LastError = leftError;
+    
   }
 
   @Override

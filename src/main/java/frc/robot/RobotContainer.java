@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.fasterxml.jackson.databind.jsontype.impl.ClassNameIdResolver;
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -13,6 +15,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DrivingCommand;
 // import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Auto.SimpleAuto;
+import frc.robot.commands.Climber.ClimberCommand;
 import frc.robot.commands.Intake.Motors.IntakeForward;
 import frc.robot.commands.Intake.Motors.IntakeReverse;
 // import frc.robot.commands.Intake.Motors.IntakeReverse;
@@ -22,6 +25,7 @@ import frc.robot.commands.Shooter.IntakeAndShoot;
 // import frc.robot.commands.Shooter.ShooterStop;
 // import frc.robot.commands.Auto.AutoForward;
 import frc.robot.controllers.BobXboxController;
+import frc.robot.subsystems.Climber;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
 // import frc.robot.subsystems.ExampleSubsystem;
@@ -47,6 +51,7 @@ public class RobotContainer {
   private static final Drivetrain drivetrain = new Drivetrain(); //gyro
   private static final Intake intake = new Intake();
   private static final Shooter shooter = new Shooter();
+  private static final Climber climber = new Climber();
 
   Compressor pcmCompressor = new Compressor(PneumaticsModuleType.CTREPCM); // for testing compressor
   public static BobXboxController driveController;
@@ -65,6 +70,7 @@ public class RobotContainer {
     
     // Configure the button bindings
     drivetrain.setDefaultCommand(new DrivingCommand(drivetrain));
+    climber.setDefaultCommand(new ClimberCommand(climber));
     configureButtonBindings();
     
     // pcmCompressor.enableDigital();
@@ -93,7 +99,7 @@ public class RobotContainer {
     operatorController.xButton.whenPressed(new IntakeAndShoot(shooter, intake));
     operatorController.yButton.whileHeld(new IntakeForward(intake));
     operatorController.yButton.whenReleased(new IntakeStop(intake));
-    operatorController.rightTriggerButton.whenPressed(new IntakeToggle(intake));
+    operatorController.rightStickButton.whenPressed(new IntakeToggle(intake));
 
     operatorController.bButton.whileHeld( new IntakeReverse(intake, shooter));
     operatorController.bButton.whenReleased(new IntakeStop(intake));

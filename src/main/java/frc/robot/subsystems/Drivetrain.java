@@ -11,7 +11,7 @@ import com.kauailabs.navx.frc.AHRS;
 // import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 import frc.robot.Constants;
@@ -30,16 +30,29 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
 
     public MotorControllerGroup leftMotors = new MotorControllerGroup(topLeftMotor, bottomLeftMotor);
     public MotorControllerGroup rightMotors = new MotorControllerGroup(topRightMotor, bottomRightMotor);
-
+    
     double kP = 0.5;
-
+    private double LastTimeStamp;
+    private double ProportionalErrorMargin = 1;
+    private double lkP = Constants.LIMELIGHT_PID[0];
+    private double lkI = Constants.LIMELIGHT_PID[1];
+    private double lkD = Constants.LIMELIGHT_PID[2];
+    private double Setpoint;
+    private double ErrorSum;
+    private double LastError;
+    private double limeTurn = 0;
 
     //private MecanumDrive driveTrain = new MecanumDrive(topLeftMotor, bottomLeftMotor, topRightMotor, bottomRightMotor);
     private AHRS gyro;
 
     /*A new Instance of the Drivetrain*/
     public Drivetrain(){
-    
+
+          ErrorSum = 0;
+          LastTimeStamp = Timer.getFPGATimestamp();
+          LastError = 0;
+          
+        
         resetSubsystem();
         topLeftMotor = new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_TOP_LEFT );
         topRightMotor= new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_TOP_RIGHT );
@@ -60,6 +73,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     private double SpeedScale = Constants.DRIVETRAIN_SPEED_SCALE;
 
     public void driveWithMisery(double leftStick, double rightStick, double rotation){
+        rotation += limeTurn;
         double forwardValue = leftStick * SpeedScale;
         double rotationValue = rotation * SpeedScale * 0.8;
         double leftValue = forwardValue + rotationValue;
@@ -107,6 +121,24 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         bottomLeftMotor.set(ControlMode.PercentOutput, -speed);
     }
 
+    @Override
+    public void periodic() {
+      double LimelightAngle = LimelightFetch.getX(); //Get encoder values in degree = 1;
+  
+      //Left Calculations
+      double Error = Setpoint - LimelightAngle;
+      double dt = Timer.getFPGATimestamp() - LastTimeStamp;
+      if(Math.abs(Error)<ProportionalErrorMargin)
+        ErrorSum += Error * dt;
+      double ErrorRate = (Error - LastError)/dt;
+      double OutputSpeed = lkP * Error + lkI * ErrorSum + lkD * ErrorRate;
+      //Motors here
+      limeTurn = OutputSpeed;
+      //Time Update
+      LastTimeStamp= Timer.getFPGATimestamp();
+      LastError = Error;
+      
+    }
     public void mechanumWHeelLeft(double speed){
         topRightMotor.set(ControlMode.PercentOutput, -speed);
         bottomRightMotor.set(ControlMode.PercentOutput, speed);

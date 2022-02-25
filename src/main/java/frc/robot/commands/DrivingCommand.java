@@ -23,35 +23,35 @@ public class DrivingCommand extends CommandBase {
 
   @Override
   public void execute() {
-    double tx = LimelightFetch.getX();
-    double bx = SnakeEyesFetch.getX();
-    float Kp = 0.04f; 
-    float min_command = 0.075f; //Last value that worked: 0.075
-    float heading_error_target = (float)tx;
-    float heading_error_object = (float)bx;
-    float steering_adjust = 0.0f;
-    //Hold X for target aiming
-    if (RobotContainer.driveController.xButton.get() == true)
-        if(tx > 0){
-            steering_adjust = Kp*heading_error_target - min_command;
-        }
-        if (tx < 0){
-            steering_adjust = Kp*heading_error_target + min_command;
-    }
-    //Hold Y for object aiming
-   if (RobotContainer.driveController.yButton.get() == true)
-        if(tx > 0){
-            steering_adjust = Kp*heading_error_object - min_command;
-        }
-        if (tx < 0){
-            steering_adjust = Kp*heading_error_object + min_command;
-    }
+  //   double tx = LimelightFetch.getX();
+  //   double bx = SnakeEyesFetch.getX();
+  //   float Kp = 0.04f; 
+  //   float min_command = 0.075f; //Last value that worked: 0.075
+  //   float heading_error_target = (float)tx;
+  //   float heading_error_object = (float)bx;
+  //   float steering_adjust = 0.0f;
+  //   //Hold X for target aiming
+  //   if (RobotContainer.driveController.xButton.get() == true)
+  //       if(tx > 0){
+  //           steering_adjust = Kp*heading_error_target - min_command;
+  //       }
+  //       if (tx < 0){
+  //           steering_adjust = Kp*heading_error_target + min_command;
+  //   }
+  //   //Hold Y for object aiming
+  //  if (RobotContainer.driveController.yButton.get() == true)
+  //       if(tx > 0){
+  //           steering_adjust = Kp*heading_error_object - min_command;
+  //       }
+  //       if (tx < 0){
+  //           steering_adjust = Kp*heading_error_object + min_command;
+  //   }
 
     if(RobotContainer.driveController.rightTriggerButton.get()){
       //Strafe Right
       drive.driveWithMisery(-RobotContainer.driveController.leftStick.getY(), /*+ forwardAdjust,*/   //Left Stick
                             RobotContainer.driveController.rightStick.getY(),                       //Right Stick
-                            RobotContainer.driveController.rightStick.getX() + steering_adjust,     //Rotation
+                            RobotContainer.driveController.rightStick.getX() ,     //Rotation
                             Constants.STRAFE_SPEED,                                                 //Front Left
                             Constants.STRAFE_SPEED,                                                 //Front Right
                             -Constants.STRAFE_SPEED,                                                //Back Left 
@@ -60,7 +60,7 @@ public class DrivingCommand extends CommandBase {
       //Strafe Left
       drive.driveWithMisery(-RobotContainer.driveController.leftStick.getY(), /*+ forwardAdjust,*/  //Left Stick
                             RobotContainer.driveController.rightStick.getY(),                       //Right Stick
-                            RobotContainer.driveController.rightStick.getX() + steering_adjust,     //Rotation
+                            RobotContainer.driveController.rightStick.getX() ,     //Rotation
                             -Constants.STRAFE_SPEED,                                                //Front Left
                             -Constants.STRAFE_SPEED,                                                //Front Right
                             Constants.STRAFE_SPEED,                                                 //Back Left
@@ -69,7 +69,7 @@ public class DrivingCommand extends CommandBase {
       //Classic Arcade Drive
       drive.driveWithMisery(-RobotContainer.driveController.leftStick.getY(), /*+ forwardAdjust,*/   //Left Stick
                             RobotContainer.driveController.rightStick.getY(),                       //Right Stick
-                            RobotContainer.driveController.rightStick.getX() + steering_adjust);    //Rotation
+                            RobotContainer.driveController.rightStick.getX() );    //Rotation
     }
   }
 
