@@ -91,6 +91,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
          topRightMotor.set(ControlMode.PercentOutput, -rightValue);
          bottomRightMotor.set(ControlMode.PercentOutput, -rightValue); 
 
+         @SuppressWarnings("unused")
          double correction; // idk why this isnt showing as implemented, it is but go off ig
          if (Math.abs(rotation) < 0.2) {
              correction = gyroCorrection();

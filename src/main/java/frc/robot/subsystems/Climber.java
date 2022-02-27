@@ -29,11 +29,13 @@ public class Climber extends SubsystemBase implements ISubsystem {
   }
 
   public void leftArm(double joystick){
+    @SuppressWarnings("unused")
     double speed = joystick * Constants.ARM_SPEED_SCALE;
     // leftArm.set(ControlMode.PercentOutput, speed);
   }
 
   public void rightArm(double joystick){
+    @SuppressWarnings("unused")
     double speed = joystick * Constants.ARM_SPEED_SCALE;
     // rightArm.set(ControlMode.PercentOutput, speed);
   }

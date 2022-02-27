@@ -34,6 +34,7 @@ import com.kauailabs.navx.frc.AHRS;
  * project.
  */
 public class Robot extends TimedRobot {
+  @SuppressWarnings("unused")
   private RobotContainer m_robotContainer= new RobotContainer();
   // private static final Drivetrain drivetrain = new Drivetrain();
   // private static final Intake intake = new Intake();
