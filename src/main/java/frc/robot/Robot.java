@@ -17,12 +17,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
-import frc.robot.commands.Auto.ComplexAuto;
-
 import frc.robot.commands.Auto.SimpleAuto;
+import frc.robot.NetworkTables.LimelightFetch;
 import frc.robot.NetworkTables.SnakeEyesFetch;
 import frc.robot.commands.Auto.BackwardsAuto;
 // import frc.robot.Vision.TeamSelector;
@@ -93,7 +89,7 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
-    
+    LimelightFetch.limeMorse();
     CommandScheduler.getInstance().run();
     RobotContainer.updateSmartdashboard();
 
@@ -102,7 +98,10 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    LimelightFetch.limeOff();
+
+  }
 
   @Override
   public void disabledPeriodic() {}
@@ -111,7 +110,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     // SnakeEyesFetch.setTeam();
-    
+    LimelightFetch.limeOn();
     SmartDashboard.putData("Auto mode", m_Chooser);
     m_autonomousCommand = m_Chooser.getSelected();
     // rightMotors.setInverted(true);
@@ -136,6 +135,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    LimelightFetch.limeOn();
     SnakeEyesFetch.setTeam();
     
     // This makes sure that the autonomous stops running when

@@ -40,8 +40,8 @@ public class ClimberCommand extends CommandBase {
     }else{
       m_subsystem.rightWinchRun(0);
     }
-    m_subsystem.leftArm(RobotContainer.operatorController.leftStick.getY());
-    m_subsystem.rightArm(RobotContainer.operatorController.rightStick.getY());
+    // m_subsystem.leftArm(RobotContainer.operatorController.leftStick.getY());
+    // m_subsystem.rightArm(RobotContainer.operatorController.rightStick.getY());
   }
 
   // Called once the command ends or is interrupted.

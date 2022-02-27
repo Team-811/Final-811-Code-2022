@@ -8,33 +8,36 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.playingwithfusion.CANVenom;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotMap;
 
 public class Climber extends SubsystemBase implements ISubsystem {
   private CANVenom leftWinch;
-  private TalonSRX leftArm;
+  // private TalonSRX leftArm;
   //Right Motors
   private CANVenom rightWinch;
-  private TalonSRX rightArm;
+  // private TalonSRX rightArm;
   
   // private DigitalInput rightLimit = new DigitalInput(0);
   // private DigitalInput leftLimit = new DigitalInput(0);
 
   /** Creates a new Climber. */
   public Climber() {
-    //define the motors
+    leftWinch = new CANVenom(RobotMap.CLIMBER_WINCH_LEFT);
+    // leftArm = new TalonSRX(RobotMap.CLIMBER_ARM_LEFT);
+    rightWinch = new CANVenom(RobotMap.CLIMBER_WINCH_RIGHT);
+    // rightArm = new TalonSRX(RobotMap.CLIMBER_ARM_RIGHT);
   }
 
   public void leftArm(double joystick){
     double speed = joystick * Constants.ARM_SPEED_SCALE;
-    leftArm.set(ControlMode.PercentOutput, speed);
+    // leftArm.set(ControlMode.PercentOutput, speed);
   }
 
   public void rightArm(double joystick){
     double speed = joystick * Constants.ARM_SPEED_SCALE;
-    rightArm.set(ControlMode.PercentOutput, speed);
+    // rightArm.set(ControlMode.PercentOutput, speed);
   }
 
   public void rightWinchRun(double speed){

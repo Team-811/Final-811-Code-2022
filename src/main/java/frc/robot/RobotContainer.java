@@ -85,7 +85,6 @@ public class RobotContainer {
   private void configureButtonBindings() {
     driveController = new BobXboxController(0, .3, .3);
     operatorController = new BobXboxController(1, .3, .3);
-
     //Button Mapping
     //  driveController.xButton.whileHeld(new LimelightAim(drivetrain));
     //  driveController.yButton.whileHeld(new LimelightAimY(drivetrain));
@@ -99,10 +98,11 @@ public class RobotContainer {
     operatorController.xButton.whenPressed(new IntakeAndShoot(shooter, intake));
     operatorController.yButton.whileHeld(new IntakeForward(intake));
     operatorController.yButton.whenReleased(new IntakeStop(intake));
-    operatorController.rightStickButton.whenPressed(new IntakeToggle(intake));
+    operatorController.rightTriggerButton.whenPressed(new IntakeToggle(intake));
 
     operatorController.bButton.whileHeld( new IntakeReverse(intake, shooter));
     operatorController.bButton.whenReleased(new IntakeStop(intake));
+    
     // operatorController.rightTriggerButton.whileHeld(new IntakeRetract(intake));
     // operatorController.aButton.whileHeld(new SlowShooter(shooter));
     // operatorController.aButton.whenReleased(new ShooterStop(shooter));
