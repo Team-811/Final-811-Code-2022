@@ -11,8 +11,6 @@ import com.kauailabs.navx.frc.AHRS;
 // import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 import frc.robot.Constants;
@@ -21,7 +19,6 @@ import frc.robot.RobotMap;
 import frc.robot.NetworkTables.GetDistance;
 import frc.robot.NetworkTables.LimelightFetch;
 import frc.robot.NetworkTables.SnakeEyesFetch;
-import frc.robot.commands.Auto.VisionTargeting.Hub.LimelightAimX;
 
 public class Drivetrain extends SubsystemBase implements ISubsystem {
 

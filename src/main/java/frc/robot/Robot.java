@@ -6,10 +6,6 @@ package frc.robot;
 // import org.photonvision.PhotonCamera;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -17,10 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
-import frc.robot.commands.Auto.SimpleAuto;
 import frc.robot.NetworkTables.LimelightFetch;
 import frc.robot.NetworkTables.SnakeEyesFetch;
-import frc.robot.commands.Auto.BackwardsAuto;
 // import frc.robot.Vision.TeamSelector;
 
 
