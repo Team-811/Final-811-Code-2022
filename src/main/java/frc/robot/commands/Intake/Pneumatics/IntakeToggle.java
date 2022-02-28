@@ -7,22 +7,21 @@ public class IntakeToggle extends CommandBase{
 
     private Intake requiredSubsystem;
     
-
-   public IntakeToggle(Intake m_SubsystemBase) {
-       requiredSubsystem = m_SubsystemBase;
-       addRequirements(requiredSubsystem);
-   }
+    public IntakeToggle(Intake m_SubsystemBase) {
+        requiredSubsystem = m_SubsystemBase;
+        addRequirements(requiredSubsystem);
+    }
  
-   @Override
-   public void initialize() {}
+    @Override
+    public void initialize() {}
  
-   @Override
-   public void execute() {
+    @Override
+    public void execute() {
         if (requiredSubsystem.getState())
             requiredSubsystem.retractIntake();
         else
             requiredSubsystem.extendIntake();
-}
+    }
  
    @Override
    public void end(boolean interrupted) {}
@@ -30,6 +29,5 @@ public class IntakeToggle extends CommandBase{
    @Override
    public boolean isFinished() {
      return true;
-   }
-    
+   }    
 }

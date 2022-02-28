@@ -1,7 +1,6 @@
 package frc.robot.controllers;
 
 import frc.robot.controllers.BobAB.ThresholdType;
-
 import edu.wpi.first.wpilibj.Joystick;
 
 public class BobXboxController extends Joystick {

@@ -2,7 +2,7 @@ package frc.robot.commands.Auto.VisionTargeting.Cargo;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.NetworkTables.SnakeEyesFetch;
+import frc.robot.VisionProcessing.Lemonlight;
 import frc.robot.subsystems.Drivetrain;
 
 public class CatFollow extends CommandBase {
@@ -18,7 +18,7 @@ public class CatFollow extends CommandBase {
   
     @Override
     public void execute() {
-        double tx = SnakeEyesFetch.getX();
+        double tx = Lemonlight.getX();
         float Kp = 0.02f; 
         float min_command = 0.04f;
         float heading_error = (float)tx;
@@ -44,7 +44,7 @@ public class CatFollow extends CommandBase {
   
     @Override
     public boolean isFinished() {
-        double x = SnakeEyesFetch.getX();
+        double x = Lemonlight.getX();
         if(x >= -30.0 && x <= 30.0)
         {
              try {
@@ -55,7 +55,7 @@ public class CatFollow extends CommandBase {
             if (x >= -30.0 && x <= 30.0)
                 return true;
         }
-        if (SnakeEyesFetch.getV() == true) 
+        if (Lemonlight.getV() == true) 
             return true;
         return false;    
     }

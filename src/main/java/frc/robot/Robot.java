@@ -1,31 +1,14 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
 package frc.robot;
-
-// import org.photonvision.PhotonCamera;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.VisionProcessing.Limelight;
+import frc.robot.VisionProcessing.Lemonlight;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
-
-import frc.robot.NetworkTables.LimelightFetch;
-import frc.robot.NetworkTables.SnakeEyesFetch;
-// import frc.robot.Vision.TeamSelector;
-
-
-
-// import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 import com.kauailabs.navx.frc.AHRS;
-
-// import frc.robot.RobotMap;
-
-// import frc.robot.Vision.TeamSelector;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -84,18 +67,15 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
-    LimelightFetch.limeMorse();
+    Limelight.Morse();
     CommandScheduler.getInstance().run();
     RobotContainer.updateSmartdashboard();
-
-    
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    LimelightFetch.limeOff();
-
+    Limelight.Off();
   }
 
   @Override
@@ -104,16 +84,13 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    // SnakeEyesFetch.setTeam();
-    LimelightFetch.limeOn();
+    Lemonlight.setTeam();
+    Limelight.On();
     SmartDashboard.putData("Auto mode", m_Chooser);
     m_autonomousCommand = m_Chooser.getSelected();
     // rightMotors.setInverted(true);
     // double error = -gyro.getRate();
-
     // drive.tankDrive(.5 + kP * error, .5 - kP * error);
-
-
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -130,8 +107,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    LimelightFetch.limeOn();
-    SnakeEyesFetch.setTeam();
+    Limelight.On();
+    Lemonlight.setTeam();
     
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to

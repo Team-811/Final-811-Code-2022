@@ -16,9 +16,9 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
-import frc.robot.NetworkTables.GetDistance;
-import frc.robot.NetworkTables.LimelightFetch;
-import frc.robot.NetworkTables.SnakeEyesFetch;
+import frc.robot.VisionProcessing.Distance;
+import frc.robot.VisionProcessing.Limelight;
+import frc.robot.VisionProcessing.Lemonlight;
 
 public class Drivetrain extends SubsystemBase implements ISubsystem {
 
@@ -235,10 +235,10 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         // SmartDashboard.putNumber("Back Left Wheel", bottomLeftMotor.getMotorOutputPercent());
         // SmartDashboard.putNumber("Back Right Wheel", -bottomRightMotor.getMotorOutputPercent());
         SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
-        SmartDashboard.putNumber("Snakeye X", SnakeEyesFetch.getX());
-        SmartDashboard.putNumber("Shooter Speed", GetDistance.ShooterSpeed());
+        SmartDashboard.putNumber("Snakeye X", Lemonlight.getX());
+        SmartDashboard.putNumber("Shooter Speed", Distance.ShooterSpeed());
         
-        if (LimelightFetch.getV() == 1.0)
+        if (Limelight.getV() == 1.0)
             SmartDashboard.putBoolean("HasTarget", true);
         else
             SmartDashboard.putBoolean("HasTarget", false);
@@ -261,7 +261,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     }
 
     public void PIDL() {
-        double error = lSetpoint - LimelightFetch.getX();
+        double error = lSetpoint - Limelight.getX();
         this.lIntegral += (error*0.02);
         double derivative = (error-this.lprevious_error)/0.02;
         lrcw = lkP* error + lkI * this.lIntegral + lkD * derivative;
@@ -269,7 +269,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     }
 
     public void PIDS() {
-        double error = sSetpoint - SnakeEyesFetch.getX();
+        double error = sSetpoint - Lemonlight.getX();
         this.sIntegral += (error*0.02);
         double derivative = (error-this.sprevious_error)/0.02;
         srcw = skP* error + skI * this.sIntegral + skD * derivative;

@@ -1,11 +1,11 @@
-package frc.robot.NetworkTables;
+package frc.robot.VisionProcessing;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 
-public class LimelightFetch extends TimedRobot{
+public class Limelight extends TimedRobot{
     static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     static NetworkTableEntry tx = table.getEntry("tx");
     static NetworkTableEntry ty = table.getEntry("ty");
@@ -42,80 +42,80 @@ public class LimelightFetch extends TimedRobot{
         return inVision;
     }
 
-    public static void limeOff() {
+    public static void Off() {
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
     }
 
-    public static void limeOn() {
+    public static void On() {
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
     }
 
-    public static void limeMorse() {
+    public static void Morse() {
         if(!smartVariabke){
         smartVariabke = true;
-        limeOn();
+        On();
         try {Thread.sleep(600);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOff();
+        Off();
         try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOn();
+        On();
         try {Thread.sleep(600);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOff();
+        Off();
         try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOn();
+        On();
         try {Thread.sleep(600);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOff();
+        Off();
         try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOn();
+        On();
         try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOff();
+        Off();
         try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOn();
+        On();
         try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOff();
+        Off();
         try {Thread.sleep(600);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOn();
+        On();
         try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOff();
+        Off();
         try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOn();
+        On();
         try {Thread.sleep(600);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOff();
+        Off();
         try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOn();
+        On();
         try {Thread.sleep(600);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOff();
+        Off();
         try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOn();
+        On();
         try {Thread.sleep(600);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOff();
+        Off();
         try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOn();
+        On();
         try {Thread.sleep(600);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOff();
+        Off();
         try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOff();
+        Off();
         try {Thread.sleep(600);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOn();
+        On();
         try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOff();
+        Off();
         try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOn();
+        On();
         try {Thread.sleep(600);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOff();
+        Off();
         try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOn();
+        On();
         try {Thread.sleep(600);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOff();
+        Off();
         try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOn();
+        On();
         try {Thread.sleep(600);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOff();
+        Off();
         try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOn();
+        On();
         try {Thread.sleep(600);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOff();
+        Off();
         try {Thread.sleep(200);} catch (InterruptedException e) {e.printStackTrace();}
-        limeOff();
+        Off();
         }
     }
     

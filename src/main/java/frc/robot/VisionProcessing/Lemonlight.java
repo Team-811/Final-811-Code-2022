@@ -1,13 +1,12 @@
-package frc.robot.NetworkTables;
+package frc.robot.VisionProcessing;
 
 import org.photonvision.PhotonCamera;
-
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 
-public class SnakeEyesFetch extends TimedRobot{
+public class Lemonlight extends TimedRobot{
     static PhotonCamera camera = new PhotonCamera("Team811ObjectCamera");
 
     static private NetworkTable table = NetworkTableInstance.getDefault().getTable("photonvision/Team811ObjectCamera");

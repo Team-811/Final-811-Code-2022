@@ -1,11 +1,10 @@
 package frc.robot.controllers;
 
 import frc.robot.controllers.BobXboxController.XboxAxis;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Button;
 
-//AB stands for Axis Button, I prefer to abbreviate to make typing easier (reduces the mispelling)
+//AB stands for Axis Button
 public class BobAB extends Button {
 	private final Joystick joy;
 	private final int axis;

@@ -1,7 +1,6 @@
 package frc.robot.controllers;
 
 import frc.robot.controllers.BobXboxController.XboxAxis;
-
 import edu.wpi.first.wpilibj.Joystick;
 
 public class BobThumbStick {

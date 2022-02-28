@@ -1,11 +1,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
-import frc.robot.NetworkTables.GetDistance;
+import frc.robot.VisionProcessing.Distance;
 
 public class Shooter extends SubsystemBase implements ISubsystem {
     
@@ -26,32 +25,20 @@ public class Shooter extends SubsystemBase implements ISubsystem {
         RightMotor.set(0);
     }
 
-
     @Override
     public void outputSmartdashboard() {
-        double feet = GetDistance.Distance();
+        double feet = Distance.get();
         SmartDashboard.putNumber("Distance", feet);
-        // SmartDashboard.putNumber("Shooter RPM", LeftMotor.getMotorOutputPercent());
-     //   SmartDashboard.putNumber("Shooter Speed", LeftMotor.getMotorOutputPercent());
-       // SmartDashboard.putNumber("Shooter Temperature", LeftMotor.getMotorOutputPercent());
     }
 
     @Override
     public void zeroSensors() {
-        shooterStop();
-        
-        
+        shooterStop(); 
     }
 
     @Override
-    public void resetSubsystem() {
-        
-    }
+    public void resetSubsystem() {}
 
     @Override
-    public void testSubsystem() {
-
-        
-    }
-    
+    public void testSubsystem() {}
 }

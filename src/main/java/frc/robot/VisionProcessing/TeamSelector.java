@@ -1,4 +1,4 @@
-package frc.robot.NetworkTables;
+package frc.robot.VisionProcessing;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;

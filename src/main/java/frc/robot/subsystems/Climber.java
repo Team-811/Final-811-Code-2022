@@ -1,26 +1,17 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.subsystems;
 
 import com.playingwithfusion.CANVenom;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 public class Climber extends SubsystemBase implements ISubsystem {
+
   private CANVenom leftWinch;
   // private TalonSRX leftArm;
-  //Right Motors
   private CANVenom rightWinch;
   // private TalonSRX rightArm;
-  
-  // private DigitalInput rightLimit = new DigitalInput(0);
-  // private DigitalInput leftLimit = new DigitalInput(0);
 
-  /** Creates a new Climber. */
   public Climber() {
     leftWinch = new CANVenom(RobotMap.CLIMBER_WINCH_LEFT);
     // leftArm = new TalonSRX(RobotMap.CLIMBER_ARM_LEFT);
@@ -65,22 +56,14 @@ public class Climber extends SubsystemBase implements ISubsystem {
   }
 
   @Override
-  public void outputSmartdashboard() {
-    
-  }
+  public void outputSmartdashboard() {}
 
   @Override
-  public void zeroSensors() {
-    
-  }
+  public void zeroSensors() {}
 
   @Override
-  public void resetSubsystem() {
-    
-  }
+  public void resetSubsystem() {}
 
   @Override
-  public void testSubsystem() {
-    
-  }
+  public void testSubsystem() {}
 }

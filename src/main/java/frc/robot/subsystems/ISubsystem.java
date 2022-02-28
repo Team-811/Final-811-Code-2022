@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-
 public interface ISubsystem {
     public abstract void outputSmartdashboard();
 

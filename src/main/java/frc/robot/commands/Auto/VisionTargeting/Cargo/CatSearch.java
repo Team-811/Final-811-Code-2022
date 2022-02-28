@@ -2,7 +2,7 @@ package frc.robot.commands.Auto.VisionTargeting.Cargo;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.NetworkTables.SnakeEyesFetch;
+import frc.robot.VisionProcessing.Lemonlight;
 import frc.robot.subsystems.Drivetrain;
 
 public class CatSearch extends CommandBase{
@@ -17,7 +17,7 @@ public class CatSearch extends CommandBase{
     
     @Override
     public void execute() {
-        boolean seen = SnakeEyesFetch.getV();
+        boolean seen = Lemonlight.getV();
         if (seen == true)
             found = true;
         else

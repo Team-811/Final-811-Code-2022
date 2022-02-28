@@ -2,7 +2,7 @@ package frc.robot.commands.Auto.VisionTargeting.Hub;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.NetworkTables.LimelightFetch;
+import frc.robot.VisionProcessing.Limelight;
 import frc.robot.subsystems.Drivetrain;
 
 public class LimelightSearch extends CommandBase{
@@ -18,7 +18,7 @@ public class LimelightSearch extends CommandBase{
     
     @Override
     public void execute() {
-        double seen = LimelightFetch.getV();
+        double seen = Limelight.getV();
         if (seen == 1.0)
             found = true;
         requiredSubsystem.turnRight(Constants.AIM_SPEED);

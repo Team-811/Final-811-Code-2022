@@ -3,8 +3,8 @@ package frc.robot.controllers;
 import frc.robot.controllers.BobAB.ThresholdType;
 import frc.robot.controllers.BobXboxController.XboxAxis;
 import frc.robot.controllers.BobXboxController.XboxDpad;
-
 import edu.wpi.first.wpilibj.Joystick;
+
 //DP stands for Dpad
 public class BobDP {
 	public final Joystick joy;

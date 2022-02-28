@@ -2,7 +2,7 @@ package frc.robot.commands.Auto.VisionTargeting.Hub;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.NetworkTables.GetDistance;
+import frc.robot.VisionProcessing.Distance;
 import frc.robot.subsystems.Drivetrain;
 
 public class LimelightAimY extends CommandBase {
@@ -20,7 +20,7 @@ public class LimelightAimY extends CommandBase {
  
    @Override
     public void execute() {
-        double feet  = GetDistance.Distance();
+        double feet  = Distance.get();
         // float Kp = 0.02f; 
         // float min_command = 0.05f;
         // float heading_error = (float)feet;
@@ -60,7 +60,7 @@ public class LimelightAimY extends CommandBase {
   
     @Override
     public boolean isFinished() {
-        double feet = GetDistance.Distance();
+        double feet = Distance.get();
         if(feet >= 8.5 && feet <= 9.5 && feet !=0.0)
         {
             try {

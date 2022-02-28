@@ -1,7 +1,7 @@
 package frc.robot.commands.Auto.VisionTargeting.Hub;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.NetworkTables.LimelightFetch;
+import frc.robot.VisionProcessing.Limelight;
 import frc.robot.subsystems.Drivetrain;
 
 public class LimelightAimX extends CommandBase {
@@ -18,10 +18,10 @@ public class LimelightAimX extends CommandBase {
   
     @Override
     public void execute() {
-        if (LimelightFetch.getV() != 1.0) {
+        if (Limelight.getV() != 1.0) {
             exit = true;
         }
-        double tx = LimelightFetch.getX();
+        double tx = Limelight.getX();
         float Kp = 0.02f; 
         float min_command = 0.05f;
         float heading_error = (float)tx;
@@ -51,7 +51,7 @@ public class LimelightAimX extends CommandBase {
             exit = false;
             return true;
         }
-        double x = LimelightFetch.getX();
+        double x = Limelight.getX();
         if(x >= -2.0 && x <= 2.0 && x !=0.0)
         {
             try {
