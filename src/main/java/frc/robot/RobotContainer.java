@@ -17,6 +17,7 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
@@ -43,6 +44,7 @@ public class RobotContainer {
     // Configure the button bindings
     drivetrain.setDefaultCommand(new DrivingCommand(drivetrain));
     climber.setDefaultCommand(new ClimberCommand(climber));
+   // climber.setDefaultCommand(new ClimberCommand(climber));
     configureButtonBindings();
   }
 
@@ -59,9 +61,19 @@ public class RobotContainer {
     operatorController.xButton.whenPressed(new Shoot(shooter, intake));
     operatorController.yButton.whileHeld(new IntakeForward(intake));
     operatorController.yButton.whenReleased(new IntakeStop(intake));
-    operatorController.rightTriggerButton.whenPressed(new IntakeToggle(intake));
+    operatorController.aButton.whenPressed(new IntakeToggle(intake));
     operatorController.bButton.whileHeld( new IntakeReverse(intake, shooter));
     operatorController.bButton.whenReleased(new IntakeStop(intake));
+
+    // operatorController.leftTriggerButton.whenHeld(new RightWinch(climber));
+    // operatorController.leftTriggerButton.whenReleased(new StopRightWinch(climber));
+    // operatorController.rightTriggerButton.whenHeld(new LeftWinch(climber));
+    // operatorController.rightTriggerButton.whenReleased(new StopLeftWinch(climber));
+
+    
+
+
+
   }
 
   /**

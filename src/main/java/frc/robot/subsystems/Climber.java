@@ -8,15 +8,15 @@ import frc.robot.RobotMap;
 public class Climber extends SubsystemBase implements ISubsystem {
 
   private CANVenom leftWinch;
-  // private TalonSRX leftArm;
   private CANVenom rightWinch;
   // private TalonSRX rightArm;
+  // private TalonSRX leftArm;
 
   public Climber() {
     leftWinch = new CANVenom(RobotMap.CLIMBER_WINCH_LEFT);
-    // leftArm = new TalonSRX(RobotMap.CLIMBER_ARM_LEFT);
     rightWinch = new CANVenom(RobotMap.CLIMBER_WINCH_RIGHT);
     // rightArm = new TalonSRX(RobotMap.CLIMBER_ARM_RIGHT);
+    // leftArm = new TalonSRX(RobotMap.CLIMBER_ARM_LEFT);
   }
 
   public void leftArm(double joystick){
@@ -40,14 +40,19 @@ public class Climber extends SubsystemBase implements ISubsystem {
       rightWinch.set(speed);
     }
   }
-    public void leftWinchRun(double speed){
+  public void leftWinchRun(double speed){
       if(speed < 0){
         // if(!leftLimit.get()){
           leftWinch.set(speed);
         // }
       }else{
         leftWinch.set(speed);
-    }
+  }
+  }
+
+  public void stopClimbers(double speed) {
+    leftWinch.set(0);
+    rightWinch.set(0);
   }
 
   @Override

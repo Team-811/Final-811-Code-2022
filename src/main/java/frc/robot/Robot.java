@@ -67,7 +67,7 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
-    Limelight.Morse();
+    // Limelight.Morse();
     CommandScheduler.getInstance().run();
     RobotContainer.updateSmartdashboard();
   }
@@ -85,7 +85,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     Lemonlight.setTeam();
-    Limelight.On();
+    Limelight.Off(); 
     SmartDashboard.putData("Auto mode", m_Chooser);
     m_autonomousCommand = m_Chooser.getSelected();
     // rightMotors.setInverted(true);
@@ -107,7 +107,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    Limelight.On();
+    Limelight.Off();
     Lemonlight.setTeam();
     
     // This makes sure that the autonomous stops running when
