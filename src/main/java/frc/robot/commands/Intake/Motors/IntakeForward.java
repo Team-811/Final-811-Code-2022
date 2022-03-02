@@ -18,8 +18,8 @@ public class IntakeForward extends CommandBase {
  
   @Override
   public void execute() {
-    requiredSubsystem.intakeSpin(Constants.REAL_INTAKE_SPEED);
-    requiredSubsystem.backSpin(Constants.FAKE_INTAKE_SPEED);
+    requiredSubsystem.intakeSpin(Constants.STORAGE_SPEED);
+    requiredSubsystem.backSpin(Constants.STORAGE_SPEED);
   }
  
   @Override

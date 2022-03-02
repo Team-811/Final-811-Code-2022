@@ -20,7 +20,7 @@ public class IntakeReverse extends CommandBase {
   @Override
   public void execute() {
       requiredSubsystem.backSpin(-0.2);
-      requiredSubsystem.intakeSpin(-Constants.REAL_INTAKE_SPEED);
+      requiredSubsystem.intakeSpin(-Constants.STORAGE_SPEED);
   }
  
   @Override

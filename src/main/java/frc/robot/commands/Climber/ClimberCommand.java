@@ -21,9 +21,9 @@ public class ClimberCommand extends CommandBase {
   public void execute() {
 
     if(RobotContainer.operatorController.rightBumper.get()){
-      m_subsystem.rightWinchRun(-Constants.WINCH_SPEED);
-    } else if (RobotContainer.operatorController.rightTriggerButton.get()) {
       m_subsystem.rightWinchRun(Constants.WINCH_SPEED);
+    } else if (RobotContainer.operatorController.rightTriggerButton.get()) {
+      m_subsystem.rightWinchRun(-Constants.WINCH_SPEED);
     } else {
       m_subsystem.rightWinchRun(0);
     } 
@@ -34,8 +34,8 @@ public class ClimberCommand extends CommandBase {
     } else {
       m_subsystem.leftWinchRun(0);
     }
-    // m_subsystem.leftArm(RobotContainer.operatorController.leftStick.getY());
-    // m_subsystem.rightArm(RobotContainer.operatorController.rightStick.getY());
+    m_subsystem.leftArm(RobotContainer.operatorController.leftStick.getY());
+    m_subsystem.rightArm(RobotContainer.operatorController.rightStick.getY());
   }
 
   @Override

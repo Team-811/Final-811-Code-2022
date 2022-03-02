@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -42,7 +43,7 @@ public class Robot extends TimedRobot {
   
   @Override
   public void robotInit() {
-
+    CameraServer.startAutomaticCapture();
     // m_Chooser.setDefaultOption("Forward", new SimpleAuto(drivetrain));
     // m_Chooser.addOption("Backward", new BackwardsAuto(drivetrain));
     // m_Chooser.addOption("Complex", new ComplexAuto(drivetrain, intake, shooter));
@@ -85,7 +86,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     Lemonlight.setTeam();
-    Limelight.Off(); 
+    Limelight.On(); 
     SmartDashboard.putData("Auto mode", m_Chooser);
     m_autonomousCommand = m_Chooser.getSelected();
     // rightMotors.setInverted(true);
@@ -107,7 +108,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    Limelight.Off();
+    Limelight.On();
     Lemonlight.setTeam();
     
     // This makes sure that the autonomous stops running when
