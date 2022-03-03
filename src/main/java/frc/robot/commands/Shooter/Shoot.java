@@ -11,7 +11,7 @@ import frc.robot.subsystems.Shooter;
 
 public class Shoot extends SequentialCommandGroup {
   
-  private static double speed = Distance.get() * .05;
+  private static double speed = Distance.get() * .038;
 
   public Shoot(Shooter shoot, Intake intake) {
     super(

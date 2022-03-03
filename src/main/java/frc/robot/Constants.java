@@ -27,6 +27,6 @@ public final class Constants {
     public static final double SHOOTER_SPEED = 0.87; 
 
     //Climber
-    public static final double ARM_SPEED_SCALE = 0.4;
-    public static final double WINCH_SPEED = 0.4;   
+    public static final double ARM_SPEED_SCALE = 0.8;
+    public static final double WINCH_SPEED = 0.8;   
 }

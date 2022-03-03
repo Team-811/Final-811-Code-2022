@@ -2,7 +2,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import com.playingwithfusion.CANVenom;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -32,27 +34,30 @@ public class Climber extends SubsystemBase implements ISubsystem {
   }
 
   public void rightWinchRun(double speed){
-    if(speed < 0){
-      // if(!rightLimit.get()){
-        rightWinch.set(speed);
-      // }
-    }else{
-      rightWinch.set(speed);
-    }
+    rightWinch.set(speed);
+    // if(speed < 0){
+    //   // if(!rightLimit.get()){
+    //     rightWinch.set(speed);
+    //   // }
+    // }else{
+    //   rightWinch.set(speed);
+    // }
   }
   public void leftWinchRun(double speed){
-      if(speed < 0){
-        // if(!leftLimit.get()){
-          leftWinch.set(speed);
-        // }
-      }else{
-        leftWinch.set(speed);
-  }
+    leftWinch.set(speed);
+  //     if(speed < 0){
+  //       // if(!leftLimit.get()){
+  //         leftWinch.set(speed);
+  //       // }
+  //     }else{
+  //       leftWinch.set(speed);
+  // }
   }
 
   public void stopClimbers(double speed) {
-    leftWinch.set(0);
-    rightWinch.set(0);
+    speed = 0;
+    rightWinch.set(speed);
+    leftWinch.set(speed);
   }
 
   @Override

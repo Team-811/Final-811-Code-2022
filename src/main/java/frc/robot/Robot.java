@@ -33,12 +33,6 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
 
-  @SuppressWarnings("unused")
-
-  private static AHRS gyro = new AHRS();
-
-
-  double kP = 0.5;
 
   
   @Override
@@ -89,11 +83,7 @@ public class Robot extends TimedRobot {
     Limelight.On(); 
     SmartDashboard.putData("Auto mode", m_Chooser);
     m_autonomousCommand = m_Chooser.getSelected();
-    // rightMotors.setInverted(true);
-    // double error = -gyro.getRate();
-    // drive.tankDrive(.5 + kP * error, .5 - kP * error);
 
-    // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
             m_autonomousCommand.schedule();
     }

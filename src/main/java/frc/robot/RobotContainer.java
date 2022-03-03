@@ -33,7 +33,7 @@ public class RobotContainer {
   private static final Shooter shooter = new Shooter();
   private static final Climber climber = new Climber();
 
-  Compressor pcmCompressor = new Compressor(PneumaticsModuleType.CTREPCM); // for testing compressor
+  Compressor pcmCompressor = new Compressor(PneumaticsModuleType.CTREPCM);
   public static BobXboxController driveController;
   public static BobXboxController operatorController;
   Command m_autonomousCommand;
@@ -65,7 +65,9 @@ public class RobotContainer {
     operatorController.bButton.whileHeld( new IntakeReverse(intake, shooter));
     operatorController.bButton.whenReleased(new IntakeStop(intake));
 
-    // operatorController.leftTriggerButton.whenHeld(new RightWinch(climber));
+    // driveController.rightBumper.whenPressed(new IntakeForward(intake));
+    // driveController.rightBumper.whenReleased(new IntakeStop(intake));
+   // // // // // // // // // // // // // // // /// // // // // /// /////////////////////// // operatorController.leftTriggerButton.whenHeld(new RightWinch(climber));
     // operatorController.leftTriggerButton.whenReleased(new StopRightWinch(climber));
     // operatorController.rightTriggerButton.whenHeld(new LeftWinch(climber));
     // operatorController.rightTriggerButton.whenReleased(new StopLeftWinch(climber));
