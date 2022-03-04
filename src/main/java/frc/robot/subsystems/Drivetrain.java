@@ -40,13 +40,13 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     private double lprevious_error;
     private double lrcw;
 
-    private double skP = Constants.SNAKEEYE_PID[0];
-    private double skI = Constants.SNAKEEYE_PID[1];
-    private double skD = Constants.SNAKEEYE_PID[2];
-    private double sSetpoint = 0;
-    private double sIntegral;
-    private double sprevious_error;
-    private double srcw;
+    // private double skP = Constants.SNAKEEYE_PID[0];
+    // private double skI = Constants.SNAKEEYE_PID[1];
+    // private double skD = Constants.SNAKEEYE_PID[2];
+    // private double sSetpoint = 0;
+    // private double sIntegral;
+    // private double sprevious_error;
+    // private double srcw;
 
     private double akP = Constants.AUTO_PID[0];
     private double akI = Constants.AUTO_PID[1];
@@ -142,7 +142,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     @Override
     public void periodic() {
         PIDL();
-        PIDS();    
+        // PIDS();    
         PIDA();
     }
 
@@ -274,13 +274,13 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         
     }
 
-    public void PIDS() {
-        double error = sSetpoint - Lemonlight.getX();
-        this.sIntegral += (error*0.02);
-        double derivative = (error-this.sprevious_error)/0.02;
-        srcw = skP* error + skI * this.sIntegral + skD * derivative;
+    // public void PIDS() {
+    //     double error = sSetpoint - Lemonlight.getX();
+    //     this.sIntegral += (error*0.02);
+    //     double derivative = (error-this.sprevious_error)/0.02;
+    //     srcw = skP* error + skI * this.sIntegral + skD * derivative;
         
-    }
+    // }
 
     public void PIDA() {
         double error = aSetpoint - gyro.getAngle();
@@ -299,4 +299,9 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
          topRightMotor.set(ControlMode.PercentOutput, -rightValue);
          bottomRightMotor.set(ControlMode.PercentOutput, -rightValue);
     }
+
+    public void aSetpoint(int point){
+        aSetpoint = point;
+    }
+
 }

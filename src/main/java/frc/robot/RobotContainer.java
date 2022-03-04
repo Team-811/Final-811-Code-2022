@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DrivingCommand;
-import frc.robot.commands.Auto.SimpleAuto;
+import frc.robot.commands.Auto.BackwardsTwoBallAuto;
 import frc.robot.commands.Climber.ClimberCommand;
 import frc.robot.commands.Intake.Motors.IntakeForward;
 import frc.robot.commands.Intake.Motors.IntakeReverse;
@@ -84,11 +84,11 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    m_Chooser.setDefaultOption("Forward", new SimpleAuto(drivetrain));
+    m_Chooser.setDefaultOption("Forward", new BackwardsTwoBallAuto(drivetrain, intake, shooter));
     m_Chooser.addOption("Do Nothing :)", null);
   
     // An ExampleCommand will run in autonomous
-    return new SimpleAuto(drivetrain);
+    return new BackwardsTwoBallAuto(drivetrain, intake, shooter);
     
   }
   public static void updateSmartdashboard() {
