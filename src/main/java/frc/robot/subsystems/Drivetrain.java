@@ -47,6 +47,14 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     private double sIntegral;
     private double sprevious_error;
     private double srcw;
+
+    private double akP = Constants.AUTO_PID[0];
+    private double akI = Constants.AUTO_PID[1];
+    private double akD = Constants.AUTO_PID[2];
+    private double aSetpoint = 180;
+    private double aIntegral;
+    private double aprevious_error;
+    private double arcw;
     
     // private PIDController OutputPID = new PIDController(lkP, lkI, lkD);
 
@@ -55,9 +63,6 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
 
     /*A new Instance of the Drivetrain*/
     public Drivetrain(){
-
-          
-        
         resetSubsystem();
         topLeftMotor = new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_TOP_LEFT );
         topRightMotor= new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_TOP_RIGHT );
@@ -80,8 +85,8 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     public void driveWithMisery(double leftStick, double rightStick, double rotation){
         if (RobotContainer.driveController.xButton.get())
              rotation -= lrcw *0.2;
-        if (RobotContainer.driveController.yButton.get())
-             rotation -= srcw *0.2;
+        // if (RobotContainer.driveController.yButton.get())
+        //      rotation -= srcw *0.2;
         double forwardValue = leftStick * SpeedScale;
         double rotationValue = rotation * SpeedScale * 0.8;
         double leftValue = forwardValue + rotationValue;
@@ -105,8 +110,8 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     public void driveWithMisery(double leftStick, double rightStick, double rotation, double FL, double FR, double BL, double BR){
         if (RobotContainer.driveController.xButton.get())
              rotation -= lrcw *0.13;
-        if (RobotContainer.driveController.yButton.get())
-             rotation -= srcw *0.13;
+        // if (RobotContainer.driveController.yButton.get())
+        //      rotation -= srcw *0.13;
         double forwardValue = leftStick * SpeedScale;
         double rotationValue = rotation * SpeedScale * 0.8;
         double leftValue = forwardValue + rotationValue ;
@@ -138,6 +143,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     public void periodic() {
         PIDL();
         PIDS();    
+        PIDA();
     }
 
     public void mechanumWHeelLeft(double speed){
@@ -276,7 +282,21 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         
     }
 
+    public void PIDA() {
+        double error = aSetpoint - gyro.getAngle();
+        this.aIntegral += (error*0.02);
+        double derivative = (error-this.aprevious_error)/0.02;
+        arcw = akP* error + akI * this.aIntegral + akD * derivative;
+    }
 
-
-    
+    public void driveAuto(){
+        double rotation = 3.0 - (arcw *0.2);
+        double rotationValue = rotation * SpeedScale * 0.8;
+        double leftValue = rotationValue;
+        double rightValue = rotationValue;
+         topLeftMotor.set(ControlMode.PercentOutput, leftValue);
+         bottomLeftMotor.set(ControlMode.PercentOutput, leftValue);
+         topRightMotor.set(ControlMode.PercentOutput, -rightValue);
+         bottomRightMotor.set(ControlMode.PercentOutput, -rightValue);
+    }
 }

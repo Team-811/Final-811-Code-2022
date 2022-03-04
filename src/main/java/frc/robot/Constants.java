@@ -17,6 +17,7 @@ public final class Constants {
     public static final double CAT_DRIVE_SPEED = 0.2;
     public static final double[] LIMELIGHT_PID = {0.004, 0.02, 0.004};
     public static final double[] SNAKEEYE_PID = {0.004, 0.02, 0.004};
+    public static final double[] AUTO_PID = {0.004, 0.02, 0.004};
     public static final double AUTO_SPEED = 0.2;
 
     //Intake
