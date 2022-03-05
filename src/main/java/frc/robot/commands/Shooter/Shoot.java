@@ -1,5 +1,6 @@
 package frc.robot.commands.Shooter;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -11,7 +12,7 @@ import frc.robot.subsystems.Shooter;
 
 public class Shoot extends SequentialCommandGroup {
   
-  private static double speed = Distance.get() * .038;
+  private static double speed = Distance.get() * SmartDashboard.getNumber("Shooter Scale", 0.38) * 0.1; //.038
 
   public Shoot(Shooter shoot, Intake intake) {
     super(

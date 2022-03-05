@@ -1,9 +1,9 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
-import com.playingwithfusion.CANVenom;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -11,16 +11,18 @@ import frc.robot.RobotMap;
 
 public class Climber extends SubsystemBase implements ISubsystem {
 
-  private CANVenom leftWinch;
-  private CANVenom rightWinch;
+  private VictorSPX leftWinch;
+  private VictorSPX rightWinch;
   private TalonSRX rightArm;
   private TalonSRX leftArm;
 
   public Climber() {
-    leftWinch = new CANVenom(RobotMap.CLIMBER_WINCH_LEFT);
-    rightWinch = new CANVenom(RobotMap.CLIMBER_WINCH_RIGHT);
+    leftWinch = new VictorSPX(RobotMap.CLIMBER_WINCH_LEFT);
+    rightWinch = new VictorSPX(RobotMap.CLIMBER_WINCH_RIGHT);
     rightArm = new TalonSRX(RobotMap.CLIMBER_ARM_RIGHT);
     leftArm = new TalonSRX(RobotMap.CLIMBER_ARM_LEFT);
+    leftWinch.setNeutralMode(NeutralMode.Brake);
+    rightWinch.setNeutralMode(NeutralMode.Brake);
   }
 
   public void leftArm(double joystick){
@@ -34,30 +36,16 @@ public class Climber extends SubsystemBase implements ISubsystem {
   }
 
   public void rightWinchRun(double speed){
-    rightWinch.set(speed);
-    // if(speed < 0){
-    //   // if(!rightLimit.get()){
-    //     rightWinch.set(speed);
-    //   // }
-    // }else{
-    //   rightWinch.set(speed);
-    // }
+    rightWinch.set(ControlMode.PercentOutput, speed);
   }
   public void leftWinchRun(double speed){
-    leftWinch.set(speed);
-  //     if(speed < 0){
-  //       // if(!leftLimit.get()){
-  //         leftWinch.set(speed);
-  //       // }
-  //     }else{
-  //       leftWinch.set(speed);
-  // }
+    leftWinch.set(ControlMode.PercentOutput, speed);
   }
 
   public void stopClimbers(double speed) {
     speed = 0;
-    rightWinch.set(speed);
-    leftWinch.set(speed);
+    rightWinch.set(ControlMode.PercentOutput, speed);
+    leftWinch.set(ControlMode.PercentOutput, speed);
   }
 
   @Override

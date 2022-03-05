@@ -5,21 +5,21 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DrivingCommand;
-import frc.robot.commands.Auto.BackwardsTwoBallAuto;
+import frc.robot.commands.Auto.BackwardsOneBallAuto;
 import frc.robot.commands.Climber.ClimberCommand;
 import frc.robot.commands.Intake.Motors.IntakeForward;
 import frc.robot.commands.Intake.Motors.IntakeReverse;
 import frc.robot.commands.Intake.Motors.IntakeStop;
 import frc.robot.commands.Intake.Pneumatics.IntakeToggle;
 import frc.robot.commands.Shooter.Shoot;
+import frc.robot.commands.Shooter.ShooterStop;
+import frc.robot.commands.Shooter.SlowShooter;
 import frc.robot.controllers.BobXboxController;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
-
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -36,15 +36,12 @@ public class RobotContainer {
   Compressor pcmCompressor = new Compressor(PneumaticsModuleType.CTREPCM);
   public static BobXboxController driveController;
   public static BobXboxController operatorController;
-  Command m_autonomousCommand;
-  SendableChooser<Command> m_Chooser = new SendableChooser<>();
 
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Configure the button bindings
     drivetrain.setDefaultCommand(new DrivingCommand(drivetrain));
     climber.setDefaultCommand(new ClimberCommand(climber));
-   // climber.setDefaultCommand(new ClimberCommand(climber));
     configureButtonBindings();
   }
 
@@ -56,26 +53,15 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     driveController = new BobXboxController(0, .3, .3);
+    driveController.aButton.whenPressed(new IntakeToggle(intake));
     operatorController = new BobXboxController(1, .3, .3);
-    //Button Mapping
     operatorController.xButton.whenPressed(new Shoot(shooter, intake));
     operatorController.yButton.whileHeld(new IntakeForward(intake));
     operatorController.yButton.whenReleased(new IntakeStop(intake));
-    operatorController.aButton.whenPressed(new IntakeToggle(intake));
     operatorController.bButton.whileHeld( new IntakeReverse(intake, shooter));
     operatorController.bButton.whenReleased(new IntakeStop(intake));
-
-    // driveController.rightBumper.whenPressed(new IntakeForward(intake));
-    // driveController.rightBumper.whenReleased(new IntakeStop(intake));
-   // // // // // // // // // // // // // // // /// // // // // /// /////////////////////// // operatorController.leftTriggerButton.whenHeld(new RightWinch(climber));
-    // operatorController.leftTriggerButton.whenReleased(new StopRightWinch(climber));
-    // operatorController.rightTriggerButton.whenHeld(new LeftWinch(climber));
-    // operatorController.rightTriggerButton.whenReleased(new StopLeftWinch(climber));
-
-    
-
-
-
+    operatorController.aButton.whileHeld(new SlowShooter(shooter));
+    operatorController.aButton.whenReleased(new ShooterStop(shooter));
   }
 
   /**
@@ -83,14 +69,10 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    m_Chooser.setDefaultOption("Forward", new BackwardsTwoBallAuto(drivetrain, intake, shooter));
-    m_Chooser.addOption("Do Nothing :)", null);
-  
-    // An ExampleCommand will run in autonomous
-    return new BackwardsTwoBallAuto(drivetrain, intake, shooter);
-    
+  public static Command getAutonomousCommand() {
+    return new BackwardsOneBallAuto(drivetrain, intake, shooter);
   }
+
   public static void updateSmartdashboard() {
     drivetrain.outputSmartdashboard();
     shooter.outputSmartdashboard();

@@ -2,22 +2,22 @@ package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.VisionProcessing.Distance;
 import frc.robot.commands.Intake.Motors.IntakeForward;
-import frc.robot.commands.Shooter.ShooterStop;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
-public class BackwardsTwoBallAuto extends ParallelDeadlineGroup {
+public class BackwardsTwoBallAuto extends SequentialCommandGroup {
 
   public BackwardsTwoBallAuto(Drivetrain drive, Intake intake, Shooter shoot) {
     super(
-      new InstantCommand(() -> intake.extendIntake()), //Extend Intake
+      new InstantCommand(() -> intake.extendIntake(), intake), //Extend Intake
       new ParallelDeadlineGroup( //Drive Backwards for 3 seconds (placeholder)
         new WaitCommand(3),                                   
-        new InstantCommand(() -> drive.driveBackwards(0.3))
+        new InstantCommand(() -> drive.driveBackwards(0.3), drive)
       ),   
       new ParallelDeadlineGroup( //Reverse Intake and Shooter
         new WaitCommand(0.2),                                        
@@ -33,30 +33,29 @@ public class BackwardsTwoBallAuto extends ParallelDeadlineGroup {
         new IntakeForward(intake),
         new InstantCommand(() -> shoot.shooterSpin((Distance.get() * .038)), shoot)
       ),
-      new ParallelDeadlineGroup( //Disable shooter and intake                                     
-        new ShooterStop(shoot),
-        new InstantCommand(() -> intake.intakeSpin(0), intake),
-        new InstantCommand(() -> intake.backSpin(0), intake)
-      ),
-      new InstantCommand(() -> drive.aSetpoint(180)), //Set Gyro point to 180 degrees (placeholder)
+       //Disable shooter and intake                                     
+      new InstantCommand(() -> shoot.shooterSpin(0), shoot),
+      new InstantCommand(() -> {intake.intakeSpin(0);
+                                intake.backSpin(0);}, intake),
+      new InstantCommand(() -> drive.aSetpoint(180), drive), //Set Gyro point to 180 degrees (placeholder)
       new ParallelDeadlineGroup( //Use Gyro and PID to lock to 180 degrees
         new WaitCommand(2),
-        new InstantCommand(() -> drive.driveAuto())
+        new InstantCommand(() -> drive.driveAuto(), drive)
       ),
-      new InstantCommand(() -> drive.aSetpoint(0)), //Set Gyro point to 0 degrees (placeholder)
+      new InstantCommand(() -> drive.aSetpoint(0), drive), //Set Gyro point to 0 degrees (placeholder)
       new ParallelDeadlineGroup(  //Drive and Pick up second ball
         new WaitCommand(2),
-        new InstantCommand(() -> drive.driveForward(0.3)),
-        new InstantCommand(() -> intake.intakeSpin(0.35)),
-        new InstantCommand(() -> intake.backSpin(0.3))
+        new InstantCommand(() -> drive.driveForward(0.3), drive),
+        new InstantCommand(() -> {intake.intakeSpin(0.35);
+                                  intake.backSpin(0.3);}, intake)
       ),
       new ParallelDeadlineGroup( //Disable shooter and intake 
-        new InstantCommand(() -> intake.intakeSpin(0), intake),
-        new InstantCommand(() -> intake.backSpin(0), intake)
+      new InstantCommand(() -> {intake.intakeSpin(0);
+                                 intake.backSpin(0);}, intake)
       ),
       new ParallelDeadlineGroup(//Use Gyro and PID to lock to 0 degrees
         new WaitCommand(2),
-        new InstantCommand(() -> drive.driveAuto())
+        new InstantCommand(() -> drive.driveAuto(), drive)
       ),
       new ParallelDeadlineGroup( //Reverse Intake and Shooter
         new WaitCommand(0.2),                                        
@@ -72,10 +71,8 @@ public class BackwardsTwoBallAuto extends ParallelDeadlineGroup {
         new IntakeForward(intake),
         new InstantCommand(() -> shoot.shooterSpin((Distance.get() * .038)), shoot)
       ),
-      new ParallelDeadlineGroup( //Disable shooter and intake                                     
-        new ShooterStop(shoot),
-        new InstantCommand(() -> intake.intakeSpin(0), intake),
-        new InstantCommand(() -> intake.backSpin(0), intake)
-      ));
+      new InstantCommand(() -> shoot.shooterSpin(0), shoot),
+      new InstantCommand(() -> {intake.intakeSpin(0);
+                                intake.backSpin(0);}, intake));
   }
 }

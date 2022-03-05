@@ -9,6 +9,7 @@ import frc.robot.VisionProcessing.Lemonlight;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+
 // import com.kauailabs.navx.frc.AHRS;
 
 /**
@@ -18,15 +19,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
-  @SuppressWarnings("unused")
-  private RobotContainer m_robotContainer= new RobotContainer();
-  // private static final Drivetrain drivetrain = new Drivetrain();
-  // private static final Intake intake = new Intake();
-  // private static final Shooter shooter = new Shooter();
-  
   Command m_autonomousCommand;
   SendableChooser<Command> m_Chooser = new SendableChooser<>();
- // public static Drivetrain drivetrain;
+
+
+  
+
+  @SuppressWarnings("unused")
+  private RobotContainer m_robotContainer= new RobotContainer();
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -38,14 +39,12 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     CameraServer.startAutomaticCapture();
-    // m_Chooser.setDefaultOption("Forward", new SimpleAuto(drivetrain));
-    // m_Chooser.addOption("Backward", new BackwardsAuto(drivetrain));
-    // m_Chooser.addOption("Complex", new ComplexAuto(drivetrain, intake, shooter));
-    m_Chooser.addOption("Do Nothing :(", null);
+    SmartDashboard.putData("Auto mode", m_Chooser);
+
+   
 
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    //drivetrain = Drivetrain.getInstance();
     
   }
 
@@ -58,6 +57,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    Limelight.On();
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
@@ -81,12 +81,31 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     Lemonlight.setTeam();
     Limelight.On(); 
-    SmartDashboard.putData("Auto mode", m_Chooser);
-    m_autonomousCommand = m_Chooser.getSelected();
+
+    m_autonomousCommand = RobotContainer.getAutonomousCommand();
+
+
+        // m_autonomousCommand = m_Chooser.getSelected();
+
+    // m_Chooser.setDefaultOption("Back and Shoot", new BackwardsOneBallAuto(drivetrain, intake, shooter));
+    // m_Chooser.addOption("Backwards", new BackwardsAuto(drivetrain));
+    // m_Chooser.addOption("Forwards", new ForwardsAuto(drivetrain));
+    // m_Chooser.addOption("Do Nothing :(", null);
+
+ 
+    // SmartDashboard.putData("Auto mode", m_Chooser);
 
     if (m_autonomousCommand != null) {
             m_autonomousCommand.schedule();
     }
+
+    
+    // m_autonomousCommand = m_chooser.getSelected();
+
+    // // schedule the autonomous command (example)
+    // if (m_autonomousCommand != null) {
+    //   m_autonomousCommand.start();      
+    // }
   }
 
   /** This function is called periodically during autonomous. */
@@ -100,11 +119,10 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     Limelight.On();
     Lemonlight.setTeam();
-    
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
-    // this line or comment it out.
+    // // this line or comment it out.
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
