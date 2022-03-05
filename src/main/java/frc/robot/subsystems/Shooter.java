@@ -20,6 +20,12 @@ public class Shooter extends SubsystemBase implements ISubsystem {
         LeftMotor.set(-speed);
         RightMotor.set(speed);
     }
+
+    public void shooterSpinShoot(double speed){
+        LeftMotor.set(speed);
+        RightMotor.set(-speed);
+    }
+
     public void shooterStop(){
         LeftMotor.set(0);
         RightMotor.set(0);

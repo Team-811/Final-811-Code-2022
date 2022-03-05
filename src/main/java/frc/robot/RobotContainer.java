@@ -4,8 +4,11 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.DriveForwardss;
 import frc.robot.commands.DrivingCommand;
-import frc.robot.commands.Auto.BackwardsOneBallAuto;
+// import frc.robot.commands.UltimateDrivingCommand;
+import frc.robot.commands.Auto.BackwardsLOneBallAuto;
+// import frc.robot.commands.Auto.BackwardsOneBallAuto;
 import frc.robot.commands.Climber.ClimberCommand;
 import frc.robot.commands.Intake.Motors.IntakeForward;
 import frc.robot.commands.Intake.Motors.IntakeReverse;
@@ -57,6 +60,9 @@ public class RobotContainer {
     driveController = new BobXboxController(0, .3, .3);
     driveController.aButton.whenPressed(new IntakeToggle(intake));
     driveController.xButton.whileHeld(new LimelightAimX(drivetrain));
+    driveController.yButton.whileHeld(new LimelightAimY(drivetrain));
+    driveController.bButton.whileHeld(new DriveForwardss(drivetrain));
+
     operatorController = new BobXboxController(1, .3, .3);
     operatorController.xButton.whenPressed(new Shoot(shooter, intake));
     operatorController.yButton.whileHeld(new IntakeForward(intake));
@@ -73,7 +79,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public static Command getAutonomousCommand() {
-    return new BackwardsOneBallAuto(drivetrain, intake, shooter);
+    // return new BackwardsOneBallAuto(drivetrain, intake, shooter);
+    return new BackwardsLOneBallAuto(drivetrain, intake, shooter);
   }
 
   public static void updateSmartdashboard() {

@@ -21,26 +21,6 @@ public class LimelightAimY extends CommandBase {
    @Override
     public void execute() {
         double feet  = Distance.get();
-        // float Kp = 0.02f; 
-        // float min_command = 0.05f;
-        // float heading_error = (float)feet;
-        // float steering_adjust = 0.0f;
-        // left_command = 0;
-        // right_command = 0;
-        // if(feet > 9){
-        //     steering_adjust = Kp*heading_error + min_command;
-        //     left_command += steering_adjust;
-        //     right_command += steering_adjust;
-        //     requiredSubsystem.leftWheelsForward(left_command);
-        //     requiredSubsystem.rightWheelsForward(right_command);
-        // }
-        // if (feet < 9){
-        //     steering_adjust = Kp*heading_error + min_command;
-        //     left_command += steering_adjust;
-        //     right_command += steering_adjust;
-        //     requiredSubsystem.leftWheelsForward(-left_command);
-        //     requiredSubsystem.rightWheelsForward(-right_command);
-        // }
         if(feet > 9 && feet != 0)
         {
             requiredSubsystem.rightWheelsForward(Constants.CAT_DRIVE_SPEED);
@@ -48,8 +28,8 @@ public class LimelightAimY extends CommandBase {
         }
         else 
         {
-            requiredSubsystem.rightWheelsForward(-Constants.CAT_DRIVE_SPEED);
-            requiredSubsystem.leftWheelsForward(-Constants.CAT_DRIVE_SPEED);
+            requiredSubsystem.rightWheelsBackwards(Constants.CAT_DRIVE_SPEED);
+            requiredSubsystem.leftWheelsBackwards(Constants.CAT_DRIVE_SPEED);
         }
     }    
 

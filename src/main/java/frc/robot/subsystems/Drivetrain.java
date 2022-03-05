@@ -1,18 +1,11 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-// import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
-
-// import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-// import edu.wpi.first.wpilibj.drive.MecanumDrive;
-// import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-// import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
@@ -39,6 +32,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     private double lSetpoint = 0;
     private double lIntegral;
     private double lprevious_error;
+    @SuppressWarnings("unused")
     private double lrcw;
 
     // private double skP = Constants.SNAKEEYE_PID[0];
@@ -48,14 +42,6 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     // private double sIntegral;
     // private double sprevious_error;
     // private double srcw;
-
-    // private double akP = Constants.AUTO_PID[0];
-    // private double akI = Constants.AUTO_PID[1];
-    // private double akD = Constants.AUTO_PID[2];
-    // private double aSetpoint = 180;
-    // private double aIntegral;
-    // private double aprevious_error;
-    // private double arcw;
     
     // private PIDController OutputPID = new PIDController(lkP, lkI, lkD);
 
@@ -123,6 +109,33 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
          bottomRightMotor.set(ControlMode.PercentOutput, -rightValue + BR); 
     }
 
+    public void driveToJoy(double leftStickX, double leftStickY) {
+        double angle = ((Math.atan2(leftStickY, leftStickX))* 57);
+        if (angle <=0)
+            angle = Math.abs(angle);
+        else
+            angle = 360 - angle;
+        double power = (Math.abs(leftStickX) + Math.abs(leftStickY)) / 2; 
+        double xDir;
+        double yDir;
+        xDir = power * (Math.cos(angle));
+        yDir = power * (Math.sin(angle));
+        double dtSpeedScale = 0.0;
+        double forwardspeed = yDir * Constants.IDEAL_MECHANUM_FORWARDS * dtSpeedScale;
+        double strafeSpeed = xDir * Constants.IDEAL_MECHANUM_LEFT * dtSpeedScale;
+        double backLeftSpeed = forwardspeed - strafeSpeed;
+        double backRightSpeed = forwardspeed - strafeSpeed;
+        double frontLeftSpeed = forwardspeed + strafeSpeed;
+        double frontRightSpeed = forwardspeed + strafeSpeed;
+        topLeftMotor.set(frontLeftSpeed);
+        topRightMotor.set(frontRightSpeed);
+        bottomRightMotor.set(backRightSpeed);
+        bottomLeftMotor.set(backLeftSpeed);
+        SmartDashboard.putNumber("Angle", angle);
+        SmartDashboard.putNumber("joyx", leftStickX);
+        SmartDashboard.putNumber("joyy", leftStickY);
+    }
+
     public void leftWheelsForward(double speed){
         topLeftMotor.set(ControlMode.PercentOutput, speed);
         bottomLeftMotor.set(ControlMode.PercentOutput, speed);
@@ -131,6 +144,16 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     public void rightWheelsForward(double speed){
         topRightMotor.set(ControlMode.PercentOutput, -speed);
         bottomRightMotor.set(ControlMode.PercentOutput, -speed);
+    }
+
+    public void leftWheelsBackwards(double speed){
+        topLeftMotor.set(ControlMode.PercentOutput, -speed);
+        bottomLeftMotor.set(ControlMode.PercentOutput, -speed);
+    }
+    
+    public void rightWheelsBackwards(double speed){
+        topRightMotor.set(ControlMode.PercentOutput, speed);
+        bottomRightMotor.set(ControlMode.PercentOutput, speed);
     }
 
     public void mechanumWHeelRight(double speed){
@@ -238,12 +261,16 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
 
     @Override
     public void outputSmartdashboard() {
+        driveToJoy(RobotContainer.driveController.getX(), RobotContainer.driveController.getY());
         // SmartDashboard.putNumber("Front Right Wheel", -topRightMotor.getMotorOutputPercent());
         // SmartDashboard.putNumber("Back Left Wheel", bottomLeftMotor.getMotorOutputPercent());
         // SmartDashboard.putNumber("Back Right Wheel", -bottomRightMotor.getMotorOutputPercent());
         SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
         SmartDashboard.putNumber("Snakeye X", Lemonlight.getX());
         SmartDashboard.putNumber("Shooter Speed", Distance.ShooterSpeed());
+        SmartDashboard.putNumber("XVel", gyro.getVelocityX());
+        SmartDashboard.putNumber("YVel", gyro.getVelocityY());
+        SmartDashboard.putNumber("ZVel", gyro.getVelocityZ());
         
         if (Limelight.getV() == 1.0)
             SmartDashboard.putBoolean("HasTarget", true);
