@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
+// import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
 import frc.robot.VisionProcessing.Distance;
 import frc.robot.VisionProcessing.Limelight;
@@ -32,14 +32,14 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     public MotorControllerGroup rightMotors = new MotorControllerGroup(topRightMotor, bottomRightMotor);
     
     //Removed Current PID Implementation & Reverted to LimelightAim.java
-    double kP = 0.5;
-    private double lkP = Constants.LIMELIGHT_PID[0];
-    private double lkI = Constants.LIMELIGHT_PID[1];
-    private double lkD = Constants.LIMELIGHT_PID[2];
-    private double lSetpoint = 0;
-    private double lIntegral;
-    private double lprevious_error;
-    private double lrcw;
+    // double kP = 0.5;
+    // private double lkP = Constants.LIMELIGHT_PID[0];
+    // private double lkI = Constants.LIMELIGHT_PID[1];
+    // private double lkD = Constants.LIMELIGHT_PID[2];
+    // private double lSetpoint = 0;
+    // private double lIntegral;
+    // private double lprevious_error;
+    // private double lrcw;
 
     // private double skP = Constants.SNAKEEYE_PID[0];
     // private double skI = Constants.SNAKEEYE_PID[1];
@@ -142,7 +142,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
 
     @Override
     public void periodic() {
-        PIDL();
+        // PIDL();
         // PIDS();    
         // PIDA();
     }
@@ -267,13 +267,13 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
 
     }
 
-    public void PIDL() {
-        double error = lSetpoint - Limelight.getX();
-        this.lIntegral += (error*0.02);
-        double derivative = (error-this.lprevious_error)/0.02;
-        lrcw = lkP* error + lkI * this.lIntegral + lkD * derivative;
+    // public void PIDL() {
+    //     double error = lSetpoint - Limelight.getX();
+    //     this.lIntegral += (error*0.02);
+    //     double derivative = (error-this.lprevious_error)/0.02;
+    //     lrcw = lkP* error + lkI * this.lIntegral + lkD * derivative;
         
-    }
+    // }
 
     // public void PIDS() {
     //     double error = sSetpoint - Lemonlight.getX();

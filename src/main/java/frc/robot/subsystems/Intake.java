@@ -14,7 +14,7 @@ public class Intake extends SubsystemBase implements ISubsystem {
     private CANSparkMax intakeMotor;
     private CANSparkMax backIntakeMotor;
     private DoubleSolenoid extendPiston; 
-    private boolean Extended = false;
+    private boolean isExtended = false;
 
     public Intake(){
        intakeMotor =  new CANSparkMax(RobotMap.INTAKE_MOTOR, MotorType.kBrushless);
@@ -23,12 +23,16 @@ public class Intake extends SubsystemBase implements ISubsystem {
     }
 
     public boolean getState() {
-        return Extended;
+        return isExtended;
     }
 
-    public boolean toggleState() {
-        Extended = !Extended;
-        return Extended;
+    public void toggleState() {
+        isExtended = !isExtended;
+    }
+
+    public boolean returnandtoggleState() {
+        isExtended = !isExtended;
+        return isExtended;
     }
 
     public void extendIntake() {

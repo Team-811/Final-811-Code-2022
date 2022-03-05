@@ -18,6 +18,10 @@ public class Shoot extends SequentialCommandGroup {
     super(
       new ParallelDeadlineGroup(
         new WaitCommand(0.2),
+        new InstantCommand(() -> intake.extendIntake(), intake)
+        ), 
+      new ParallelDeadlineGroup(
+        new WaitCommand(0.2),
         new InstantCommand(() -> shoot.shooterSpin(-0.3), shoot),
         new InstantCommand(() -> intake.backSpin(-0.2), intake)
       ),
@@ -32,7 +36,11 @@ public class Shoot extends SequentialCommandGroup {
       ),
       new ShooterStop(shoot),
       new InstantCommand(() -> intake.intakeSpin(0), intake),
-      new InstantCommand(() -> intake.backSpin(0), intake)
+      new InstantCommand(() -> intake.backSpin(0), intake),
+      new ParallelDeadlineGroup(
+        new WaitCommand(0.2),
+        new InstantCommand(() -> intake.retractIntake(), intake)
+      )
     );
   }
 }

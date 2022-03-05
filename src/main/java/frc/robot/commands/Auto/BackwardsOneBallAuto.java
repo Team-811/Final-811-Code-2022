@@ -36,7 +36,8 @@ public class BackwardsOneBallAuto extends SequentialCommandGroup {
        //Disable shooter and intake                                     
       new InstantCommand(() -> shoot.shooterSpin(0), shoot),
       new InstantCommand(() -> {intake.intakeSpin(0);
-                                intake.backSpin(0);}, intake)
+                                intake.backSpin(0);}, intake),
+      new InstantCommand(() -> intake.retractIntake())    
     );
   }
 }

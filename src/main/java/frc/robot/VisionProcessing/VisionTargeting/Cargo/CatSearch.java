@@ -1,33 +1,27 @@
-package frc.robot.commands.VisionTargeting.Hub;
+package frc.robot.VisionProcessing.VisionTargeting.Cargo;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.VisionProcessing.Limelight;
+import frc.robot.VisionProcessing.Lemonlight;
 import frc.robot.subsystems.Drivetrain;
 
-public class LimelightSearch extends CommandBase{
+public class CatSearch extends CommandBase{
     
     private Drivetrain requiredSubsystem;
     private boolean found = false;
 
-
-    public LimelightSearch(Drivetrain m_SubsystemBase) {
+    public CatSearch(Drivetrain m_SubsystemBase) {
       requiredSubsystem = m_SubsystemBase;
       addRequirements(requiredSubsystem);      
     }
     
     @Override
     public void execute() {
-        double seen = Limelight.getV();
-        if (seen == 1.0)
+        boolean seen = Lemonlight.getV();
+        if (seen == true)
             found = true;
-        requiredSubsystem.turnRight(Constants.AIM_SPEED);
-        // if (RobotContainer.driveController.rightStick.getX() < 0) {
-        //     requiredSubsystem.turnLeft(Math.abs(RobotContainer.driveController.rightStick.getX()*0.6));
-        // }
-        // else if (RobotContainer.driveController.rightStick.getX() > 0) {
-        //     requiredSubsystem.turnRight(Math.abs(RobotContainer.driveController.rightStick.getX()*0.6));
-        // }
+        else
+            requiredSubsystem.turnLeft(Constants.OBJECT_AIM_SPEED);
 
     }
     @Override
