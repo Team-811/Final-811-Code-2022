@@ -23,6 +23,10 @@ public class Intake extends SubsystemBase implements ISubsystem {
     }
 
     public boolean getState() {
+        return Extended;
+    }
+
+    public boolean toggleState() {
         Extended = !Extended;
         return Extended;
     }

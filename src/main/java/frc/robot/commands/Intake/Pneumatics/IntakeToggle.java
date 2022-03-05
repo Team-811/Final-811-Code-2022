@@ -17,7 +17,7 @@ public class IntakeToggle extends CommandBase{
  
     @Override
     public void execute() {
-        if (requiredSubsystem.getState())
+        if (requiredSubsystem.toggleState())
             requiredSubsystem.retractIntake();
         else
             requiredSubsystem.extendIntake();

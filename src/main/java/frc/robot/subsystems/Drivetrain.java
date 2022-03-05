@@ -31,6 +31,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     public MotorControllerGroup leftMotors = new MotorControllerGroup(topLeftMotor, bottomLeftMotor);
     public MotorControllerGroup rightMotors = new MotorControllerGroup(topRightMotor, bottomRightMotor);
     
+    //Removed Current PID Implementation & Reverted to LimelightAim.java
     double kP = 0.5;
     private double lkP = Constants.LIMELIGHT_PID[0];
     private double lkI = Constants.LIMELIGHT_PID[1];
@@ -83,10 +84,10 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     private double SpeedScale = Constants.DRIVETRAIN_SPEED_SCALE;
 
     public void driveWithMisery(double leftStick, double rightStick, double rotation){
-        if (RobotContainer.driveController.xButton.get())
-             rotation -= lrcw *0.2;
-        // if (RobotContainer.driveController.yButton.get())
-        //      rotation -= srcw *0.2;
+        // if (RobotContainer.driveController.xButton.get())
+            //  rotation -= lrcw *0.2;
+        //// if (RobotContainer.driveController.yButton.get())
+        ////      rotation -= srcw *0.2;
         double forwardValue = leftStick * SpeedScale;
         double rotationValue = rotation * SpeedScale * 0.8;
         double leftValue = forwardValue + rotationValue;
@@ -108,9 +109,9 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     }
 
     public void driveWithMisery(double leftStick, double rightStick, double rotation, double FL, double FR, double BL, double BR){
-        if (RobotContainer.driveController.xButton.get())
-             rotation -= lrcw *0.2;
-        // if (RobotContainer.driveController.yButton.get())
+        // if (RobotContainer.driveController.xButton.get())
+            //  rotation -= lrcw *0.2;
+        //// if (RobotContainer.driveController.yButton.get())
         //      rotation -= srcw *0.13;
         double forwardValue = leftStick * SpeedScale;
         double rotationValue = rotation * SpeedScale * 0.8;

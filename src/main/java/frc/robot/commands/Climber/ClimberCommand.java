@@ -24,16 +24,16 @@ public class ClimberCommand extends CommandBase {
     m_subsystem.rightArm(RobotContainer.operatorController.rightStick.getY());
 
     if(RobotContainer.operatorController.rightBumper.get()){
-      m_subsystem.rightWinchRun(Constants.WINCH_SPEED);
-    } else if (RobotContainer.operatorController.rightTriggerButton.get()){
       m_subsystem.rightWinchRun(-Constants.WINCH_SPEED);
+    } else if (RobotContainer.operatorController.rightTriggerButton.get()){
+      m_subsystem.rightWinchRun(Constants.WINCH_SPEED);
     } else {
       m_subsystem.rightWinchRun(0);} 
     
     if(RobotContainer.operatorController.leftBumper.get()){
-      m_subsystem.leftWinchRun(Constants.WINCH_SPEED);
+      m_subsystem.leftWinchRun(-Constants.WINCH_SPEED);
     } else if (RobotContainer.operatorController.leftTriggerButton.get()){
-      m_subsystem.leftWinchRun(-Constants.WINCH_SPEED); 
+      m_subsystem.leftWinchRun(Constants.WINCH_SPEED); 
     } else {
       m_subsystem.leftWinchRun(0);}
   }

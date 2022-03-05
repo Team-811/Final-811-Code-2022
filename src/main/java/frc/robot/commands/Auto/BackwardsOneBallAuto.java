@@ -20,7 +20,7 @@ public class BackwardsOneBallAuto extends SequentialCommandGroup {
         new InstantCommand(() -> drive.driveBackwards(0.2), drive)
       ),   
       new ParallelDeadlineGroup( //Reverse Intake and Shooter
-        new WaitCommand(0.2),                                        
+        new WaitCommand(0.3),                                        
         new InstantCommand(() -> shoot.shooterSpin(-0.3), shoot),
         new InstantCommand(() -> intake.backSpin(-0.2), intake)
       ),

@@ -14,6 +14,8 @@ import frc.robot.commands.Intake.Pneumatics.IntakeToggle;
 import frc.robot.commands.Shooter.Shoot;
 import frc.robot.commands.Shooter.ShooterStop;
 import frc.robot.commands.Shooter.SlowShooter;
+import frc.robot.commands.VisionTargeting.Hub.LimelightAimX;
+import frc.robot.commands.VisionTargeting.Hub.LimelightAimY;
 import frc.robot.controllers.BobXboxController;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
@@ -54,6 +56,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     driveController = new BobXboxController(0, .3, .3);
     driveController.aButton.whenPressed(new IntakeToggle(intake));
+    driveController.xButton.whileHeld(new LimelightAimX(drivetrain));
     operatorController = new BobXboxController(1, .3, .3);
     operatorController.xButton.whenPressed(new Shoot(shooter, intake));
     operatorController.yButton.whileHeld(new IntakeForward(intake));
