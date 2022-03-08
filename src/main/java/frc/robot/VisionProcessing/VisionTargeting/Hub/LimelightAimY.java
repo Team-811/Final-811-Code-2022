@@ -1,4 +1,4 @@
-package frc.robot.commands.VisionTargeting.Hub;
+package frc.robot.VisionProcessing.VisionTargeting.Hub;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
