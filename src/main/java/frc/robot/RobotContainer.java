@@ -1,16 +1,19 @@
-package frc.robot;
+               package frc.robot;
+
+import javax.swing.JList.DropLocation;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.VisionProcessing.VisionTargeting.Hub.LimelightAimX;
 import frc.robot.VisionProcessing.VisionTargeting.Hub.LimelightAimY;
 import frc.robot.commands.DriveForwardss;
 import frc.robot.commands.DrivingCommand;
-// import frc.robot.commands.UltimateDrivingCommand;
-import frc.robot.commands.Auto.BackwardsLOneBallAuto;
-// import frc.robot.commands.Auto.BackwardsOneBallAuto;
+import frc.robot.commands.Auto.BackwardsAuto;
+import frc.robot.commands.Auto.BackwardsOneBallAuto;
+import frc.robot.commands.Auto.ForwardsAuto;
 import frc.robot.commands.Climber.ClimberCommand;
 import frc.robot.commands.Intake.IntakeForwardsPress;
 import frc.robot.commands.Intake.IntakeRelease;
@@ -25,6 +28,10 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
+
+
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -42,12 +49,24 @@ public class RobotContainer {
   public static BobXboxController driveController;
   public static BobXboxController operatorController;
 
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     drivetrain.setDefaultCommand(new DrivingCommand(drivetrain));
     climber.setDefaultCommand(new ClimberCommand(climber));
     configureButtonBindings();
+    
+    //Autonomus selection group 
+    SmartDashboard.putData("Auto mode", m_chooser);
+
+    m_chooser.setDefaultOption("back and shoot", new BackwardsOneBallAuto(drivetrain, intake, shooter));
+    m_chooser.addOption("go back", new BackwardsAuto(drivetrain));
+    m_chooser.addOption("go forward", new ForwardsAuto(drivetrain));
+    m_chooser.addOption("do nothing :(", null);
+
   }
 
   /**
@@ -80,9 +99,10 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public static Command getAutonomousCommand() {
-    // return new BackwardsOneBallAuto(drivetrain, intake, shooter);
-    return new BackwardsLOneBallAuto(drivetrain, intake, shooter);
+
+  
+  public Command getAutonomousCommand() {
+    return m_chooser.getSelected();
   }
 
   public static void updateSmartdashboard() {

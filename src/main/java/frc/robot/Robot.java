@@ -2,12 +2,11 @@ package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.VisionProcessing.Limelight;
 import frc.robot.VisionProcessing.Lemonlight;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 // import com.kauailabs.navx.frc.AHRS;
@@ -20,9 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot {
   Command m_autonomousCommand;
-  SendableChooser<Command> m_Chooser = new SendableChooser<>();
-
-
+  
   
 
   @SuppressWarnings("unused")
@@ -39,7 +36,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     CameraServer.startAutomaticCapture();
-    SmartDashboard.putData("Auto mode", m_Chooser);
 
    
 
@@ -79,34 +75,15 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     Lemonlight.setTeam();
     Limelight.On(); 
-
-    m_autonomousCommand = RobotContainer.getAutonomousCommand();
-
-
-        // m_autonomousCommand = m_Chooser.getSelected();
-
-    // m_Chooser.setDefaultOption("Back and Shoot", new BackwardsOneBallAuto(drivetrain, intake, shooter));
-    // m_Chooser.addOption("Backwards", new BackwardsAuto(drivetrain));
-    // m_Chooser.addOption("Forwards", new ForwardsAuto(drivetrain));
-    // m_Chooser.addOption("Do Nothing :(", null);
-
- 
-    // SmartDashboard.putData("Auto mode", m_Chooser);
 
     if (m_autonomousCommand != null) {
             m_autonomousCommand.schedule();
     }
-
-    
-    // m_autonomousCommand = m_chooser.getSelected();
-
-    // // schedule the autonomous command (example)
-    // if (m_autonomousCommand != null) {
-    //   m_autonomousCommand.start();      
-    // }
   }
+
 
   /** This function is called periodically during autonomous. */
   @Override
