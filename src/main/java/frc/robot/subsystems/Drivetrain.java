@@ -106,6 +106,11 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         double gyroangle = gyro.getAngle();
         double gyroscale = gyroangle % 360;
         gyroangle /= gyroscale;
+        // Add this to make gyro degree match controller degree
+        // if (gyroangle >= 270)
+	    //     gyroangle = Math.abs(270 - gyroangle);
+        // else 
+	    //     gyroangle += 90;
         return gyroangle;
     }
 
