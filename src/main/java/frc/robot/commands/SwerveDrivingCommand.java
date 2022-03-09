@@ -13,8 +13,7 @@ public class SwerveDrivingCommand extends CommandBase {
 
   @Override
   public void execute() {
-      drive.adjustRotation(RobotContainer.driveController.rightStick.getX());
-      drive.driveToJoy(RobotContainer.driveController.leftStick.getX(), RobotContainer.driveController.leftStick.getY());    
+      drive.driveToJoy(RobotContainer.driveController.leftStick.getY(), RobotContainer.driveController.leftStick.getX(), RobotContainer.driveController.rightStick.getX());  
   }
 
   @Override

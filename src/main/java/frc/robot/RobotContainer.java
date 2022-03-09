@@ -1,22 +1,15 @@
-               package frc.robot;
-
-import javax.swing.JList.DropLocation;
+package frc.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frc.robot.VisionProcessing.VisionTargeting.Hub.LimelightAimX;
-import frc.robot.VisionProcessing.VisionTargeting.Hub.LimelightAimY;
-import frc.robot.commands.DrivingCommand;
+import frc.robot.commands.SwerveDrivingCommand;
 import frc.robot.commands.Auto.BackwardsAuto;
 import frc.robot.commands.Auto.BackwardsOneBallAuto;
 import frc.robot.commands.Auto.ForwardsAuto;
 import frc.robot.commands.Climber.ClimberCommand;
-import frc.robot.commands.Intake.IntakeForwardsPress;
-import frc.robot.commands.Intake.IntakeRelease;
-import frc.robot.commands.Intake.IntakeReversePress;
 import frc.robot.commands.Intake.Motors.IntakeForward;
 import frc.robot.commands.Intake.Motors.IntakeReverse;
 import frc.robot.commands.Intake.Motors.IntakeStop;
@@ -32,7 +25,6 @@ import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 
 
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -57,7 +49,7 @@ public class RobotContainer {
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    drivetrain.setDefaultCommand(new DrivingCommand(drivetrain));
+    drivetrain.setDefaultCommand(new SwerveDrivingCommand(drivetrain));
     climber.setDefaultCommand(new ClimberCommand(climber));
     configureButtonBindings();
     
@@ -79,14 +71,10 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     driveController = new BobXboxController(0, .3, .3);
-    driveController.aButton.whenPressed(new IntakeToggle(intake));  //Left in case a problem arises on the field
-    driveController.xButton.whileHeld(new LimelightAimX(drivetrain));
-    driveController.yButton.whileHeld(new LimelightAimY(drivetrain));
+    driveController.aButton.whenPressed(new IntakeToggle(intake));
    
     operatorController = new BobXboxController(1, .3, .3);
     operatorController.xButton.whenPressed(new Shoot(shooter, intake));
-    // operatorController.yButton.whileHeld(new IntakeForward(intake));
-    // operatorController.yButton.whenReleased(new IntakeStop(intake));
     operatorController.yButton.whileHeld( new IntakeForward(intake));
     operatorController.yButton.whenReleased( new IntakeStop(intake));
     operatorController.bButton.whileHeld( new IntakeReverse(intake, shooter));
