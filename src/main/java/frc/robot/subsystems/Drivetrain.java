@@ -1,14 +1,13 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
-// import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
 import frc.robot.VisionProcessing.Distance;
 import frc.robot.VisionProcessing.Limelight;
@@ -16,32 +15,25 @@ import frc.robot.VisionProcessing.Lemonlight;
 
 public class Drivetrain extends SubsystemBase implements ISubsystem {
 
-    private WPI_TalonSRX topLeftMotor;
-    private WPI_TalonSRX topRightMotor;
-    private WPI_TalonSRX bottomLeftMotor;
-    private WPI_TalonSRX bottomRightMotor;
+    private WPI_TalonFX topLeftMotor;
+    private WPI_TalonFX topRightMotor;
+    private WPI_TalonFX bottomLeftMotor;
+    private WPI_TalonFX bottomRightMotor;
 
 
     public MotorControllerGroup leftMotors = new MotorControllerGroup(topLeftMotor, bottomLeftMotor);
     public MotorControllerGroup rightMotors = new MotorControllerGroup(topRightMotor, bottomRightMotor);
     
-    //Removed Current PID Implementation & Reverted to LimelightAim.java
-    // double kP = 0.5;
-    // private double lkP = Constants.LIMELIGHT_PID[0];
-    // private double lkI = Constants.LIMELIGHT_PID[1];
-    // private double lkD = Constants.LIMELIGHT_PID[2];
-    // private double lSetpoint = 0;
-    // private double lIntegral;
-    // private double lprevious_error;
-    // private double lrcw;
+    private double robotRotation = 0;
 
-    // private double skP = Constants.SNAKEEYE_PID[0];
-    // private double skI = Constants.SNAKEEYE_PID[1];
-    // private double skD = Constants.SNAKEEYE_PID[2];
-    // private double sSetpoint = 0;
-    // private double sIntegral;
-    // private double sprevious_error;
-    // private double srcw;
+    //Removed Current PID Implementation & Reverted to LimelightAim.java
+    double kP = 0.5;
+    private double gkP = Constants.LIMELIGHT_PID[0];
+    private double gkI = Constants.LIMELIGHT_PID[1];
+    private double gkD = Constants.LIMELIGHT_PID[2];
+    private double gIntegral;
+    private double gprevious_error;
+    private double grcw;
     
     // private PIDController OutputPID = new PIDController(lkP, lkI, lkD);
 
@@ -51,10 +43,10 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     /*A new Instance of the Drivetrain*/
     public Drivetrain(){
         resetSubsystem();
-        topLeftMotor = new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_TOP_LEFT );
-        topRightMotor= new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_TOP_RIGHT );
-        bottomLeftMotor = new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_BOTTOM_LEFT );
-        bottomRightMotor= new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_BOTTOM_RIGHT );
+        topLeftMotor = new WPI_TalonFX(RobotMap.DRIVE_TRAIN_TOP_LEFT );
+        topRightMotor= new WPI_TalonFX(RobotMap.DRIVE_TRAIN_TOP_RIGHT );
+        bottomLeftMotor = new WPI_TalonFX(RobotMap.DRIVE_TRAIN_BOTTOM_LEFT );
+        bottomRightMotor= new WPI_TalonFX(RobotMap.DRIVE_TRAIN_BOTTOM_RIGHT );
         topLeftMotor.set(ControlMode.PercentOutput, 0.0f);
         topRightMotor.set(ControlMode.PercentOutput, 0.0f);
         bottomLeftMotor.set(ControlMode.PercentOutput, 0.0f);
@@ -62,6 +54,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
 
         gyro = new AHRS();
         gyro.reset();
+        gyro.zeroYaw();
         //invertGyro(false);
         
     }
@@ -83,15 +76,6 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
          topRightMotor.set(ControlMode.PercentOutput, -rightValue);
          bottomRightMotor.set(ControlMode.PercentOutput, -rightValue); 
 
-         @SuppressWarnings("unused")
-         double correction; 
-         if (Math.abs(rotation) < 0.2) {
-             correction = gyroCorrection();
-         } else {
-             correction = 0;
-         }
-
-         prevAngle = getGyroAngle(); 
     }
 
     public void driveWithMisery(double leftStick, double rightStick, double rotation, double FL, double FR, double BL, double BR){
@@ -109,20 +93,46 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
          bottomRightMotor.set(ControlMode.PercentOutput, -rightValue + BR); 
     }
 
+    public void adjustRotation(double rightstickX) {
+        robotRotation += (rightstickX * 5);
+    }
+
     public void driveToJoy(double leftStickX, double leftStickY) {
-        double angle = ((Math.atan2(leftStickY, leftStickX))* 57);
+        double angle = ((Math.atan2(leftStickY, leftStickX))* 57);    
         if (angle <=0)
             angle = Math.abs(angle);
         else
             angle = 360 - angle;
+        //subtraction goes here
+        if(angle > 360)
+            angle -= 360;
+        if (angle < 0)
+            angle += 360;
         double power = (Math.abs(leftStickX) + Math.abs(leftStickY)) / 2; 
         double xDir;
         double yDir;
-        xDir = power * (Math.cos(angle));
-        yDir = power * (Math.sin(angle));
-        double dtSpeedScale = 0.0;
+        xDir = power * (Math.cos(angle) *(Math.PI / 180));
+        yDir = power * (Math.sin(angle) *(Math.PI / 180));
+        double dtSpeedScale = 0.1;
         double forwardspeed = yDir * Constants.IDEAL_MECHANUM_FORWARDS * dtSpeedScale;
         double strafeSpeed = xDir * Constants.IDEAL_MECHANUM_LEFT * dtSpeedScale;
+        if(angle == 0){
+            
+        }else if(angle == 90){
+
+        }else if(angle == 180){
+
+        }else if(angle == 270){
+
+        }else if(getQuad(angle) == 1){
+
+        }else if(getQuad(angle) == 2){
+
+        }else if(getQuad(angle) == 3){
+
+        }else if(getQuad(angle) == 4){
+
+        }
         double backLeftSpeed = forwardspeed - strafeSpeed;
         double backRightSpeed = forwardspeed - strafeSpeed;
         double frontLeftSpeed = forwardspeed + strafeSpeed;
@@ -134,6 +144,27 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         SmartDashboard.putNumber("Angle", angle);
         SmartDashboard.putNumber("joyx", leftStickX);
         SmartDashboard.putNumber("joyy", leftStickY);
+    }
+
+    public double getGyroAngle() {
+        double gyroangle = gyro.getAngle();
+        double gyroscale = gyroangle % 360;
+        gyroangle /= gyroscale;
+        return gyroangle;
+    }
+
+    public int getQuad(Double angle) {
+        if (angle > 0 && angle < 90)
+            return 1;
+        else if (angle > 90 && angle < 180)
+            return 2;
+        else if (angle > 180 && angle < 270)
+            return 3;
+        else if (angle > 270)
+            return 4;
+        else
+            return 0;
+             
     }
 
     public void leftWheelsForward(double speed){
@@ -165,9 +196,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
 
     @Override
     public void periodic() {
-        // PIDL();
-        // PIDS();    
-        // PIDA();
+        PIDGyro();
     }
 
     public void mechanumWHeelLeft(double speed){
@@ -228,40 +257,18 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         bottomLeftMotor.set(ControlMode.PercentOutput, speed);
     }
 
-    //gyro
-    private int gyroInversion = 1;
-    private double correctRate = 0.5;
-    private double prevAngle = 0;
-
-    public double getGyroAngle() {
-        return gyroInversion * gyro.getAngle();
+    public void PIDGyro() {
+        grcw = 0;
+        double error = robotRotation - getGyroAngle();
+        this.gIntegral += (error*0.02);
+        double derivative = (error-this.gprevious_error)/0.02;
+        grcw = gkP* error + gkI * this.gIntegral + gkD * derivative;
     }
-
-    public double getAngularVelocity() {
-        return gyroInversion * gyro.getRate();
-    }
-
-    public void gyroInvert(boolean inverted) {
-        if (inverted) {
-            gyroInversion = -1;
-        } else {
-            gyroInversion = 1;
-        }
-    }
-
-    public double gyroCorrection() {
-        return (getGyroAngle() - prevAngle) * correctRate; 
-    }
-
-    public void zeroGyro() {
-        gyro.zeroYaw();
-    }
-
     
 
     @Override
     public void outputSmartdashboard() {
-        driveToJoy(RobotContainer.driveController.getX(), RobotContainer.driveController.getY());
+        // driveToJoy(RobotContainer.driveController.getX(), RobotContainer.driveController.getY());
         // SmartDashboard.putNumber("Front Right Wheel", -topRightMotor.getMotorOutputPercent());
         // SmartDashboard.putNumber("Back Left Wheel", bottomLeftMotor.getMotorOutputPercent());
         // SmartDashboard.putNumber("Back Right Wheel", -bottomRightMotor.getMotorOutputPercent());
@@ -280,56 +287,13 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
 
     @Override
     public void zeroSensors() {
-        zeroGyro();
-
+        gyro.zeroYaw();
     }
 
     @Override
-    public void resetSubsystem() {
-        
-    }
+    public void resetSubsystem() {}
 
     @Override
-    public void testSubsystem() {
-
-    }
-
-    // public void PIDL() {
-    //     double error = lSetpoint - Limelight.getX();
-    //     this.lIntegral += (error*0.02);
-    //     double derivative = (error-this.lprevious_error)/0.02;
-    //     lrcw = lkP* error + lkI * this.lIntegral + lkD * derivative;
-        
-    // }
-
-    // public void PIDS() {
-    //     double error = sSetpoint - Lemonlight.getX();
-    //     this.sIntegral += (error*0.02);
-    //     double derivative = (error-this.sprevious_error)/0.02;
-    //     srcw = skP* error + skI * this.sIntegral + skD * derivative;
-        
-    // }
-
-    // public void PIDA() {
-    //     double error = aSetpoint - gyro.getAngle();
-    //     this.aIntegral += (error*0.02);
-    //     double derivative = (error-this.aprevious_error)/0.02;
-    //     arcw = akP* error + akI * this.aIntegral + akD * derivative;
-    // }
-
-    // public void driveAuto(){
-    //     double rotation = 3.0 - (arcw *0.2);
-    //     double rotationValue = rotation * SpeedScale * 0.8;
-    //     double leftValue = rotationValue;
-    //     double rightValue = rotationValue;
-    //      topLeftMotor.set(ControlMode.PercentOutput, leftValue);
-    //      bottomLeftMotor.set(ControlMode.PercentOutput, leftValue);
-    //      topRightMotor.set(ControlMode.PercentOutput, -rightValue);
-    //      bottomRightMotor.set(ControlMode.PercentOutput, -rightValue);
-    // }
-
-    // public void aSetpoint(int point){
-    //     aSetpoint = point;
-    // }
+    public void testSubsystem() {}
 
 }

@@ -41,7 +41,7 @@ public class Drivetrain extends SubsystemBase {
 
   private AHRS gyro;
 
-  private DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(28));//placeholder amount of inches
+  private DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(22));//placeholder amount of inches
   private DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getHeading());
 
   private SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0.268, 1.89, 0.234);

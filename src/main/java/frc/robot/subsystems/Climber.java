@@ -23,6 +23,8 @@ public class Climber extends SubsystemBase implements ISubsystem {
     leftArm = new TalonSRX(RobotMap.CLIMBER_ARM_LEFT);
     leftWinch.setNeutralMode(NeutralMode.Brake);
     rightWinch.setNeutralMode(NeutralMode.Brake);
+    rightArm.setNeutralMode(NeutralMode.Brake);
+    leftArm.setNeutralMode(NeutralMode.Brake);
   }
 
   public void leftArm(double joystick){
