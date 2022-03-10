@@ -6,7 +6,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import frc.robot.Constants;
+// import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
 import frc.robot.VisionProcessing.Distance;
@@ -23,15 +23,15 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     public MotorControllerGroup leftMotors = new MotorControllerGroup(topLeftMotor, bottomLeftMotor);
     public MotorControllerGroup rightMotors = new MotorControllerGroup(topRightMotor, bottomRightMotor);
     
-    private double robotRotation = 0;
+    // private double robotRotation = 0;
 
-    double kP = 0.5;
-    private double gkP = Constants.GYRO_PID[0];
-    private double gkI = Constants.GYRO_PID[1];
-    private double gkD = Constants.GYRO_PID[2];
-    private double gIntegral;
-    private double gprevious_error;
-    private double grcw;
+    // double kP = 0.5;
+    // private double gkP = Constants.GYRO_PID[0];
+    // private double gkI = Constants.GYRO_PID[1];
+    // private double gkD = Constants.GYRO_PID[2];
+    // private double gIntegral;
+    // private double gprevious_error;
+    // private double grcw;
 
     private double driverControllerAngle = 0;    
     
@@ -48,17 +48,23 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         bottomLeftMotor.set(ControlMode.PercentOutput, 0.0f);
         bottomRightMotor.set(ControlMode.PercentOutput, 0.0f);
 
+        topLeftMotor.setInverted(false);
+        topRightMotor.setInverted(true);
+        bottomLeftMotor.setInverted(false);
+        bottomRightMotor.setInverted(true);
+
         gyro = new AHRS();
         gyro.reset();
         gyro.zeroYaw();        
     }
 
     public void driveControllerAngle() {
-        driverControllerAngle = ((Math.atan2(RobotContainer.driveController.leftStick.getY(), RobotContainer.driveController.leftStick.getX()))* 57);    
-        if (driverControllerAngle <=0)
-            driverControllerAngle = Math.abs(driverControllerAngle);
-        else
-            driverControllerAngle = 360 - driverControllerAngle;
+        // driverControllerAngle = ((Math.atan2(RobotContainer.driveController.leftStick.getY(), RobotContainer.driveController.leftStick.getX()))* 57);    
+        // if (driverControllerAngle <=0)
+        //     driverControllerAngle = Math.abs(driverControllerAngle);
+        // else
+        //     driverControllerAngle = 360 - driverControllerAngle;
+        driverControllerAngle = (Math.atan2(RobotContainer.driveController.leftStick.getY(), RobotContainer.driveController.leftStick.getX()));
     }
 
     public void driveToJoy(double leftStickY, double leftStickX, double rotation) {
@@ -67,74 +73,51 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
             driverControllerAngle -= 360;
         if (driverControllerAngle < 0)
             driverControllerAngle += 360;
-        double power = (Math.abs(leftStickX) + Math.abs(leftStickY)) / 2; 
-        double xDir;
-        double yDir;
-        xDir = power * (Math.cos(driverControllerAngle) *(Math.PI / 180));
-        yDir = power * (Math.sin(driverControllerAngle) *(Math.PI / 180));
-        double forwardspeed = yDir * Constants.IDEAL_MECHANUM_FORWARDS * Constants.DRIVETRAIN_SPEED_SCALE;
-        double strafeSpeed = xDir * Constants.IDEAL_MECHANUM_LEFT * Constants.DRIVETRAIN_SPEED_SCALE;
-        if(driverControllerAngle == 0){
+        double power = Math.hypot(Math.abs(leftStickX), Math.abs(leftStickY)); 
 
-        } else if (driverControllerAngle == 90){
+        double angle = driverControllerAngle - gyro.getAngle();
+        
+        double ADPower = power * Math.sqrt(2) * 0.5 * (Math.sin(angle) + Math.cos(angle));
+        double BCPower = power * Math.sqrt(2) * 0.5 * (Math.sin(angle) - Math.cos(angle));
 
-        } else if (driverControllerAngle == 180){
+        // check if turning power will interfere with normal translation
+        // check ADPower to see if trying to apply turnPower would put motor power over 1.0 or under -1.0
+        double turningScale = Math.max(Math.abs(ADPower + rotation), Math.abs(ADPower - rotation));
+        // check BCPower to see if trying to apply turnPower would put motor power over 1.0 or under -1.0
+        turningScale = Math.max(turningScale, Math.max(Math.abs(BCPower + rotation), Math.abs(BCPower - rotation)));
 
-        } else if (driverControllerAngle == 270){
-
-        } else if (getQuad(driverControllerAngle) == 1){
-
-        } else if (getQuad(driverControllerAngle) == 2){
-
-        } else if (getQuad(driverControllerAngle) == 3){
-
-        } else if (getQuad(driverControllerAngle) == 4){
-
+        // adjust turn power scale correctly
+        if (Math.abs(turningScale) < 1.0)
+        {
+            turningScale = 1.0;
         }
-        rotation -= grcw;
-        double backLeftSpeed = forwardspeed - strafeSpeed;
-        double backRightSpeed = forwardspeed - strafeSpeed;
-        double frontLeftSpeed = forwardspeed + strafeSpeed;
-        double frontRightSpeed = forwardspeed + strafeSpeed;
-        topLeftMotor.set(ControlMode.PercentOutput, frontLeftSpeed);
-        topRightMotor.set(ControlMode.PercentOutput, frontRightSpeed);
-        bottomRightMotor.set(ControlMode.PercentOutput, backRightSpeed);
-        bottomLeftMotor.set(ControlMode.PercentOutput, backLeftSpeed);
+
+        // set the motors, and divide them by turningScale to make sure none of them go over the top, which would alter the translation angle
+        topLeftMotor.set(ControlMode.PercentOutput, (ADPower - turningScale) / turningScale);
+        bottomLeftMotor.set(ControlMode.PercentOutput, (BCPower - turningScale) / turningScale);
+        topRightMotor.set(ControlMode.PercentOutput, (BCPower + turningScale) / turningScale);
+        bottomRightMotor.set(ControlMode.PercentOutput, (ADPower + turningScale) / turningScale);
     }
 
-    public double getGyroAngle() {
-        double gyroangle = gyro.getAngle();
-        double gyroscale = gyroangle % 360;
-        gyroangle /= gyroscale;
-        // Add this to make gyro degree match controller degree
-        // if (gyroangle >= 270)
-	    //     gyroangle = Math.abs(270 - gyroangle);
-        // else 
-	    //     gyroangle += 90;
-        return gyroangle;
-    }
+    // public double getGyroAngle() {
+    //     double gyroangle = gyro.getAngle();
+    //     double gyroscale = gyroangle % 360;
+    //     gyroangle /= gyroscale;
+    //     // Add this to make gyro degree match controller degree
+    //     if (gyroangle >= 270)
+	//         gyroangle = Math.abs(270 - gyroangle);
+    //     else 
+	//         gyroangle += 90;
+    //     return gyroangle;
+    // }
 
-    public int getQuad(Double angle) {
-        if (angle > 0 && angle < 90)
-            return 1;
-        else if (angle > 90 && angle < 180)
-            return 2;
-        else if (angle > 180 && angle < 270)
-            return 3;
-        else if (angle > 270)
-            return 4;
-        else
-            return 0;
-             
-    }
-
-    public void PIDGyro() {
-        grcw = 0;
-        double error = robotRotation - getGyroAngle();
-        this.gIntegral += (error*0.02);
-        double derivative = (error-this.gprevious_error)/0.02;
-        grcw = gkP* error + gkI * this.gIntegral + gkD * derivative;
-    }
+    // public void PIDGyro() {
+    //     grcw = 0;
+    //     double error = robotRotation - getGyroAngle();
+    //     this.gIntegral += (error*0.02);
+    //     double derivative = (error-this.gprevious_error)/0.02;
+    //     grcw = gkP* error + gkI * this.gIntegral + gkD * derivative;
+    // }
 
     public void driveForward(double speed){
         topLeftMotor.set(ControlMode.PercentOutput, speed);
@@ -168,7 +151,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
 
     @Override
     public void periodic() {
-        PIDGyro();
+        // PIDGyro();
         driveControllerAngle();
     }
 
