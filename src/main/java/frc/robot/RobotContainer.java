@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frc.robot.commands.SwerveDrivingCommand;
+import frc.robot.commands.DrivingCommand;
 import frc.robot.commands.Auto.BackwardsAuto;
 import frc.robot.commands.Auto.BackwardsOneBallAuto;
 import frc.robot.commands.Auto.ForwardsAuto;
@@ -49,7 +49,7 @@ public class RobotContainer {
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    drivetrain.setDefaultCommand(new SwerveDrivingCommand(drivetrain));
+    drivetrain.setDefaultCommand(new DrivingCommand(drivetrain));
     climber.setDefaultCommand(new ClimberCommand(climber));
     configureButtonBindings();
     
