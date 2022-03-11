@@ -6,6 +6,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+// import frc.robot.Robot;
 // import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
@@ -59,20 +60,23 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     }
 
     public void driveControllerAngle() {
-        // driverControllerAngle = ((Math.atan2(RobotContainer.driveController.leftStick.getY(), RobotContainer.driveController.leftStick.getX()))* 57);    
-        // if (driverControllerAngle <=0)
-        //     driverControllerAngle = Math.abs(driverControllerAngle);
-        // else
-        //     driverControllerAngle = 360 - driverControllerAngle;
-        driverControllerAngle = (Math.atan2(RobotContainer.driveController.leftStick.getY(), RobotContainer.driveController.leftStick.getX()));
+        driverControllerAngle = ((Math.atan2(RobotContainer.driveController.leftStick.getY(), RobotContainer.driveController.leftStick.getX()))* 57);    
+        if (driverControllerAngle <=0)
+            driverControllerAngle = Math.abs(driverControllerAngle);
+        else
+            driverControllerAngle = 360 - driverControllerAngle;
+
+        // driverControllerAngle = (Math.atan2(-RobotContainer.driveController.leftStick.getY(), RobotContainer.driveController.leftStick.getX()));
+        // if (RobotContainer.driveController.leftStick.getX() < 0.03 && -RobotContainer.driveController.leftStick.getY() < 0.03 && RobotContainer.driveController.leftStick.getX() > -0.03 && -RobotContainer.driveController.leftStick.getY() > -0.03) {
+        //     driverControllerAngle = 0;
+        
+
+        SmartDashboard.putNumber("X", RobotContainer.driveController.leftStick.getX());
+        SmartDashboard.putNumber("Y", -RobotContainer.driveController.leftStick.getY());
     }
 
     public void driveToJoy(double leftStickY, double leftStickX, double rotation) {
-        //subtraction goes here
-        if(driverControllerAngle > 360)
-            driverControllerAngle -= 360;
-        if (driverControllerAngle < 0)
-            driverControllerAngle += 360;
+        
         double power = Math.hypot(Math.abs(leftStickX), Math.abs(leftStickY)); 
 
         double angle = driverControllerAngle - gyro.getAngle();
@@ -99,17 +103,17 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         bottomRightMotor.set(ControlMode.PercentOutput, (ADPower + turningScale) / turningScale);
     }
 
-    // public double getGyroAngle() {
-    //     double gyroangle = gyro.getAngle();
-    //     double gyroscale = gyroangle % 360;
-    //     gyroangle /= gyroscale;
-    //     // Add this to make gyro degree match controller degree
-    //     if (gyroangle >= 270)
-	//         gyroangle = Math.abs(270 - gyroangle);
-    //     else 
-	//         gyroangle += 90;
-    //     return gyroangle;
-    // }
+    public double getGyroAngle() {
+        double gyroangle = gyro.getAngle();
+        double gyroscale = gyroangle % 360;
+        gyroangle /= gyroscale;
+        // Add this to make gyro degree match controller degree
+        if (gyroangle >= 270)
+	        gyroangle = Math.abs(270 - gyroangle);
+        else 
+	        gyroangle += 90;
+        return gyroangle;
+    }
 
     // public void PIDGyro() {
     //     grcw = 0;
