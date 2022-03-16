@@ -13,7 +13,7 @@ public class RobotMap {
 
     //Intake
     public static final int INTAKE_MOTOR = 9;
-    public static final int INTAKE_BACK_MOTOR = 8;
+    public static final int INTAKE_BACK_MOTOR = 7;
     public static final int LIMIT_SWITCH = 0;
 
     //Pneumatics

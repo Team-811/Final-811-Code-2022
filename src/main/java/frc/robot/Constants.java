@@ -21,7 +21,7 @@ public final class Constants {
     public static final double AUTO_SPEED = 0.2;
 
     //Intake
-    public static final double STORAGE_SPEED = 0.3; 
+    public static final double STORAGE_SPEED = 0.5; 
     public static final double INTAKE_SPEED = 0.35;
 
     //Shooter

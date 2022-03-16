@@ -92,6 +92,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    m_robotContainer.resetClimber();
     Limelight.On();
     Lemonlight.setTeam();
     // This makes sure that the autonomous stops running when
@@ -106,7 +107,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    Limelight.On();
+    Limelight.Off();
   }
 
   @Override

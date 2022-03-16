@@ -17,7 +17,7 @@ public class SlowShooter extends CommandBase {
  
    @Override
    public void execute() {
-      requiredSubsystem.shooterSpin(-((Constants.SHOOTER_SPEED / 2) + 0.05));
+      requiredSubsystem.shooterSpin(/*-((Constants.SHOOTER_SPEED / 2) + 0.05)*/-Constants.SHOOTER_SPEED);
 }
  
    @Override

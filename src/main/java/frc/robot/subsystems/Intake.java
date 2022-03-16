@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -12,13 +14,13 @@ import frc.robot.RobotMap;
 public class Intake extends SubsystemBase implements ISubsystem {
 
     private CANSparkMax intakeMotor;
-    private CANSparkMax backIntakeMotor;
+    private TalonSRX backIntakeMotor;
     private DoubleSolenoid extendPiston; 
     private boolean isExtended = false;
 
     public Intake(){
        intakeMotor =  new CANSparkMax(RobotMap.INTAKE_MOTOR, MotorType.kBrushless);
-       backIntakeMotor = new CANSparkMax(RobotMap.INTAKE_BACK_MOTOR, MotorType.kBrushless);
+       backIntakeMotor = new TalonSRX(RobotMap.INTAKE_BACK_MOTOR);
        extendPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.INTAKE_PISTON_EXTENTION, RobotMap.INTAKE_PISTON_RETRACTION);
     }
 
@@ -56,11 +58,11 @@ public class Intake extends SubsystemBase implements ISubsystem {
     }
 
     public void backSpin(double speed){
-        backIntakeMotor.set(speed);
+        backIntakeMotor.set(ControlMode.PercentOutput, speed);
     }
 
     public void backStop(){
-        backIntakeMotor.set(0);
+        backIntakeMotor.set(ControlMode.PercentOutput, 0);
     }
 
     @Override

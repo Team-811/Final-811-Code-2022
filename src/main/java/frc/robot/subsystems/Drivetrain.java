@@ -11,6 +11,7 @@ import com.kauailabs.navx.frc.AHRS;
 // import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+// import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 import frc.robot.Constants;
@@ -27,6 +28,8 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     private WPI_TalonSRX bottomLeftMotor;
     private WPI_TalonSRX bottomRightMotor;
 
+    // private  PIDController LimeXPID = new PIDController(0.04, 0, 0, 0.02);
+    
 
     public MotorControllerGroup leftMotors = new MotorControllerGroup(topLeftMotor, bottomLeftMotor);
     public MotorControllerGroup rightMotors = new MotorControllerGroup(topRightMotor, bottomRightMotor);
@@ -88,6 +91,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
             //  rotation -= lrcw *0.2;
         //// if (RobotContainer.driveController.yButton.get())
         ////      rotation -= srcw *0.2;
+        // double xPIDSpeed = LimeXPID.calculate(Limelight.getX(), 0);
         double forwardValue = leftStick * SpeedScale;
         double rotationValue = rotation * SpeedScale * 0.8;
         double leftValue = forwardValue + rotationValue;

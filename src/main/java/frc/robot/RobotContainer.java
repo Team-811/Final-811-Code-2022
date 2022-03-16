@@ -5,13 +5,17 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+// import frc.robot.VisionProcessing.Limelight;
+import frc.robot.VisionProcessing.VisionTargeting.Hub.LimelightAim;
 import frc.robot.commands.DrivingCommand;
 import frc.robot.commands.Auto.BackwardsAuto;
+import frc.robot.commands.Auto.BackwardsLOneBallAuto;
 import frc.robot.commands.Auto.BackwardsOneBallAuto;
 import frc.robot.commands.Auto.ForwardsAuto;
 import frc.robot.commands.Climber.ClimberCommand;
+import frc.robot.commands.Climber.ClimberStep;
 import frc.robot.commands.Intake.Motors.IntakeForward;
-import frc.robot.commands.Intake.Motors.IntakeReverse;
+// import frc.robot.commands.Intake.Motors.IntakeReverse;
 import frc.robot.commands.Intake.Motors.IntakeStop;
 import frc.robot.commands.Intake.Pneumatics.IntakeToggle;
 import frc.robot.commands.Shooter.Shoot;
@@ -57,6 +61,7 @@ public class RobotContainer {
     SmartDashboard.putData("Auto mode", m_chooser);
 
     m_chooser.setDefaultOption("back and shoot", new BackwardsOneBallAuto(drivetrain, intake, shooter));
+    m_chooser.addOption("🍆 lower hub and back", new BackwardsLOneBallAuto(drivetrain, intake, shooter));
     m_chooser.addOption("go back", new BackwardsAuto(drivetrain));
     m_chooser.addOption("go forward", new ForwardsAuto(drivetrain));
     m_chooser.addOption("do nothing :(", null);
@@ -72,13 +77,13 @@ public class RobotContainer {
   private void configureButtonBindings() {
     driveController = new BobXboxController(0, .3, .3);
     driveController.aButton.whenPressed(new IntakeToggle(intake));
-   
+    driveController.xButton.whileHeld(new LimelightAim(drivetrain));
+
     operatorController = new BobXboxController(1, .3, .3);
     operatorController.xButton.whenPressed(new Shoot(shooter, intake));
     operatorController.yButton.whileHeld( new IntakeForward(intake));
     operatorController.yButton.whenReleased( new IntakeStop(intake));
-    operatorController.bButton.whileHeld( new IntakeReverse(intake, shooter));
-    operatorController.bButton.whenReleased(new IntakeStop(intake));
+    operatorController.bButton.whenPressed( new ClimberStep(climber));
     operatorController.aButton.whileHeld(new SlowShooter(shooter));
     operatorController.aButton.whenReleased(new ShooterStop(shooter));
   }
@@ -88,7 +93,9 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-
+  public void resetClimber(){
+    climber.resetStep();
+  }
   
   public Command getAutonomousCommand() {
     return m_chooser.getSelected();
