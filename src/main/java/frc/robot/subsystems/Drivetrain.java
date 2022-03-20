@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 // import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
 import frc.robot.VisionProcessing.Distance;
@@ -36,13 +37,21 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     
     //Removed Current PID Implementation & Reverted to LimelightAim.java
     // double kP = 0.5;
-    // private double lkP = Constants.LIMELIGHT_PID[0];
-    // private double lkI = Constants.LIMELIGHT_PID[1];
-    // private double lkD = Constants.LIMELIGHT_PID[2];
-    // private double lSetpoint = 0;
-    // private double lIntegral;
-    // private double lprevious_error;
-    // private double lrcw;
+    // private double lxkP = Constants.LIMELIGHT_PID_X[0];
+    // private double lxkI = Constants.LIMELIGHT_PID_X[1];
+    // private double lxkD = Constants.LIMELIGHT_PID_X[2];
+    // private double lxSetpoint = 0;
+    // private double lxIntegral;
+    // private double lxprevious_error;
+    // private double lxrcw;
+
+    // private double lykP = Constants.LIMELIGHT_PID_Y[0];
+    // private double lykI = Constants.LIMELIGHT_PID_Y[1];
+    // private double lykD = Constants.LIMELIGHT_PID_Y[2];
+    // private double lySetpoint = 8.5;
+    // private double lyIntegral;
+    // private double lyprevious_error;
+    // private double lyrcw;
 
     // private double skP = Constants.SNAKEEYE_PID[0];
     // private double skI = Constants.SNAKEEYE_PID[1];
@@ -60,7 +69,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     // private double aprevious_error;
     // private double arcw;
     
-    // private PIDController OutputPID = new PIDController(lkP, lkI, lkD);
+    // private PIDController OutputPID = new PIDController(lxkP, lkI, lkD);
 
     //private MecanumDrive driveTrain = new MecanumDrive(topLeftMotor, bottomLeftMotor, topRightMotor, bottomRightMotor);
     private AHRS gyro;
@@ -88,10 +97,11 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
 
     public void driveWithMisery(double leftStick, double rightStick, double rotation){
         // if (RobotContainer.driveController.xButton.get())
-            //  rotation -= lrcw *0.2;
-        //// if (RobotContainer.driveController.yButton.get())
-        ////      rotation -= srcw *0.2;
+        //      rotation -= lxrcw *0.2;
+        // if (RobotContainer.driveController.yButton.get())
+        //      leftStick -= lyrcw *0.02;
         // double xPIDSpeed = LimeXPID.calculate(Limelight.getX(), 0);
+        
         double forwardValue = leftStick * SpeedScale;
         double rotationValue = rotation * SpeedScale * 0.8;
         double leftValue = forwardValue + rotationValue;
@@ -101,20 +111,23 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
          topRightMotor.set(ControlMode.PercentOutput, -rightValue);
          bottomRightMotor.set(ControlMode.PercentOutput, -rightValue); 
 
-         @SuppressWarnings("unused")
-         double correction; 
-         if (Math.abs(rotation) < 0.2) {
-             correction = gyroCorrection();
-         } else {
-             correction = 0;
-         }
+        //  @SuppressWarnings("unused")
+        //  double correction; 
+        //  if (Math.abs(rotation) < 0.2) {
+        //      correction = gyroCorrection();
+        //  } else {
+        //      correction = 0;
+        //  }
 
-         prevAngle = getGyroAngle(); 
+        //  prevAngle = getGyroAngle(); 
     }
 
     public void driveWithMisery(double leftStick, double rightStick, double rotation, double FL, double FR, double BL, double BR){
         // if (RobotContainer.driveController.xButton.get())
-            //  rotation -= lrcw *0.2;
+        //      rotation -= lxrcw *0.2;
+        // if (RobotContainer.driveController.yButton.get())
+        //      leftStick -= lyrcw *0.02;
+
         //// if (RobotContainer.driveController.yButton.get())
         //      rotation -= srcw *0.13;
         double forwardValue = leftStick * SpeedScale;
@@ -146,7 +159,8 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
 
     @Override
     public void periodic() {
-        // PIDL();
+        // PIDLX();
+        // PIDLY();
         // PIDS();    
         // PIDA();
     }
@@ -210,33 +224,33 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     }
 
     //gyro
-    private int gyroInversion = 1;
-    private double correctRate = 0.5;
-    private double prevAngle = 0;
+    // private int gyroInversion = 1;
+    // private double correctRate = 0.5;
+    // private double prevAngle = 0;
 
-    public double getGyroAngle() {
-        return gyroInversion * gyro.getAngle();
-    }
+    // public double getGyroAngle() {
+    //     return gyroInversion * gyro.getAngle();
+    // }
 
-    public double getAngularVelocity() {
-        return gyroInversion * gyro.getRate();
-    }
+    // public double getAngularVelocity() {
+    //     return gyroInversion * gyro.getRate();
+    // }
 
-    public void gyroInvert(boolean inverted) {
-        if (inverted) {
-            gyroInversion = -1;
-        } else {
-            gyroInversion = 1;
-        }
-    }
+    // public void gyroInvert(boolean inverted) {
+    //     if (inverted) {
+    //         gyroInversion = -1;
+    //     } else {
+    //         gyroInversion = 1;
+    //     }
+    // }
 
-    public double gyroCorrection() {
-        return (getGyroAngle() - prevAngle) * correctRate; 
-    }
+    // public double gyroCorrection() {
+    //     return (getGyroAngle() - prevAngle) * correctRate; 
+    // }
 
-    public void zeroGyro() {
-        gyro.zeroYaw();
-    }
+    // public void zeroGyro() {
+    //     gyro.zeroYaw();
+    // }
 
     
 
@@ -257,7 +271,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
 
     @Override
     public void zeroSensors() {
-        zeroGyro();
+        // zeroGyro();
 
     }
 
@@ -271,11 +285,19 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
 
     }
 
-    // public void PIDL() {
-    //     double error = lSetpoint - Limelight.getX();
-    //     this.lIntegral += (error*0.02);
-    //     double derivative = (error-this.lprevious_error)/0.02;
-    //     lrcw = lkP* error + lkI * this.lIntegral + lkD * derivative;
+    // public void PIDLX() {
+    //     double error = lxSetpoint - Limelight.getX();
+    //     this.lxIntegral += (error*0.02);
+    //     double derivative = (error-this.lxprevious_error)/0.02;
+    //     lxrcw = lxkP* error + lxkI * this.lxIntegral + lxkD * derivative;
+        
+    // }
+
+    // public void PIDLY() {
+    //     double error = lySetpoint - Distance.get();
+    //     this.lyIntegral += (error*0.02);
+    //     double derivative = (error-this.lyprevious_error)/0.02;
+    //     lyrcw = lykP* error + lykI * this.lyIntegral + lykD * derivative;
         
     // }
 

@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants;
 // import frc.robot.VisionProcessing.Distance;
 import frc.robot.commands.Intake.Motors.IntakeForward;
 import frc.robot.subsystems.Intake;
@@ -12,7 +13,7 @@ import frc.robot.subsystems.Shooter;
 
 public class Shoot extends SequentialCommandGroup {
   
-  private static double speed = 0.75;//Distance.get() * SmartDashboard.getNumber("Shooter Scale", 0.38) * 0.1; //.038
+  private static double speed = Constants.SHOOTER_SPEED;//Distance.get() * SmartDashboard.getNumber("Shooter Scale", 0.38) * 0.1; //.038
 
   public Shoot(Shooter shoot, Intake intake) {
     super(
@@ -23,7 +24,7 @@ public class Shoot extends SequentialCommandGroup {
       new ParallelDeadlineGroup(
         new WaitCommand(0.2),
         new InstantCommand(() -> shoot.shooterSpin(0.3), shoot),
-        new InstantCommand(() -> intake.backSpin(-0.2), intake)
+        new InstantCommand(() -> intake.backSpin(-0.4), intake)
       ),
       new ParallelDeadlineGroup(
         new WaitCommand(1.5),

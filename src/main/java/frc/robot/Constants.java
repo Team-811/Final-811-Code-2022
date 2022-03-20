@@ -16,16 +16,17 @@ public final class Constants {
     
     //limelight
     public static final double OBJECT_AIM_SPEED = 0.4;   
-    public static final double CAT_DRIVE_SPEED = 0.4;
-    public static final double[] LIMELIGHT_PID = {0.004, 0.02, 0.004};
+    public static final double CAT_DRIVE_SPEED = 0.15;
+    public static final double[] LIMELIGHT_PID_X = {0.004, 0.02, 0.004};
+    public static final double[] LIMELIGHT_PID_Y = {0.002, 0.02, 0.004};
     public static final double AUTO_SPEED = 0.2;
 
     //Intake
-    public static final double STORAGE_SPEED = 0.5; 
-    public static final double INTAKE_SPEED = 0.35;
+    public static final double STORAGE_SPEED = 0.4; 
+    public static final double INTAKE_SPEED = 0.45;
 
     //Shooter
-    public static final double SHOOTER_SPEED = 0.87; 
+    public static final double SHOOTER_SPEED = 0.9; 
 
     //Climber
     public static final double ARM_SPEED_SCALE = 0.8;

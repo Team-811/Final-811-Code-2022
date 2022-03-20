@@ -19,7 +19,7 @@ public class IntakeForward extends CommandBase {
   @Override
   public void execute() {
     requiredSubsystem.intakeSpin(Constants.INTAKE_SPEED);
-    // requiredSubsystem.backSpin(Constants.STORAGE_SPEED);
+    requiredSubsystem.backSpin(Constants.STORAGE_SPEED);
   }
  
   @Override

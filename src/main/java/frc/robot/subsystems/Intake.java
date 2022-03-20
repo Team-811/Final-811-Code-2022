@@ -22,6 +22,7 @@ public class Intake extends SubsystemBase implements ISubsystem {
        intakeMotor =  new CANSparkMax(RobotMap.INTAKE_MOTOR, MotorType.kBrushless);
        backIntakeMotor = new TalonSRX(RobotMap.INTAKE_BACK_MOTOR);
        extendPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.INTAKE_PISTON_EXTENTION, RobotMap.INTAKE_PISTON_RETRACTION);
+       backIntakeMotor.setInverted(true);
     }
 
     public boolean getState() {

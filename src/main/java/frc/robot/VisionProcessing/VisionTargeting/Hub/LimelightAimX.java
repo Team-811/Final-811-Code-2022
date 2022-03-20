@@ -52,14 +52,14 @@ public class LimelightAimX extends CommandBase {
             return true;
         }
         double x = Limelight.getX();
-        if(x >= -2.0 && x <= 2.0 && x !=0.0)
+        if(x >= -1.0 && x <= 1.0 && x !=0.0)
         {
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (x >= -3.0 && x <= 3.0 && x !=0.0)
+            if (x >= -1.0 && x <= 1.0 && x !=0.0)
                 return true;
         }
         return false;    
