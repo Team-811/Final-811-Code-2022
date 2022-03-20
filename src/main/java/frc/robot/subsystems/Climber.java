@@ -61,13 +61,13 @@ public class Climber extends SubsystemBase implements ISubsystem {
     return Step;
   }
 
-  public void runStepper(){
+  public void  runStepper(){
     //Negative is left on diagram for arms, positive extends the winches
     if(Step==1){
-      this.leftArm(-1);
+      this.leftArm(1);
     }else if(Step==2){
-      this.leftArm(-1);
-      this.leftWinchRun(Constants.WINCH_SPEED);
+      this.leftArm(1);
+      this.leftWinchRun(-Constants.WINCH_SPEED);
     }else if(Step==3){
       this.leftArm(1);
       this.rightArm(-1);
@@ -75,78 +75,77 @@ public class Climber extends SubsystemBase implements ISubsystem {
     else if(Step==4){
       this.leftArm(1);
       this.rightArm(-1);
-      this.leftWinchRun(-Constants.WINCH_SPEED);
-      this.rightWinchRun(Constants.WINCH_SPEED);
+      this.leftWinchRun(Constants.WINCH_SPEED);
+      // this.rightWinchRun(Constants.WINCH_SPEED);
     }
     else if(Step==5){
       this.stopClimbers(0);
     }
     else if(Step==6){
-      this.rightArm(-1);
-    }
-    else if(Step==7){
-      this.rightArm(-1);
       this.rightWinchRun(-Constants.WINCH_SPEED);
     }
     else if(Step==7){
-      this.leftArm(-1);
+      this.leftArm(1);
+    }
+    else if(Step==7){
+      this.rightArm(-1);
       this.rightWinchRun(Constants.WINCH_SPEED);
-      this.leftWinchRun(-Constants.WINCH_SPEED);
-    }
-    else if(Step==8){
-      this.leftArm(-1);
-    }
-    else if(Step==9){
-      this.leftWinchRun(-Constants.WINCH_SPEED);
-    }
-    else if(Step==10){
-      this.leftArm(-1);
       this.leftWinchRun(Constants.WINCH_SPEED);
-    }else if(Step==11){
-      this.leftArm(1);
-    }else if(Step==12){
-      this.leftArm(1);
-      this.leftWinchRun(-Constants.WINCH_SPEED);
-      this.rightArm(1);
-    }else if(Step==13){
-      this.rightArm(1);
-      this.rightWinchRun(-Constants.WINCH_SPEED);
     }
-    else if(Step==14){
-      this.stopClimbers(0);
-    }
-    else if(Step==15){
-      this.rightArm(-1);
-    }
-    else if(Step==16){
-      this.rightArm(-1);
-      this.rightWinchRun(-Constants.WINCH_SPEED);
-    }
-    else if(Step==17){
-      this.leftArm(-1);
-      this.rightWinchRun(Constants.WINCH_SPEED);
-      this.leftWinchRun(-Constants.WINCH_SPEED);
-    }
-    else if(Step==18){
-      this.leftArm(-1);
-    }
-    else if(Step==19){
-      this.leftWinchRun(-Constants.WINCH_SPEED);
-    }
-    else if(Step==20){
-      this.leftArm(-1);
-      this.leftWinchRun(Constants.WINCH_SPEED);
-    }else if(Step==21){
-      this.leftArm(1);
-    }else if(Step==22){
-      this.leftArm(1);
-      this.rightArm(-1);
-      this.leftWinchRun(-Constants.WINCH_SPEED);
-    }else if(Step==23){
-      this.rightArm(-1);
-      this.leftArm(1);
-      this.rightWinchRun(-Constants.WINCH_SPEED);
-    }
+    // else if(Step==8){
+    //   this.leftArm(-1);
+    // }
+    // else if(Step==9){
+    //   this.leftWinchRun(Constants.WINCH_SPEED);
+    // }
+    // else if(Step==10){
+    //   this.leftArm(-1);
+    //   this.leftWinchRun(-Constants.WINCH_SPEED);
+    // }else if(Step==11){
+    //   this.leftArm(1);
+    // }else if(Step==12){
+    //   this.leftArm(1);
+    //   this.leftWinchRun(Constants.WINCH_SPEED);
+    //   this.rightArm(1);
+    // }else if(Step==13){
+    //   this.rightArm(1);
+    //   this.rightWinchRun(-Constants.WINCH_SPEED);
+    // }
+    // else if(Step==14){
+    //   this.stopClimbers(0);
+    // }
+    // else if(Step==15){
+    //   this.rightArm(-1);
+    // }
+    // else if(Step==16){
+    //   this.rightArm(-1);
+    //   this.rightWinchRun(-Constants.WINCH_SPEED);
+    // }
+    // else if(Step==17){
+    //   this.leftArm(-1);
+    //   this.rightWinchRun(Constants.WINCH_SPEED);
+    //   this.leftWinchRun(Constants.WINCH_SPEED);
+    // }
+    // else if(Step==18){
+    //   this.leftArm(-1);
+    // }
+    // else if(Step==19){
+    //   this.leftWinchRun(Constants.WINCH_SPEED);
+    // }
+    // else if(Step==20){
+    //   this.leftArm(-1);
+    //   this.leftWinchRun(-Constants.WINCH_SPEED);
+    // }else if(Step==21){
+    //   this.leftArm(1);
+    // }else if(Step==22){
+    //   this.leftArm(1);
+    //   this.rightArm(-1);
+    //   this.leftWinchRun(Constants.WINCH_SPEED);
+    // }else if(Step==23){
+    //   this.rightArm(-1);
+    //   this.leftArm(1);
+    //   this.rightWinchRun(-Constants.WINCH_SPEED);
+    // }
     else{
       Step=0;
     }
