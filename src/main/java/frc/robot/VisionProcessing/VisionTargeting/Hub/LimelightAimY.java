@@ -21,6 +21,11 @@ public class LimelightAimY extends CommandBase {
    @Override
     public void execute() {
         double feet  = Distance.get();
+        if (feet > 8.6 && feet < 8.8)
+        {
+            requiredSubsystem.rightWheelsForward(0);
+            requiredSubsystem.leftWheelsForward(0);
+        }
         if(feet > 8.7 && feet != 0)
         {
             requiredSubsystem.rightWheelsForward(Constants.CAT_DRIVE_SPEED);

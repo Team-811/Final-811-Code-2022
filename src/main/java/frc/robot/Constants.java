@@ -16,7 +16,7 @@ public final class Constants {
     
     //limelight
     public static final double OBJECT_AIM_SPEED = 0.4;   
-    public static final double CAT_DRIVE_SPEED = 0.15;
+    public static final double CAT_DRIVE_SPEED = 0.1;
     public static final double[] LIMELIGHT_PID_X = {0.004, 0.02, 0.004};
     public static final double[] LIMELIGHT_PID_Y = {0.002, 0.02, 0.004};
     public static final double AUTO_SPEED = 0.2;

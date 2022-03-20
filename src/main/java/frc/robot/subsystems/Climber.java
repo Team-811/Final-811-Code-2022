@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
@@ -64,16 +65,16 @@ public class Climber extends SubsystemBase implements ISubsystem {
   public void  runStepper(){
     //Negative is left on diagram for arms, positive extends the winches
     if(Step==1){
-      this.leftArm(1);
+      // this.leftArm(1);
     }else if(Step==2){
-      this.leftArm(1);
+      // this.leftArm(1);
       this.leftWinchRun(-Constants.WINCH_SPEED);
     }else if(Step==3){
-      this.leftArm(1);
+      // this.leftArm(1);
       this.rightArm(-1);
     }
     else if(Step==4){
-      this.leftArm(1);
+      // this.leftArm(1);
       this.rightArm(-1);
       this.leftWinchRun(Constants.WINCH_SPEED);
       // this.rightWinchRun(Constants.WINCH_SPEED);
@@ -86,11 +87,15 @@ public class Climber extends SubsystemBase implements ISubsystem {
     }
     else if(Step==7){
       this.leftArm(1);
-    }
-    else if(Step==7){
-      this.rightArm(-1);
+      new WaitCommand(2);
       this.rightWinchRun(Constants.WINCH_SPEED);
-      this.leftWinchRun(Constants.WINCH_SPEED);
+    }
+    else if(Step==8){
+      this.leftArm(1);
+      this.rightArm(-1);
+      this.leftWinchRun(-Constants.WINCH_SPEED);
+      new WaitCommand(1);
+      this.rightWinchRun(Constants.WINCH_SPEED);
     }
     // else if(Step==8){
     //   this.leftArm(-1);
