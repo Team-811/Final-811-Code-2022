@@ -1,6 +1,10 @@
 package frc.robot.subsystems;
 
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Arrays;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 // import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -11,8 +15,24 @@ import com.kauailabs.navx.frc.AHRS;
 // import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 // import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 // import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
@@ -36,6 +56,18 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     public MotorControllerGroup leftMotors = new MotorControllerGroup(topLeftMotor, bottomLeftMotor);
     public MotorControllerGroup rightMotors = new MotorControllerGroup(topRightMotor, bottomRightMotor);
     
+
+    private DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(22));//placeholder amount of inches
+    private DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getHeading());
+  
+    private SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0.64267, 5821.3, 579.7); //placeholders
+  
+    private PIDController leftPIDController = new PIDController(13.661, 0, 0); //Placeholder kp values
+    private PIDController rightPIDController = new PIDController(13.661, 0, 0);
+  
+    private Pose2d pose;
+    public static final double kEncoderDistancePerPulse =   2048 / 10.71 * 2 * Math.PI * Units.inchesToMeters(3); // The three is a placeholder wheel radius
+
     //Removed Current PID Implementation & Reverted to LimelightAim.java
     // double kP = 0.5;
     // private double lxkP = Constants.LIMELIGHT_PID_X[0];
@@ -136,6 +168,89 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
          topRightMotor.set(ControlMode.PercentOutput, -rightValue + FR);
          bottomRightMotor.set(ControlMode.PercentOutput, -rightValue + BR); 
     }
+    public Rotation2d getHeading(){
+        return Rotation2d.fromDegrees(-gyro.getAngle());
+      }
+    
+      public DifferentialDriveWheelSpeeds getSpeeds() {
+        return new DifferentialDriveWheelSpeeds(
+          topLeftMotor.getSelectedSensorVelocity() / 2048 / 10.71 * 2 * Math.PI * Units.inchesToMeters(3), //7.29 is placeholder gear ratio of wheel and 3 is a placeholder wheel radius
+          topRightMotor.getSelectedSensorVelocity() / 2048 / 10.71 * 2 * Math.PI * Units.inchesToMeters(3)
+        );
+      }
+    
+      public SimpleMotorFeedforward getFeedForward() {
+        return feedforward;
+      }
+    
+      public PIDController getleftPidController(){
+        return leftPIDController;
+      }
+    
+      public PIDController getrighPidController(){
+        return rightPIDController;
+      }
+    
+      public DifferentialDriveKinematics getKinematics() {
+        return kinematics;
+      }
+    
+      public Pose2d getPose(){
+        return pose;
+      }
+    
+      public Trajectory getDefaultTrajectory(){
+        TrajectoryConfig config = new TrajectoryConfig(Units.feetToMeters(2), Units.feetToMeters(2));
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+          Arrays.asList(new Pose2d(), new Pose2d(1, 0, new Rotation2d())),
+          config
+        );
+        return trajectory;
+      }
+    
+      public void setOutput(double leftVolts, double rightVolts){
+        topLeftMotor.set(ControlMode.PercentOutput, leftVolts/12);
+        bottomLeftMotor.set(ControlMode.PercentOutput, leftVolts/12);
+        topRightMotor.set(ControlMode.PercentOutput, rightVolts/12);
+        bottomRightMotor.set(ControlMode.PercentOutput, rightVolts/12);
+      }
+    
+
+    
+    
+      public double getEncoderDistance(WPI_TalonFX motor){
+        return motor.getSelectedSensorPosition()/kEncoderDistancePerPulse;
+      }
+    
+      
+    
+      /*
+      @param  Pathfile  the file path to your pathweaver.json file example: "paths/YourPath.wpilib.json"  
+      */
+      public Command generateAutoPath(String Pathfile){
+        Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve("paths/YourPath.wpilib.json");
+        Trajectory selectedTrajectory;
+        try {
+            selectedTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+        } catch (IOException ex) {
+          selectedTrajectory = this.getDefaultTrajectory();
+          DriverStation.reportError("Unable to open trajectory, Robots should quit, but yours did:", ex.getStackTrace());
+        }
+        RamseteCommand command = new RamseteCommand(
+          selectedTrajectory,
+          this::getPose,
+          new RamseteController(2, 0.7),
+          this.getFeedForward(),
+          this.getKinematics(),
+          this::getSpeeds,
+          this.getleftPidController(),
+          this.getrighPidController(),
+          this::setOutput,
+          this
+          );
+        return command;
+      }
+    
 
     public void leftWheelsForward(double speed){
         topLeftMotor.set(ControlMode.PercentOutput, speed);
@@ -286,6 +401,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         // PIDS();    
         // PIDA();
         // PIDD();
+        pose = odometry.update(getHeading(), getEncoderDistance(topLeftMotor), getEncoderDistance(topRightMotor));
     }
     
     @Override

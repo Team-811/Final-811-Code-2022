@@ -44,10 +44,10 @@ public class Drivetrain extends SubsystemBase {
   private DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(22));//placeholder amount of inches
   private DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getHeading());
 
-  private SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0.268, 1.89, 0.234); //placeholders
+  private SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0.64267, 5821.3, 579.7); //placeholders
 
-  private PIDController leftPIDController = new PIDController(9.95, 0, 0); //Placeholder kp values
-  private PIDController rightPIDController = new PIDController(9.95, 0, 0);
+  private PIDController leftPIDController = new PIDController(13.661, 0, 0); //Placeholder kp values
+  private PIDController rightPIDController = new PIDController(13.661, 0, 0);
 
   private Pose2d pose;
 
@@ -67,8 +67,8 @@ public class Drivetrain extends SubsystemBase {
 
   public DifferentialDriveWheelSpeeds getSpeeds() {
     return new DifferentialDriveWheelSpeeds(
-      topLeftMotor.getSelectedSensorVelocity() / 2048 / 7.29 * 2 * Math.PI * Units.inchesToMeters(3) * 10, //7.29 is placeholder gear ratio of wheel and 3 is a placeholder wheel radius
-      topRightMotor.getSelectedSensorVelocity() / 2048 / 7.29 * 2 * Math.PI * Units.inchesToMeters(3) * 10
+      topLeftMotor.getSelectedSensorVelocity() / 2048 / 10.71 * 2 * Math.PI * Units.inchesToMeters(3), //7.29 is placeholder gear ratio of wheel and 3 is a placeholder wheel radius
+      topRightMotor.getSelectedSensorVelocity() / 2048 / 10.71 * 2 * Math.PI * Units.inchesToMeters(3)
     );
   }
 

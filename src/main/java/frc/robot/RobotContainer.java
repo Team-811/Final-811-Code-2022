@@ -65,6 +65,7 @@ public class RobotContainer {
     m_chooser.addOption("🍆 lower hub and back", new BackwardsLOneBallAuto(drivetrain, intake, shooter));
     m_chooser.addOption("go back", new BackwardsAuto(drivetrain));
     m_chooser.addOption("go forward", new ForwardsAuto(drivetrain));
+    m_chooser.addOption("Experimenal Pathweaver", drivetrain.generateAutoPath("pretend this string actually makes sense"));
     m_chooser.addOption("do nothing :(", null);
 
   }
