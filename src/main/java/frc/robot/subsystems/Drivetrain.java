@@ -44,6 +44,7 @@ import frc.robot.VisionProcessing.Limelight;
 import frc.robot.VisionProcessing.Lemonlight;
 
 public class Drivetrain extends SubsystemBase implements ISubsystem {
+    private AHRS gyro = new AHRS();
 
     private WPI_TalonFX topLeftMotor;
     private WPI_TalonFX topRightMotor;
@@ -113,7 +114,6 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     // private PIDController OutputPID = new PIDController(lxkP, lkI, lkD);
 
     //private MecanumDrive driveTrain = new MecanumDrive(topLeftMotor, bottomLeftMotor, topRightMotor, bottomRightMotor);
-    private AHRS gyro;
 
     /*A new Instance of the Drivetrain*/
     public Drivetrain(){
@@ -126,8 +126,11 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         topRightMotor.set(ControlMode.PercentOutput, 0.0f);
         bottomLeftMotor.set(ControlMode.PercentOutput, 0.0f);
         bottomRightMotor.set(ControlMode.PercentOutput, 0.0f);
+        topLeftMotor.setInverted(false);
+        bottomLeftMotor.setInverted(false);
+        topRightMotor.setInverted(true);
+        bottomRightMotor.setInverted(true);
 
-        gyro = new AHRS();
         gyro.reset();
     }
 
@@ -147,8 +150,8 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         double rightValue = forwardValue - rotationValue;
          topLeftMotor.set(ControlMode.PercentOutput, leftValue);
          bottomLeftMotor.set(ControlMode.PercentOutput, leftValue);
-         topRightMotor.set(ControlMode.PercentOutput, -rightValue);
-         bottomRightMotor.set(ControlMode.PercentOutput, -rightValue);  
+         topRightMotor.set(ControlMode.PercentOutput, rightValue);
+         bottomRightMotor.set(ControlMode.PercentOutput, rightValue);  
     }
 
     public void driveWithMisery(double leftStick, double rightStick, double rotation, double FL, double FR, double BL, double BR){
@@ -165,8 +168,8 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         double rightValue = forwardValue - rotationValue;
          topLeftMotor.set(ControlMode.PercentOutput, leftValue + FL);
          bottomLeftMotor.set(ControlMode.PercentOutput, leftValue + BL);
-         topRightMotor.set(ControlMode.PercentOutput, -rightValue + FR);
-         bottomRightMotor.set(ControlMode.PercentOutput, -rightValue + BR); 
+         topRightMotor.set(ControlMode.PercentOutput, rightValue - FR);
+         bottomRightMotor.set(ControlMode.PercentOutput, rightValue - BR); 
     }
     public Rotation2d getHeading(){
         return Rotation2d.fromDegrees(-gyro.getAngle());
@@ -174,8 +177,8 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     
       public DifferentialDriveWheelSpeeds getSpeeds() {
         return new DifferentialDriveWheelSpeeds(
-          topLeftMotor.getSelectedSensorVelocity() / 2048 / 10.71 * 2 * Math.PI * Units.inchesToMeters(3), //7.29 is placeholder gear ratio of wheel and 3 is a placeholder wheel radius
-          topRightMotor.getSelectedSensorVelocity() / 2048 / 10.71 * 2 * Math.PI * Units.inchesToMeters(3)
+          Units.inchesToMeters(topLeftMotor.getSelectedSensorVelocity() * 10 / 2048 / 10.71 * (2 * Math.PI * 3)), //7.29 is placeholder gear ratio of wheel and 3 is a placeholder wheel radius
+          Units.inchesToMeters(topRightMotor.getSelectedSensorVelocity() * 10 / 2048 / 10.71 * 2 * Math.PI * 3)
         );
       }
     
@@ -219,7 +222,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     
     
       public double getEncoderDistance(WPI_TalonFX motor){
-        return motor.getSelectedSensorPosition()/kEncoderDistancePerPulse;
+        return Units.inchesToMeters(motor.getSelectedSensorPosition()/2048 / 10.71 * (2 * Math.PI * 3));
       }
     
       
@@ -258,13 +261,13 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     }
     
     public void rightWheelsForward(double speed){
-        topRightMotor.set(ControlMode.PercentOutput, -speed);
-        bottomRightMotor.set(ControlMode.PercentOutput, -speed);
+        topRightMotor.set(ControlMode.PercentOutput, speed);
+        bottomRightMotor.set(ControlMode.PercentOutput, speed);
     }
 
     public void mechanumWHeelRight(double speed){
-        topRightMotor.set(ControlMode.PercentOutput, speed);
-        bottomRightMotor.set(ControlMode.PercentOutput, -speed);
+        topRightMotor.set(ControlMode.PercentOutput, -speed);
+        bottomRightMotor.set(ControlMode.PercentOutput, speed);
         topLeftMotor.set(ControlMode.PercentOutput, speed);
         bottomLeftMotor.set(ControlMode.PercentOutput, -speed);
     }
@@ -272,8 +275,8 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
 
 
     public void mechanumWHeelLeft(double speed){
-        topRightMotor.set(ControlMode.PercentOutput, -speed);
-        bottomRightMotor.set(ControlMode.PercentOutput, speed);
+        topRightMotor.set(ControlMode.PercentOutput, speed);
+        bottomRightMotor.set(ControlMode.PercentOutput, -speed);
         topLeftMotor.set(ControlMode.PercentOutput, -speed);
         bottomLeftMotor.set(ControlMode.PercentOutput, speed);
     }
@@ -281,15 +284,15 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     public void turnLeft(double speed){
         topLeftMotor.set(ControlMode.PercentOutput, -speed);
         bottomLeftMotor.set(ControlMode.PercentOutput, -speed);
-        topRightMotor.set(ControlMode.PercentOutput, -speed);
-        bottomRightMotor.set(ControlMode.PercentOutput, -speed);
+        topRightMotor.set(ControlMode.PercentOutput, speed);
+        bottomRightMotor.set(ControlMode.PercentOutput, speed);
     }
 
     public void turnRight(double speed){
         topLeftMotor.set(ControlMode.PercentOutput, speed);
         bottomLeftMotor.set(ControlMode.PercentOutput, speed);
-        topRightMotor.set(ControlMode.PercentOutput, speed);
-        bottomRightMotor.set(ControlMode.PercentOutput, speed);
+        topRightMotor.set(ControlMode.PercentOutput, -speed);
+        bottomRightMotor.set(ControlMode.PercentOutput, -speed);
     }
 
     public void stopRobot(){
@@ -302,31 +305,31 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     public void driveForward(double speed){
         topLeftMotor.set(ControlMode.PercentOutput, speed);
         bottomLeftMotor.set(ControlMode.PercentOutput, speed);
-        topRightMotor.set(ControlMode.PercentOutput, -speed);
-        bottomRightMotor.set(ControlMode.PercentOutput, -speed);
+        topRightMotor.set(ControlMode.PercentOutput, speed);
+        bottomRightMotor.set(ControlMode.PercentOutput, speed);
     }
 
     public void driveBackwards(double speed){
         topLeftMotor.set(ControlMode.PercentOutput, -speed);
         bottomLeftMotor.set(ControlMode.PercentOutput, -speed);
-        topRightMotor.set(ControlMode.PercentOutput, speed);
-        bottomRightMotor.set(ControlMode.PercentOutput, speed);
+        topRightMotor.set(ControlMode.PercentOutput, -speed);
+        bottomRightMotor.set(ControlMode.PercentOutput, -speed);
     }
 
     public void driveBackwardsPID(double setpoint){
         dSetpoint = setpoint;
         topLeftMotor.set(ControlMode.PercentOutput, drcw);
-        topRightMotor.set(ControlMode.PercentOutput, -drcw);
+        topRightMotor.set(ControlMode.PercentOutput, drcw);
         bottomLeftMotor.set(ControlMode.PercentOutput, drcw);
         bottomRightMotor.set(ControlMode.PercentOutput, drcw);
     }
 
     public void frontRightForward(double speed){
-        topRightMotor.set(ControlMode.PercentOutput, -speed);
+        topRightMotor.set(ControlMode.PercentOutput, speed);
     }
 
     public void backRightForward(double speed){
-        bottomRightMotor.set(ControlMode.PercentOutput, -speed);
+        bottomRightMotor.set(ControlMode.PercentOutput, speed);
     }
 
     public void frontLeftForward(double speed){
@@ -421,7 +424,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
 
     @Override
     public void zeroSensors() {
-        // zeroGyro();
+        gyro.reset();
         topLeftMotor.setSelectedSensorPosition(0);
 
     }

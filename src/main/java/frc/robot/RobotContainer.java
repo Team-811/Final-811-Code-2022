@@ -101,7 +101,7 @@ public class RobotContainer {
   }
   
   public Command getAutonomousCommand() {
-    return m_chooser.getSelected();
+    return drivetrain.generateAutoPath("pretend this makes sense");
   }
 
   public void zeroSensors(){
