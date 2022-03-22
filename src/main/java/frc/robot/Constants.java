@@ -7,6 +7,7 @@ public final class Constants {
     public static final double AIM_SPEED = 0.4;
     public static final double STRAFE_SPEED = 0.8;
     public static final double[] GYRO_PID = {0.004, 0.02, 0.004};
+    public static final double[] DRIVE_PID = {0, 0, 0};
 
     //Swervish Drive
     public static final double IDEAL_MECHANUM_FORWARDS = 0.7;

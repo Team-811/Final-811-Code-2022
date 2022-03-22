@@ -21,7 +21,6 @@ public class Robot extends TimedRobot {
   
   
 
-  @SuppressWarnings("unused")
   private RobotContainer m_robotContainer= new RobotContainer();
 
 
@@ -73,6 +72,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    m_robotContainer.zeroSensors();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     Lemonlight.setTeam();
     Limelight.On(); 
@@ -93,6 +93,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     m_robotContainer.resetClimber();
+    m_robotContainer.zeroSensors();
     Limelight.On();
     Lemonlight.setTeam();
     // This makes sure that the autonomous stops running when

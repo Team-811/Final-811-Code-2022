@@ -1,8 +1,9 @@
 package frc.robot.subsystems;
 
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 // import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
 // import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -11,11 +12,11 @@ import com.kauailabs.navx.frc.AHRS;
 // import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.util.Units;
 // import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 // import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
 import frc.robot.VisionProcessing.Distance;
@@ -24,10 +25,10 @@ import frc.robot.VisionProcessing.Lemonlight;
 
 public class Drivetrain extends SubsystemBase implements ISubsystem {
 
-    private WPI_TalonSRX topLeftMotor;
-    private WPI_TalonSRX topRightMotor;
-    private WPI_TalonSRX bottomLeftMotor;
-    private WPI_TalonSRX bottomRightMotor;
+    private WPI_TalonFX topLeftMotor;
+    private WPI_TalonFX topRightMotor;
+    private WPI_TalonFX bottomLeftMotor;
+    private WPI_TalonFX bottomRightMotor;
 
     // private  PIDController LimeXPID = new PIDController(0.04, 0, 0, 0.02);
     
@@ -68,6 +69,14 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     // private double aIntegral;
     // private double aprevious_error;
     // private double arcw;
+
+    private double dkP = Constants.DRIVE_PID[0];
+    private double dkI = Constants.DRIVE_PID[1];
+    private double dkD = Constants.DRIVE_PID[2];
+    private double dSetpoint = 180;
+    private double dIntegral;
+    private double dprevious_error;
+    private double drcw;
     
     // private PIDController OutputPID = new PIDController(lxkP, lkI, lkD);
 
@@ -77,10 +86,10 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     /*A new Instance of the Drivetrain*/
     public Drivetrain(){
         resetSubsystem();
-        topLeftMotor = new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_TOP_LEFT );
-        topRightMotor= new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_TOP_RIGHT );
-        bottomLeftMotor = new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_BOTTOM_LEFT );
-        bottomRightMotor= new WPI_TalonSRX(RobotMap.DRIVE_TRAIN_BOTTOM_RIGHT );
+        topLeftMotor = new WPI_TalonFX(RobotMap.DRIVE_TRAIN_TOP_LEFT );
+        topRightMotor= new WPI_TalonFX(RobotMap.DRIVE_TRAIN_TOP_RIGHT );
+        bottomLeftMotor = new WPI_TalonFX(RobotMap.DRIVE_TRAIN_BOTTOM_LEFT );
+        bottomRightMotor= new WPI_TalonFX(RobotMap.DRIVE_TRAIN_BOTTOM_RIGHT );
         topLeftMotor.set(ControlMode.PercentOutput, 0.0f);
         topRightMotor.set(ControlMode.PercentOutput, 0.0f);
         bottomLeftMotor.set(ControlMode.PercentOutput, 0.0f);
@@ -88,8 +97,6 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
 
         gyro = new AHRS();
         gyro.reset();
-        //invertGyro(false);
-        
     }
 
 
@@ -109,17 +116,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
          topLeftMotor.set(ControlMode.PercentOutput, leftValue);
          bottomLeftMotor.set(ControlMode.PercentOutput, leftValue);
          topRightMotor.set(ControlMode.PercentOutput, -rightValue);
-         bottomRightMotor.set(ControlMode.PercentOutput, -rightValue); 
-
-        //  @SuppressWarnings("unused")
-        //  double correction; 
-        //  if (Math.abs(rotation) < 0.2) {
-        //      correction = gyroCorrection();
-        //  } else {
-        //      correction = 0;
-        //  }
-
-        //  prevAngle = getGyroAngle(); 
+         bottomRightMotor.set(ControlMode.PercentOutput, -rightValue);  
     }
 
     public void driveWithMisery(double leftStick, double rightStick, double rotation, double FL, double FR, double BL, double BR){
@@ -157,13 +154,7 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         bottomLeftMotor.set(ControlMode.PercentOutput, -speed);
     }
 
-    @Override
-    public void periodic() {
-        // PIDLX();
-        // PIDLY();
-        // PIDS();    
-        // PIDA();
-    }
+
 
     public void mechanumWHeelLeft(double speed){
         topRightMotor.set(ControlMode.PercentOutput, -speed);
@@ -207,6 +198,14 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         bottomRightMotor.set(ControlMode.PercentOutput, speed);
     }
 
+    public void driveBackwardsPID(double setpoint){
+        dSetpoint = setpoint;
+        topLeftMotor.set(ControlMode.PercentOutput, drcw);
+        topRightMotor.set(ControlMode.PercentOutput, -drcw);
+        bottomLeftMotor.set(ControlMode.PercentOutput, drcw);
+        bottomRightMotor.set(ControlMode.PercentOutput, drcw);
+    }
+
     public void frontRightForward(double speed){
         topRightMotor.set(ControlMode.PercentOutput, -speed);
     }
@@ -223,68 +222,10 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
         bottomLeftMotor.set(ControlMode.PercentOutput, speed);
     }
 
-    //gyro
-    // private int gyroInversion = 1;
-    // private double correctRate = 0.5;
-    // private double prevAngle = 0;
-
-    // public double getGyroAngle() {
-    //     return gyroInversion * gyro.getAngle();
-    // }
-
-    // public double getAngularVelocity() {
-    //     return gyroInversion * gyro.getRate();
-    // }
-
-    // public void gyroInvert(boolean inverted) {
-    //     if (inverted) {
-    //         gyroInversion = -1;
-    //     } else {
-    //         gyroInversion = 1;
-    //     }
-    // }
-
-    // public double gyroCorrection() {
-    //     return (getGyroAngle() - prevAngle) * correctRate; 
-    // }
-
-    // public void zeroGyro() {
-    //     gyro.zeroYaw();
-    // }
-
+    public double getDistance(){
+        return topLeftMotor.getSelectedSensorPosition()  / 2048 / 10.71 * 2 * Math.PI * Units.inchesToMeters(3);
+    }
     
-
-    @Override
-    public void outputSmartdashboard() {
-        // SmartDashboard.putNumber("Front Right Wheel", -topRightMotor.getMotorOutputPercent());
-        // SmartDashboard.putNumber("Back Left Wheel", bottomLeftMotor.getMotorOutputPercent());
-        // SmartDashboard.putNumber("Back Right Wheel", -bottomRightMotor.getMotorOutputPercent());
-        SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
-        SmartDashboard.putNumber("Snakeye X", Lemonlight.getX());
-        SmartDashboard.putNumber("Shooter Speed", Distance.ShooterSpeed());
-        
-        if (Limelight.getV() == 1.0)
-            SmartDashboard.putBoolean("HasTarget", true);
-        else
-            SmartDashboard.putBoolean("HasTarget", false);
-    }
-
-    @Override
-    public void zeroSensors() {
-        // zeroGyro();
-
-    }
-
-    @Override
-    public void resetSubsystem() {
-        
-    }
-
-    @Override
-    public void testSubsystem() {
-
-    }
-
     // public void PIDLX() {
     //     double error = lxSetpoint - Limelight.getX();
     //     this.lxIntegral += (error*0.02);
@@ -316,6 +257,13 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     //     arcw = akP* error + akI * this.aIntegral + akD * derivative;
     // }
 
+    public void PIDD() {
+        double error = dSetpoint - Math.abs(topLeftMotor.getSelectedSensorPosition());
+        this.dIntegral += (error*0.02);
+        double derivative = (error-this.dprevious_error)/0.02;
+        drcw = dkP* error + dkI * this.dIntegral + dkD * derivative;
+    }
+
     // public void driveAuto(){
     //     double rotation = 3.0 - (arcw *0.2);
     //     double rotationValue = rotation * SpeedScale * 0.8;
@@ -330,5 +278,47 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
     // public void aSetpoint(int point){
     //     aSetpoint = point;
     // }
+
+    @Override
+    public void periodic() {
+        // PIDLX();
+        // PIDLY();
+        // PIDS();    
+        // PIDA();
+        // PIDD();
+    }
+    
+    @Override
+    public void outputSmartdashboard() {
+        // SmartDashboard.putNumber("Front Right Wheel", -topRightMotor.getMotorOutputPercent());
+        // SmartDashboard.putNumber("Back Left Wheel", bottomLeftMotor.getMotorOutputPercent());
+        // SmartDashboard.putNumber("Back Right Wheel", -bottomRightMotor.getMotorOutputPercent());
+        SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
+        SmartDashboard.putNumber("Snakeye X", Lemonlight.getX());
+        SmartDashboard.putNumber("Shooter Speed", Distance.ShooterSpeed());
+        SmartDashboard.putNumber("Distance Traveled", getDistance());
+        if (Limelight.getV() == 1.0)
+            SmartDashboard.putBoolean("HasTarget", true);
+        else
+            SmartDashboard.putBoolean("HasTarget", false);
+    }
+
+    @Override
+    public void zeroSensors() {
+        // zeroGyro();
+        topLeftMotor.setSelectedSensorPosition(0);
+
+    }
+
+    @Override
+    public void resetSubsystem() {
+        
+    }
+ 
+    @Override
+    public void testSubsystem() {
+
+    }
+
 
 }

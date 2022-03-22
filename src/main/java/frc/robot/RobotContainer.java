@@ -103,6 +103,10 @@ public class RobotContainer {
     return m_chooser.getSelected();
   }
 
+  public void zeroSensors(){
+    drivetrain.zeroSensors();
+  }
+
   public static void updateSmartdashboard() {
     drivetrain.outputSmartdashboard();
     shooter.outputSmartdashboard();
