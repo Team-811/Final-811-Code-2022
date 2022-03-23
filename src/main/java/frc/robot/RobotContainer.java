@@ -13,6 +13,7 @@ import frc.robot.commands.Auto.BackwardsAuto;
 import frc.robot.commands.Auto.BackwardsLOneBallAuto;
 import frc.robot.commands.Auto.BackwardsOneBallAuto;
 import frc.robot.commands.Auto.ForwardsAuto;
+import frc.robot.commands.Climber.BackClimberStep;
 import frc.robot.commands.Climber.ClimberCommand;
 import frc.robot.commands.Climber.ClimberStep;
 import frc.robot.commands.Intake.Motors.IntakeForward;
@@ -65,7 +66,7 @@ public class RobotContainer {
     m_chooser.addOption("🍆 lower hub and back", new BackwardsLOneBallAuto(drivetrain, intake, shooter));
     m_chooser.addOption("go back", new BackwardsAuto(drivetrain));
     m_chooser.addOption("go forward", new ForwardsAuto(drivetrain));
-    m_chooser.addOption("Experimenal Pathweaver", drivetrain.generateAutoPath("pretend this string actually makes sense"));
+    m_chooser.addOption("Experimenal Pathweaver", drivetrain.generateAutoPath("paths/test_path.wpilib.json"));
     m_chooser.addOption("do nothing :(", null);
 
   }
@@ -87,8 +88,9 @@ public class RobotContainer {
     operatorController.yButton.whileHeld( new IntakeForward(intake));
     operatorController.yButton.whenReleased( new IntakeStop(intake));
     operatorController.bButton.whenPressed( new ClimberStep(climber));
-    operatorController.aButton.whileHeld(new SlowShooter(shooter));
-    operatorController.aButton.whenReleased(new ShooterStop(shooter));
+    // operatorController.aButton.whileHeld(new SlowShooter(shooter));
+    // operatorController.aButton.whenReleased(new ShooterStop(shooter));
+    operatorController.aButton.whenPressed(new BackClimberStep(climber));
   }
 
   /**
@@ -101,7 +103,7 @@ public class RobotContainer {
   }
   
   public Command getAutonomousCommand() {
-    return drivetrain.generateAutoPath("pretend this makes sense");
+    return m_chooser.getSelected();
   }
 
   public void zeroSensors(){

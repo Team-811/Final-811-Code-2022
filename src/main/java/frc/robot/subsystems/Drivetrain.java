@@ -176,9 +176,13 @@ public class Drivetrain extends SubsystemBase implements ISubsystem {
       }
     
       public DifferentialDriveWheelSpeeds getSpeeds() {
+        System.out.println("Aditya"+ Units.inchesToMeters(topLeftMotor.getSelectedSensorVelocity() * 600 / 2048 / 10.71 * (2 * Math.PI * 3)));
+
         return new DifferentialDriveWheelSpeeds(
-          Units.inchesToMeters(topLeftMotor.getSelectedSensorVelocity() * 10 / 2048 / 10.71 * (2 * Math.PI * 3)), //7.29 is placeholder gear ratio of wheel and 3 is a placeholder wheel radius
-          Units.inchesToMeters(topRightMotor.getSelectedSensorVelocity() * 10 / 2048 / 10.71 * 2 * Math.PI * 3)
+          Units.inchesToMeters(topLeftMotor.getSelectedSensorVelocity() * 600 / 2048 / 10.71 * (2 * Math.PI * 3)), //7.29 is placeholder gear ratio of wheel and 3 is a placeholder wheel radius
+          Units.inchesToMeters(topRightMotor.getSelectedSensorVelocity() * 600 / 2048 / 10.71 * 2 * Math.PI * 3)
+          
+          
         );
       }
     

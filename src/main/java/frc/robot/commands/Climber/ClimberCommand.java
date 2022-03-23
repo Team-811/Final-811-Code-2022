@@ -20,22 +20,22 @@ public class ClimberCommand extends CommandBase {
   @Override
   public void execute() {
 
-    m_subsystem.leftArm(RobotContainer.operatorController.rightStick.getY());
-    m_subsystem.rightArm(RobotContainer.operatorController.leftStick.getY());
+    m_subsystem.redArm(RobotContainer.operatorController.leftStick.getY());
+    m_subsystem.yellowArm(RobotContainer.operatorController.rightStick.getY());
 
-    if(RobotContainer.operatorController.rightBumper.get()){
-      m_subsystem.rightWinchRun(-Constants.WINCH_SPEED);
-    } else if (RobotContainer.operatorController.rightTriggerButton.get()){
-      m_subsystem.rightWinchRun(Constants.WINCH_SPEED);
-    } else {
-      m_subsystem.rightWinchRun(0);} 
-    
     if(RobotContainer.operatorController.leftBumper.get()){
-      m_subsystem.leftWinchRun(-Constants.WINCH_SPEED);
+      m_subsystem.redWinchRun(-Constants.WINCH_SPEED);
     } else if (RobotContainer.operatorController.leftTriggerButton.get()){
-      m_subsystem.leftWinchRun(Constants.WINCH_SPEED); 
+      m_subsystem.redWinchRun(Constants.WINCH_SPEED);
     } else {
-      m_subsystem.leftWinchRun(0);}
+      m_subsystem.redWinchRun(0);} 
+    
+    if(RobotContainer.operatorController.rightBumper.get()){
+      m_subsystem.yellowWinchRun(-Constants.WINCH_SPEED);
+    } else if (RobotContainer.operatorController.rightTriggerButton.get()){
+      m_subsystem.yellowWinchRun(Constants.WINCH_SPEED); 
+    } else {
+      m_subsystem.yellowWinchRun(0);}
   }
 
   @Override
