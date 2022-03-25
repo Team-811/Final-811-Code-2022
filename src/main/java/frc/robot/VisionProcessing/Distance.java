@@ -8,8 +8,8 @@ public class Distance {
         if (Limelight.getY() == 0)
             angle = 0;        
         else
-            angle = 30;
-            return (6 / Math.tan((angle + Limelight.getY() -8.5) *(Math.PI / 180)));
+            angle = 42;
+            return (6 / Math.tan((angle + Limelight.getY() ) *(Math.PI / 180)));
         }
 
     public static float ShooterSpeed(){

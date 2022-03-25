@@ -21,12 +21,12 @@ public class LimelightAimY extends CommandBase {
    @Override
     public void execute() {
         double feet  = Distance.get();
-        if (feet > 8.6 && feet < 8.8)
+        if (feet > 10.6 && feet < 10.8)
         {
             requiredSubsystem.rightWheelsForward(0);
             requiredSubsystem.leftWheelsForward(0);
         }
-        if(feet > 8.7 && feet != 0)
+        if(feet > 10.7 && feet != 0)
         {
             requiredSubsystem.rightWheelsForward(Constants.CAT_DRIVE_SPEED);
             requiredSubsystem.leftWheelsForward(Constants.CAT_DRIVE_SPEED);
@@ -46,14 +46,14 @@ public class LimelightAimY extends CommandBase {
     @Override
     public boolean isFinished() {
         double feet = Distance.get();
-        if(feet >= 8.5 && feet <= 8.7 && feet !=0.0)
+        if(feet >= 10.5 && feet <= 10.7 && feet !=0.0)
         {
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (feet >= 8.5 && feet <= 8.7 && feet !=0.0)
+            if (feet >= 10.5 && feet <= 10.7 && feet !=0.0)
                 return true;
         }
         return false;    

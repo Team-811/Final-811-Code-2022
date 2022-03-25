@@ -4,12 +4,15 @@ import org.photonvision.PhotonCamera;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+// import edu.wpi.first.networktables.NetworkTablesJNI;
+// import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Lemonlight extends TimedRobot{
-    static PhotonCamera camera = new PhotonCamera("Team811ObjectCamera");
+    static PhotonCamera camera = new PhotonCamera("lemonlight");
 
-    static private NetworkTable table = NetworkTableInstance.getDefault().getTable("photonvision/Team811ObjectCamera");
+    static private NetworkTable table = NetworkTableInstance.getDefault().getTable("photonvision/lemonlight");
     static private NetworkTableEntry tx = table.getEntry("targetYaw");
     static private NetworkTableEntry ty = table.getEntry("targetPitch");
     static private NetworkTableEntry ta = table.getEntry("targetArea");
@@ -50,10 +53,14 @@ public class Lemonlight extends TimedRobot{
     public static void setTeam() {
         if(TeamSelector.getTeam()){
             camera.setPipelineIndex(1);
+            // table.getEntry("pipelineIndex").setNumber(1);
             System.out.println("Setting team to Red");
         }else{
             camera.setPipelineIndex(0);
+            // table.getEntry("pipelineIndex").setNumber(0);
             System.out.println("Setting team to Blue");
         }
+        SmartDashboard.putBoolean("team",  TeamSelector.getTeam());
+
     }
 }

@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.VisionProcessing.VisionTargeting.CatFollow;
 import frc.robot.VisionProcessing.VisionTargeting.Hub.LimelightAim;
 import frc.robot.VisionProcessing.VisionTargeting.Hub.LimelightAimY;
 // import frc.robot.VisionProcessing.Limelight;
@@ -82,6 +83,7 @@ public class RobotContainer {
     driveController.aButton.whenPressed(new IntakeToggle(intake));
     driveController.xButton.whileHeld(new LimelightAim(drivetrain));
     driveController.yButton.whileHeld(new LimelightAimY(drivetrain));
+    driveController.bButton.whileHeld(new CatFollow(drivetrain));
 
     operatorController = new BobXboxController(1, .3, .3);
     operatorController.xButton.whenPressed(new Shoot(shooter, intake));
