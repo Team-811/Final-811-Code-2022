@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
-public class Climber extends SubsystemBase implements ISubsystem {
+public class Climber extends SubsystemBase implements ISubsystem { 
 
   private static int Step;
 
@@ -70,52 +70,41 @@ public class Climber extends SubsystemBase implements ISubsystem {
       this.yellowWinchRun(-Constants.WINCH_SPEED);
     }else if(Step==2){
       this.yellowArm(-1);
-    }
-    else if(Step==3){
+    }else if(Step==3){
       this.yellowArm(-1);
       this.yellowWinchRun(Constants.WINCH_SPEED);
-    }
-    else if(Step==4){
+    }else if(Step==4){
       this.redWinchRun(-Constants.WINCH_SPEED);
-    }
-    else if(Step==5){
+    }else if(Step==5){
       this.redArm(1);
       new WaitCommand(2);
       this.redWinchRun(Constants.WINCH_SPEED);
-    }
-    else if(Step==6){
+    }else if(Step==6){
       this.redArm(1);
       this.yellowArm(-1);
       this.yellowWinchRun(-Constants.WINCH_SPEED);
       new WaitCommand(1);
       this.redWinchRun(Constants.WINCH_SPEED);
-    }
-    else if(Step==7){
+    }else if(Step==7){
       this.yellowWinchRun(-Constants.WINCH_SPEED);
-    }
-    else if(Step==8){  //Works until here
+    }else if(Step==8){  //Works until here
       this.yellowArm(1);
       this.yellowWinchRun(Constants.WINCH_SPEED);
-    }
-    else if(Step==9){
+    }else if(Step==9){
       this.yellowWinchRun(-Constants.WINCH_SPEED);
-    }
-    else if(Step==10){
+    }else if(Step==10){
       this.redArm(-1);
       this.redWinchRun(Constants.WINCH_SPEED);
-    }
-    else if(Step==11){
+      this.redWinchRun(Constants.WINCH_SPEED);
+    }else if(Step==11){
       this.redArm(1);
       this.redWinchRun(-Constants.WINCH_SPEED);
-    }
-    else if(Step==12){
+    }else if(Step==12){
       this.yellowWinchRun(Constants.WINCH_SPEED);
       this.redWinchRun(-Constants.WINCH_SPEED/2);
-    }
-    else if(Step==13){
+    }else if(Step==13){
       this.redWinchRun(-Constants.WINCH_SPEED);
-    }
-    else{
+    }else{
       Step=0;
     }
   }

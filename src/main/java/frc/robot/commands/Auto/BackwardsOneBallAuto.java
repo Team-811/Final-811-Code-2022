@@ -24,12 +24,12 @@ public class BackwardsOneBallAuto extends SequentialCommandGroup {
       ),
       new ParallelDeadlineGroup( //Ramp up shooter
         new WaitCommand(1.5),                                                        
-        new InstantCommand(() -> shoot.shooterSpin(-.75), shoot)
+        new InstantCommand(() -> shoot.shooterSpin(.75), shoot)
       ),
       new ParallelDeadlineGroup( //Storage motor into shooter for shot
         new WaitCommand(2),                                                         
         new InstantCommand(() ->intake.backSpin(0.5), intake),
-        new InstantCommand(() -> shoot.shooterSpin(-.75), shoot)
+        new InstantCommand(() -> shoot.shooterSpin(.75), shoot)
       ),
        //Disable shooter and intake                                     
       new InstantCommand(() -> shoot.shooterSpin(0), shoot),
